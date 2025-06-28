@@ -11,79 +11,87 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Filter,
   Search,
   MapPin,
   SlidersHorizontal,
-  Flower2,
+  Leaf,
   ChevronDown,
   Star,
+  Home,
+  Calendar,
+  Compass,
+  User,
 } from "lucide-react";
 
-const salons = [
+const venues = [
   {
     id: "1",
-    name: "Bliss Beauty Lounge",
+    name: "Serenity Wellness Spa",
     image: "/placeholder.svg",
-    rating: 4.8,
-    reviewCount: 245,
+    rating: 4.9,
+    reviewCount: 186,
     location: "Connaught Place, Delhi",
-    services: ["Hair Spa", "Facial", "Manicure", "Pedicure", "Threading"],
+    services: [
+      "Deep Tissue Massage",
+      "Hot Stone",
+      "Aromatherapy",
+      "Reflexology",
+    ],
     priceRange: "₹₹₹",
     isOpen: true,
   },
   {
     id: "2",
-    name: "Serenity Spa & Wellness",
+    name: "Zen Beauty Lounge",
     image: "/placeholder.svg",
-    rating: 4.9,
-    reviewCount: 189,
+    rating: 4.8,
+    reviewCount: 234,
     location: "Bandra West, Mumbai",
-    services: ["Full Body Massage", "Thai Spa", "Aromatherapy", "Hot Stone"],
+    services: ["Facial Treatment", "Hair Spa", "Manicure", "Pedicure"],
     priceRange: "₹₹₹₹",
     isOpen: true,
   },
   {
     id: "3",
-    name: "Glamour Studio",
+    name: "Natural Glow Studio",
     image: "/placeholder.svg",
     rating: 4.7,
-    reviewCount: 312,
-    location: "Koramangala, Bangalore",
-    services: ["Bridal Makeup", "Hair Styling", "Nail Art", "Extensions"],
-    priceRange: "₹₹",
-    isOpen: false,
-  },
-  {
-    id: "4",
-    name: "Zen Massage Center",
-    image: "/placeholder.svg",
-    rating: 4.6,
     reviewCount: 156,
-    location: "Cyber City, Gurgaon",
-    services: ["Deep Tissue", "Swedish", "Reflexology", "Couples Massage"],
-    priceRange: "₹₹₹",
+    location: "Koramangala, Bangalore",
+    services: ["Organic Facial", "Natural Hair Care", "Wellness Therapy"],
+    priceRange: "₹₹",
     isOpen: true,
   },
   {
-    id: "5",
-    name: "Elite Hair Studio",
+    id: "4",
+    name: "Tranquil Mind & Body",
     image: "/placeholder.svg",
     rating: 4.8,
-    reviewCount: 278,
+    reviewCount: 198,
+    location: "Cyber City, Gurgaon",
+    services: ["Swedish Massage", "Couples Therapy", "Meditation"],
+    priceRange: "₹₹₹",
+    isOpen: false,
+  },
+  {
+    id: "5",
+    name: "Pure Essence Spa",
+    image: "/placeholder.svg",
+    rating: 4.9,
+    reviewCount: 267,
     location: "Jubilee Hills, Hyderabad",
-    services: ["Hair Cut", "Coloring", "Keratin", "Hair Spa"],
+    services: ["Ayurvedic Treatment", "Herbal Therapy", "Detox"],
     priceRange: "₹₹₹₹",
     isOpen: true,
   },
   {
     id: "6",
-    name: "Royal Beauty Palace",
+    name: "Harmony Beauty Center",
     image: "/placeholder.svg",
-    rating: 4.5,
-    reviewCount: 203,
+    rating: 4.6,
+    reviewCount: 142,
     location: "Park Street, Kolkata",
-    services: ["Facial", "Cleanup", "Bleach", "Waxing"],
+    services: ["Hair Care", "Skin Treatment", "Nail Care"],
     priceRange: "₹₹",
     isOpen: true,
   },
@@ -101,22 +109,22 @@ const filters = {
   ],
   serviceType: [
     "All Services",
+    "Spa & Wellness",
     "Hair Care",
-    "Spa & Massage",
     "Facial & Skincare",
-    "Makeup & Beauty",
-    "Nail Care",
+    "Massage Therapy",
+    "Beauty Treatments",
   ],
   priceRange: ["All Prices", "₹", "₹₹", "₹₹₹", "₹₹₹₹"],
   rating: ["All Ratings", "4.5+ Stars", "4.0+ Stars", "3.5+ Stars"],
 };
 
 const sortOptions = [
-  { value: "popularity", label: "Popularity" },
-  { value: "rating", label: "Rating" },
+  { value: "recommended", label: "Recommended" },
+  { value: "rating", label: "Highest Rated" },
   { value: "priceLow", label: "Price: Low to High" },
   { value: "priceHigh", label: "Price: High to Low" },
-  { value: "distance", label: "Distance" },
+  { value: "distance", label: "Nearest First" },
 ];
 
 export default function VendorListing() {
@@ -125,38 +133,47 @@ export default function VendorListing() {
   const [selectedService, setSelectedService] = useState("All Services");
   const [selectedPrice, setSelectedPrice] = useState("All Prices");
   const [selectedRating, setSelectedRating] = useState("All Ratings");
-  const [sortBy, setSortBy] = useState("popularity");
+  const [sortBy, setSortBy] = useState("recommended");
   const [showFilters, setShowFilters] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-beauty-pink/20 to-beauty-lavender/20">
+    <div className="min-h-screen bg-gradient-hero">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-sm border-b border-white/20 sticky top-0 z-50">
+      <nav className="bg-white/95 backdrop-blur-sm border-b border-spa-stone/20 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-2">
-              <div className="h-8 w-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <Flower2 className="h-5 w-5 text-white" />
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
+                <Leaf className="h-4 w-4 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-900">
+              <span className="text-xl font-light text-spa-charcoal tracking-wide">
                 BeautyBook
               </span>
             </div>
-            <div className="hidden md:flex items-center gap-6">
-              <a href="/" className="text-gray-700 hover:text-primary">
+            <div className="hidden md:flex items-center gap-8">
+              <a
+                href="/"
+                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+              >
                 Home
               </a>
-              <a href="/salons" className="text-primary font-medium">
-                Find Salons
+              <a href="/salons" className="text-sm text-primary font-medium">
+                Find Venues
               </a>
-              <a href="/services" className="text-gray-700 hover:text-primary">
+              <a
+                href="/services"
+                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+              >
                 Services
               </a>
-              <Button variant="outline" size="sm">
+              <Button variant="ghost" size="sm" className="text-sm">
                 Sign In
               </Button>
-              <Button size="sm" className="bg-gradient-primary text-white">
-                Join as Vendor
+              <Button
+                size="sm"
+                className="bg-primary text-white hover:bg-spa-sage text-sm px-6 rounded-full"
+              >
+                Become a Partner
               </Button>
             </div>
           </div>
@@ -164,29 +181,34 @@ export default function VendorListing() {
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Search and Filters Header */}
+        {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">
-            Find Salons & Spas
+          <h1 className="text-4xl font-light text-spa-charcoal mb-3">
+            Wellness Venues
           </h1>
+          <p className="text-spa-charcoal/60 font-light">
+            Discover exceptional spa and beauty experiences near you
+          </p>
+        </div>
 
-          {/* Search Bar */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        {/* Search and Filters */}
+        <div className="mb-8">
+          <div className="flex flex-col lg:flex-row gap-4 mb-6">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-spa-charcoal/40" />
               <Input
-                placeholder="Search salons, services..."
+                placeholder="Search venues, treatments..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-12 rounded-xl bg-white/80 backdrop-blur-sm border-gray-200"
+                className="pl-12 h-12 rounded-full bg-white/95 backdrop-blur-sm border-spa-stone/20 font-light placeholder:text-spa-charcoal/40"
               />
             </div>
             <Button
               variant="outline"
               onClick={() => setShowFilters(!showFilters)}
-              className="h-12 px-6 rounded-xl border-gray-200 bg-white/80 backdrop-blur-sm"
+              className="h-12 px-6 rounded-full border-spa-stone/30 bg-white/95 backdrop-blur-sm font-light"
             >
-              <SlidersHorizontal className="h-5 w-5 mr-2" />
+              <SlidersHorizontal className="h-4 w-4 mr-2" />
               Filters
               <ChevronDown
                 className={`h-4 w-4 ml-2 transition-transform ${
@@ -196,19 +218,19 @@ export default function VendorListing() {
             </Button>
           </div>
 
-          {/* Filter Options */}
+          {/* Filter Panel */}
           {showFilters && (
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 mb-6 card-shadow">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 mb-6 sophisticated-shadow border border-spa-stone/10">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-spa-charcoal mb-3">
                     Location
                   </label>
                   <Select
                     value={selectedLocation}
                     onValueChange={setSelectedLocation}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="border-spa-stone/20 rounded-lg font-light">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -222,14 +244,14 @@ export default function VendorListing() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-spa-charcoal mb-3">
                     Service Type
                   </label>
                   <Select
                     value={selectedService}
                     onValueChange={setSelectedService}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="border-spa-stone/20 rounded-lg font-light">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -243,14 +265,14 @@ export default function VendorListing() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-spa-charcoal mb-3">
                     Price Range
                   </label>
                   <Select
                     value={selectedPrice}
                     onValueChange={setSelectedPrice}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="border-spa-stone/20 rounded-lg font-light">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -264,14 +286,14 @@ export default function VendorListing() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-spa-charcoal mb-3">
                     Rating
                   </label>
                   <Select
                     value={selectedRating}
                     onValueChange={setSelectedRating}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="border-spa-stone/20 rounded-lg font-light">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -287,16 +309,20 @@ export default function VendorListing() {
             </div>
           )}
 
-          {/* Sort and Results Count */}
+          {/* Results and Sort */}
           <div className="flex justify-between items-center">
-            <p className="text-gray-600">
-              Showing <span className="font-medium">{salons.length}</span>{" "}
-              salons
+            <p className="text-spa-charcoal/60 font-light">
+              <span className="font-medium text-spa-charcoal">
+                {venues.length}
+              </span>{" "}
+              venues found
             </p>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600">Sort by:</span>
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-spa-charcoal/60 font-light">
+                Sort by:
+              </span>
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-48 border-spa-stone/20 rounded-lg font-light">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -312,83 +338,107 @@ export default function VendorListing() {
         </div>
 
         {/* Active Filters */}
-        <div className="flex flex-wrap gap-2 mb-6">
-          {selectedLocation !== "All Locations" && (
-            <Badge
-              variant="secondary"
-              className="px-3 py-1 bg-primary/10 text-primary"
-            >
-              <MapPin className="h-3 w-3 mr-1" />
-              {selectedLocation}
-            </Badge>
-          )}
-          {selectedService !== "All Services" && (
-            <Badge
-              variant="secondary"
-              className="px-3 py-1 bg-primary/10 text-primary"
-            >
-              {selectedService}
-            </Badge>
-          )}
-          {selectedPrice !== "All Prices" && (
-            <Badge
-              variant="secondary"
-              className="px-3 py-1 bg-primary/10 text-primary"
-            >
-              {selectedPrice}
-            </Badge>
-          )}
-          {selectedRating !== "All Ratings" && (
-            <Badge
-              variant="secondary"
-              className="px-3 py-1 bg-primary/10 text-primary"
-            >
-              <Star className="h-3 w-3 mr-1" />
-              {selectedRating}
-            </Badge>
-          )}
-        </div>
+        {(selectedLocation !== "All Locations" ||
+          selectedService !== "All Services" ||
+          selectedPrice !== "All Prices" ||
+          selectedRating !== "All Ratings") && (
+          <div className="flex flex-wrap gap-2 mb-8">
+            {selectedLocation !== "All Locations" && (
+              <Badge
+                variant="secondary"
+                className="px-3 py-1 bg-primary/10 text-primary border-0 font-light"
+              >
+                <MapPin className="h-3 w-3 mr-1" />
+                {selectedLocation}
+              </Badge>
+            )}
+            {selectedService !== "All Services" && (
+              <Badge
+                variant="secondary"
+                className="px-3 py-1 bg-primary/10 text-primary border-0 font-light"
+              >
+                {selectedService}
+              </Badge>
+            )}
+            {selectedPrice !== "All Prices" && (
+              <Badge
+                variant="secondary"
+                className="px-3 py-1 bg-primary/10 text-primary border-0 font-light"
+              >
+                {selectedPrice}
+              </Badge>
+            )}
+            {selectedRating !== "All Ratings" && (
+              <Badge
+                variant="secondary"
+                className="px-3 py-1 bg-primary/10 text-primary border-0 font-light"
+              >
+                <Star className="h-3 w-3 mr-1" />
+                {selectedRating}
+              </Badge>
+            )}
+          </div>
+        )}
 
-        {/* Salon Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {salons.map((salon) => (
-            <ServiceCard key={salon.id} {...salon} />
+        {/* Venue Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {venues.map((venue) => (
+            <ServiceCard key={venue.id} {...venue} />
           ))}
         </div>
 
         {/* Load More */}
-        <div className="text-center mt-12">
+        <div className="text-center">
           <Button
             size="lg"
             variant="outline"
-            className="px-8 rounded-xl border-primary text-primary hover:bg-primary hover:text-white"
+            className="px-8 rounded-full border-primary text-primary hover:bg-primary hover:text-white font-light"
           >
-            Load More Salons
+            Load More Venues
           </Button>
         </div>
       </div>
 
-      {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t border-gray-200 md:hidden">
-        <div className="flex justify-around py-2">
-          <Button variant="ghost" size="sm" className="flex-col h-auto py-2">
-            <div className="h-6 w-6 mb-1 bg-gray-300 rounded"></div>
-            <span className="text-xs">Home</span>
+      {/* Mobile Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-spa-stone/20 md:hidden">
+        <div className="flex justify-around py-3">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex-col h-auto py-2 text-spa-charcoal/60"
+          >
+            <Home className="h-5 w-5 mb-1" />
+            <span className="text-xs font-light">Home</span>
           </Button>
-          <Button variant="ghost" size="sm" className="flex-col h-auto py-2">
-            <div className="h-6 w-6 mb-1 bg-primary rounded"></div>
-            <span className="text-xs text-primary">Explore</span>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex-col h-auto py-2 text-primary"
+          >
+            <Compass className="h-5 w-5 mb-1" />
+            <span className="text-xs font-light">Explore</span>
           </Button>
-          <Button variant="ghost" size="sm" className="flex-col h-auto py-2">
-            <div className="h-6 w-6 mb-1 bg-gray-300 rounded"></div>
-            <span className="text-xs">Bookings</span>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex-col h-auto py-2 text-spa-charcoal/60"
+          >
+            <Calendar className="h-5 w-5 mb-1" />
+            <span className="text-xs font-light">Bookings</span>
           </Button>
-          <Button variant="ghost" size="sm" className="flex-col h-auto py-2">
-            <div className="h-6 w-6 mb-1 bg-gray-300 rounded"></div>
-            <span className="text-xs">Profile</span>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex-col h-auto py-2 text-spa-charcoal/60"
+          >
+            <User className="h-5 w-5 mb-1" />
+            <span className="text-xs font-light">Profile</span>
           </Button>
         </div>
       </div>
+
+      {/* Bottom padding for mobile nav */}
+      <div className="h-20 md:hidden"></div>
     </div>
   );
 }
