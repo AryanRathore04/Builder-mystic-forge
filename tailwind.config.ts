@@ -47,12 +47,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        beauty: {
-          pink: "hsl(330 70% 85%)",
-          lavender: "hsl(280 50% 90%)",
-          mint: "hsl(160 60% 88%)",
-          cream: "hsl(45 50% 95%)",
-          rose: "hsl(350 60% 80%)",
+        spa: {
+          forest: "hsl(84 45% 21%)",
+          sage: "hsl(84 30% 40%)",
+          lime: "hsl(76 55% 75%)",
+          cream: "hsl(60 8% 96%)",
+          stone: "hsl(60 6% 92%)",
+          charcoal: "hsl(0 0% 15%)",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
