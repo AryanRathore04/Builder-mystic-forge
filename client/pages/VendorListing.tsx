@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ServiceCard } from "@/components/ui/service-card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import {
   Select,
   SelectContent,
@@ -159,7 +160,7 @@ export default function VendorListing() {
             <div className="hidden md:flex items-center gap-8">
               <a
                 href="/"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm text-spa-charcoal/70 dark:text-white/70 hover:text-primary transition-colors"
               >
                 Home
               </a>
@@ -168,10 +169,11 @@ export default function VendorListing() {
               </a>
               <a
                 href="/membership"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm text-spa-charcoal/70 dark:text-white/70 hover:text-primary transition-colors"
               >
                 Services
               </a>
+              <ThemeToggle />
               <Button
                 variant="ghost"
                 size="sm"
