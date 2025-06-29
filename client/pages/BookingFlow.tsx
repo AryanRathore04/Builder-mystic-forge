@@ -458,11 +458,10 @@ export default function BookingFlow() {
                 <Button
                   variant="outline"
                   onClick={prevStep}
-                  disabled={currentStep === 1}
                   className="border-spa-stone/30 text-spa-charcoal font-light"
                 >
                   <ChevronLeft className="h-4 w-4 mr-2" />
-                  Previous
+                  {currentStep === 1 ? "Back" : "Previous"}
                 </Button>
                 <Button
                   onClick={nextStep}
