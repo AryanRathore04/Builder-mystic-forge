@@ -262,7 +262,7 @@ export default function VendorListing() {
               <Button
                 size="sm"
                 className="bg-primary text-white hover:bg-spa-sage text-sm px-6 rounded-full"
-                onClick={() => (window.location.href = "/signup")}
+                onClick={() => (window.location.href = "/signup?type=vendor")}
               >
                 Become a Partner
               </Button>
