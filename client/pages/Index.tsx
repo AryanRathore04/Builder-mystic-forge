@@ -31,7 +31,8 @@ const featuredServices = [
   {
     id: "1",
     name: "Serenity Wellness Spa",
-    image: "/placeholder.svg",
+    image:
+      "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=300&fit=crop&crop=center",
     rating: 4.9,
     reviewCount: 186,
     location: "Connaught Place, Delhi",
@@ -42,7 +43,8 @@ const featuredServices = [
   {
     id: "2",
     name: "Zen Beauty Lounge",
-    image: "/placeholder.svg",
+    image:
+      "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=400&h=300&fit=crop&crop=center",
     rating: 4.8,
     reviewCount: 234,
     location: "Bandra West, Mumbai",
@@ -53,7 +55,8 @@ const featuredServices = [
   {
     id: "3",
     name: "Natural Glow Studio",
-    image: "/placeholder.svg",
+    image:
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&crop=center",
     rating: 4.7,
     reviewCount: 156,
     location: "Koramangala, Bangalore",
@@ -132,7 +135,7 @@ export default function Index() {
             </div>
             <div className="hidden md:flex items-center gap-8">
               <a
-                href="/services"
+                href="/salons"
                 className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
               >
                 Services
@@ -150,17 +153,23 @@ export default function Index() {
                 Membership
               </a>
               <a
-                href="/about"
+                href="/salons"
                 className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
               >
                 About
               </a>
-              <Button variant="ghost" size="sm" className="text-sm">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-sm"
+                onClick={() => (window.location.href = "/signin")}
+              >
                 Sign In
               </Button>
               <Button
                 size="sm"
                 className="bg-primary text-white hover:bg-spa-sage text-sm px-6 rounded-full"
+                onClick={() => (window.location.href = "/signup")}
               >
                 Become a Partner
               </Button>
@@ -189,6 +198,7 @@ export default function Index() {
             <Button
               size="lg"
               className="bg-primary text-white hover:bg-spa-sage px-8 py-3 rounded-full text-sm font-medium"
+              onClick={() => (window.location.href = "/salons")}
             >
               Explore Treatments
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -333,12 +343,14 @@ export default function Index() {
               size="lg"
               variant="outline"
               className="border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-full font-medium"
+              onClick={() => (window.location.href = "/salons")}
             >
               Book Your Treatment
             </Button>
             <Button
               size="lg"
               className="bg-white text-primary hover:bg-white/90 px-8 py-3 rounded-full font-medium"
+              onClick={() => (window.location.href = "/signup")}
             >
               Become a Partner
             </Button>
