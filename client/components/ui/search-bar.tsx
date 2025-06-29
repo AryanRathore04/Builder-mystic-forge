@@ -10,28 +10,30 @@ interface SearchBarProps {
 export function SearchBar({ className = "", onSearch }: SearchBarProps) {
   return (
     <div className={`relative ${className}`}>
-      <div className="flex flex-col sm:flex-row gap-0 bg-white/95 backdrop-blur-sm rounded-full p-1 sophisticated-shadow border border-spa-stone/10">
+      <div className="flex flex-col sm:flex-row gap-0 bg-white/95 dark:bg-spa-charcoal/95 backdrop-blur-sm rounded-full p-1 sophisticated-shadow border border-spa-stone/10 dark:border-white/10">
         <div className="flex-1 flex items-center gap-3 px-6 py-4">
-          <MapPin className="h-4 w-4 text-spa-charcoal/40" />
+          <MapPin className="h-4 w-4 text-spa-charcoal/40 dark:text-white/50" />
           <Input
             placeholder="Your location"
-            className="border-0 bg-transparent placeholder:text-spa-charcoal/40 focus-visible:ring-0 p-0 font-light"
+            className="border-0 bg-transparent placeholder:text-spa-charcoal/40 dark:placeholder:text-white/50 dark:text-white focus-visible:ring-0 p-0 font-light"
           />
         </div>
-        <div className="hidden sm:block w-px bg-spa-stone/20 my-2"></div>
+        <div className="hidden sm:block w-px bg-spa-stone/20 dark:bg-white/10 my-2"></div>
         <div className="flex-1 flex items-center gap-3 px-6 py-4">
-          <Search className="h-4 w-4 text-spa-charcoal/40" />
+          <Search className="h-4 w-4 text-spa-charcoal/40 dark:text-white/50" />
           <Input
             placeholder="Service or treatment"
-            className="border-0 bg-transparent placeholder:text-spa-charcoal/40 focus-visible:ring-0 p-0 font-light"
+            className="border-0 bg-transparent placeholder:text-spa-charcoal/40 dark:placeholder:text-white/50 dark:text-white focus-visible:ring-0 p-0 font-light"
           />
         </div>
-        <Button
-          size="lg"
-          className="bg-primary text-white rounded-full px-8 py-4 hover:bg-spa-sage transition-all font-medium text-sm m-1"
-        >
-          Search
-        </Button>
+        <div className="flex items-center justify-center p-1">
+          <Button
+            size="lg"
+            className="bg-primary text-white rounded-full px-8 py-3 hover:bg-spa-sage transition-all font-medium text-sm h-12 flex items-center justify-center"
+          >
+            Search
+          </Button>
+        </div>
       </div>
     </div>
   );

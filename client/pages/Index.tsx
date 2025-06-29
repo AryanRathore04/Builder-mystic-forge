@@ -181,31 +181,51 @@ export default function Index() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-20 pb-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-light text-spa-charcoal dark:text-white mb-8 leading-tight">
+      <section className="relative pt-20 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/60 to-white/90 dark:from-spa-charcoal/90 dark:via-spa-charcoal/60 dark:to-spa-charcoal/90 z-10"></div>
+          <img
+            src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1920&h=1080&fit=crop&crop=center"
+            alt="Spa wellness background"
+            className="w-full h-full object-cover opacity-30 dark:opacity-20"
+          />
+        </div>
+
+        {/* Floating Animation Elements */}
+        <div className="absolute inset-0 z-5">
+          <div className="absolute top-20 left-10 w-20 h-20 bg-spa-lime/20 rounded-full animate-float-slow"></div>
+          <div className="absolute top-40 right-20 w-16 h-16 bg-primary/20 rounded-full animate-float-medium"></div>
+          <div className="absolute bottom-40 left-20 w-12 h-12 bg-spa-sage/20 rounded-full animate-float-fast"></div>
+          <div className="absolute bottom-20 right-10 w-24 h-24 bg-beauty-rose/20 rounded-full animate-float-slow"></div>
+        </div>
+
+        <div className="relative z-20 max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl md:text-7xl font-light text-spa-charcoal dark:text-white mb-8 leading-tight animate-slide-up">
             Rejuvenate Your Mind,
             <br />
-            <span className="text-spa-sage dark:text-spa-lime">
+            <span className="text-spa-sage dark:text-spa-lime animate-gradient-text">
               Body, and Spirit
             </span>
           </h1>
-          <p className="text-lg text-spa-charcoal/60 dark:text-white/70 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="text-lg text-spa-charcoal/80 dark:text-white/90 mb-12 max-w-2xl mx-auto font-light leading-relaxed animate-slide-up-delay">
             Discover exceptional wellness experiences at premium salons and
             spas. Book treatments from certified professionals who care about
             your well-being.
           </p>
 
-          <SearchBar className="max-w-3xl mx-auto mb-16" />
+          <div className="animate-slide-up-delay-2">
+            <SearchBar className="max-w-3xl mx-auto mb-16" />
+          </div>
 
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-8 animate-slide-up-delay-3">
             <Button
               size="lg"
-              className="bg-primary text-white hover:bg-spa-sage px-8 py-3 rounded-full text-sm font-medium"
+              className="bg-primary text-white hover:bg-spa-sage px-8 py-3 rounded-full text-sm font-medium transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
               onClick={() => (window.location.href = "/salons")}
             >
               Explore Treatments
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </div>
         </div>
@@ -246,16 +266,19 @@ export default function Index() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
+              <div
+                key={index}
+                className="text-center transform transition-all duration-300 hover:scale-105"
+              >
                 <div className="flex justify-center mb-4">
-                  <div className="p-3 bg-white rounded-full sophisticated-shadow">
+                  <div className="p-3 bg-white dark:bg-spa-charcoal/80 rounded-full sophisticated-shadow">
                     <div className="text-primary">{stat.icon}</div>
                   </div>
                 </div>
-                <div className="text-2xl font-light text-spa-charcoal mb-2">
+                <div className="text-2xl font-light text-spa-charcoal dark:text-white mb-2">
                   {stat.value}
                 </div>
-                <div className="text-sm text-spa-charcoal/60 font-light">
+                <div className="text-sm text-spa-charcoal/60 dark:text-white/70 font-light">
                   {stat.label}
                 </div>
               </div>
@@ -265,14 +288,14 @@ export default function Index() {
       </section>
 
       {/* Featured Venues */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-spa-charcoal/30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-12">
             <div>
-              <h2 className="text-3xl font-light text-spa-charcoal mb-2">
+              <h2 className="text-3xl font-light text-spa-charcoal dark:text-white mb-2">
                 Premium Wellness Venues
               </h2>
-              <p className="text-spa-charcoal/60 font-light">
+              <p className="text-spa-charcoal/60 dark:text-white/70 font-light">
                 Handpicked locations for the ultimate relaxation experience
               </p>
             </div>
@@ -287,30 +310,37 @@ export default function Index() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredServices.map((service) => (
-              <ServiceCard key={service.id} {...service} />
+            {featuredServices.map((service, index) => (
+              <div
+                key={service.id}
+                className="animate-slide-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <ServiceCard {...service} />
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-spa-cream">
+      <section className="py-20 bg-spa-cream dark:bg-gray-800">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-light text-spa-charcoal mb-4">
+            <h2 className="text-3xl font-light text-spa-charcoal dark:text-white mb-4">
               Client Experiences
             </h2>
-            <p className="text-spa-charcoal/60 font-light">
+            <p className="text-spa-charcoal/60 dark:text-white/70 font-light">
               Stories from our wellness community
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial) => (
+            {testimonials.map((testimonial, index) => (
               <div
                 key={testimonial.id}
-                className="bg-white rounded-lg p-8 sophisticated-shadow"
+                className="bg-white dark:bg-spa-charcoal/60 rounded-lg p-8 sophisticated-shadow transform transition-all duration-300 hover:scale-105 animate-slide-up"
+                style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <div className="flex items-center gap-1 mb-6">
                   {[...Array(5)].map((_, i) => (
@@ -320,15 +350,15 @@ export default function Index() {
                     />
                   ))}
                 </div>
-                <Quote className="h-6 w-6 text-spa-stone mb-4" />
-                <p className="text-spa-charcoal/80 font-light leading-relaxed mb-6">
+                <Quote className="h-6 w-6 text-spa-stone dark:text-white/40 mb-4" />
+                <p className="text-spa-charcoal/80 dark:text-white/90 font-light leading-relaxed mb-6">
                   "{testimonial.text}"
                 </p>
-                <div className="border-t border-spa-stone pt-6">
-                  <div className="font-medium text-spa-charcoal text-sm">
+                <div className="border-t border-spa-stone dark:border-white/20 pt-6">
+                  <div className="font-medium text-spa-charcoal dark:text-white text-sm">
                     {testimonial.name}
                   </div>
-                  <div className="text-xs text-spa-charcoal/60 font-light mt-1">
+                  <div className="text-xs text-spa-charcoal/60 dark:text-white/60 font-light mt-1">
                     {testimonial.treatment} • {testimonial.location}
                   </div>
                 </div>
@@ -339,26 +369,32 @@ export default function Index() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-white">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl md:text-5xl font-light mb-6">
+      <section className="py-20 bg-primary text-white relative overflow-hidden">
+        {/* Background Animation */}
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full animate-float-slow"></div>
+          <div className="absolute bottom-10 right-10 w-24 h-24 bg-white/10 rounded-full animate-float-medium"></div>
+        </div>
+
+        <div className="relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl md:text-5xl font-light mb-6 animate-slide-up">
             Begin Your Wellness Journey
           </h2>
-          <p className="text-xl font-light mb-8 text-white/90">
+          <p className="text-xl font-light mb-8 text-white/90 animate-slide-up-delay">
             Join thousands who trust BeautyBook for their wellness needs
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up-delay-2">
             <Button
               size="lg"
               variant="outline"
-              className="border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-full font-medium"
+              className="border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105"
               onClick={() => (window.location.href = "/salons")}
             >
               Book Your Treatment
             </Button>
             <Button
               size="lg"
-              className="bg-white text-primary hover:bg-white/90 px-8 py-3 rounded-full font-medium"
+              className="bg-white text-primary hover:bg-white/90 px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105"
               onClick={() => (window.location.href = "/signup")}
             >
               Become a Partner
@@ -368,7 +404,7 @@ export default function Index() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-spa-charcoal text-white py-16">
+      <footer className="bg-spa-charcoal dark:bg-black text-white py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div className="md:col-span-2">
@@ -376,18 +412,18 @@ export default function Index() {
                 <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
                   <Leaf className="h-4 w-4 text-white" />
                 </div>
-                <span className="text-xl font-light tracking-wide">
+                <span className="text-xl font-light tracking-wide text-white">
                   BeautyBook
                 </span>
               </div>
-              <p className="text-white/70 font-light leading-relaxed max-w-md">
+              <p className="text-white/80 font-light leading-relaxed max-w-md">
                 Your trusted companion for discovering exceptional wellness
                 experiences. We connect you with premium salons and spas that
                 prioritize your well-being.
               </p>
             </div>
             <div>
-              <h3 className="font-medium mb-6 text-sm tracking-wide">
+              <h3 className="font-medium mb-6 text-sm tracking-wide text-white">
                 Services
               </h3>
               <ul className="space-y-3 text-white/70 font-light text-sm">
@@ -406,7 +442,7 @@ export default function Index() {
               </ul>
             </div>
             <div>
-              <h3 className="font-medium mb-6 text-sm tracking-wide">
+              <h3 className="font-medium mb-6 text-sm tracking-wide text-white">
                 Company
               </h3>
               <ul className="space-y-3 text-white/70 font-light text-sm">
@@ -425,8 +461,8 @@ export default function Index() {
               </ul>
             </div>
           </div>
-          <div className="border-t border-white/10 pt-8 text-center">
-            <p className="text-white/60 font-light text-sm">
+          <div className="border-t border-white/20 pt-8 text-center">
+            <p className="text-white/70 font-light text-sm">
               © 2024 BeautyBook. All rights reserved. Made with care for your
               wellness journey.
             </p>
