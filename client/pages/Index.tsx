@@ -182,11 +182,11 @@ export default function Index() {
       <section className="relative pt-20 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/60 to-white/90 z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-spa-cream/80 via-spa-cream/40 to-spa-cream/80 z-10"></div>
           <img
-            src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1920&h=1080&fit=crop&crop=center"
+            src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1920&h=1080&fit=crop&crop=center"
             alt="Spa wellness background"
-            className="w-full h-full object-cover opacity-30"
+            className="w-full h-full object-cover opacity-60"
           />
         </div>
 
@@ -230,7 +230,7 @@ export default function Index() {
       </section>
 
       {/* Categories */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-spa-cream/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-light text-spa-charcoal mb-4">
@@ -269,7 +269,7 @@ export default function Index() {
                 className="text-center transform transition-all duration-300 hover:scale-105"
               >
                 <div className="flex justify-center mb-4">
-                  <div className="p-3 bg-white rounded-full sophisticated-shadow">
+                  <div className="p-3 bg-spa-cream/90 rounded-full sophisticated-shadow">
                     <div className="text-primary">{stat.icon}</div>
                   </div>
                 </div>
@@ -286,7 +286,7 @@ export default function Index() {
       </section>
 
       {/* Featured Venues */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-spa-cream/30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-12">
             <div>
@@ -337,7 +337,7 @@ export default function Index() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={testimonial.id}
-                className="bg-white rounded-lg p-8 sophisticated-shadow transform transition-all duration-300 hover:scale-105 animate-slide-up"
+                className="bg-spa-cream/70 rounded-lg p-8 sophisticated-shadow transform transition-all duration-300 hover:scale-105 animate-slide-up"
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <div className="flex items-center gap-1 mb-6">
@@ -368,6 +368,16 @@ export default function Index() {
 
       {/* CTA Section */}
       <section className="py-20 bg-primary text-white relative overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1920&h=600&fit=crop&crop=center"
+            alt="Wellness background"
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-primary/80"></div>
+        </div>
+
         {/* Background Animation */}
         <div className="absolute inset-0">
           <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full animate-float-slow"></div>

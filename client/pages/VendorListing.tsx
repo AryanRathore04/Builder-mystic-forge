@@ -142,6 +142,85 @@ export default function VendorListing() {
   const [sortBy, setSortBy] = useState("recommended");
   const [showFilters, setShowFilters] = useState(false);
 
+  // Filter and sort venues
+  const filteredVenues = venues
+    .filter((venue) => {
+      // Search filter
+      if (
+        searchQuery &&
+        !venue.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        !venue.services.some((service) =>
+          service.toLowerCase().includes(searchQuery.toLowerCase()),
+        ) &&
+        !venue.location.toLowerCase().includes(searchQuery.toLowerCase())
+      ) {
+        return false;
+      }
+
+      // Location filter
+      if (
+        selectedLocation !== "All Locations" &&
+        !venue.location.includes(selectedLocation)
+      ) {
+        return false;
+      }
+
+      // Service type filter
+      if (selectedService !== "All Services") {
+        const serviceMap = {
+          "Hair Care": ["Hair", "Cut", "Color", "Styling"],
+          "Spa & Wellness": ["Spa", "Wellness", "Massage", "Therapy"],
+          "Facial & Skincare": ["Facial", "Skin", "Care", "Treatment"],
+          "Makeup & Beauty": ["Makeup", "Beauty", "Nail"],
+          "Nail Care": ["Nail", "Manicure", "Pedicure"],
+        };
+        const keywords = serviceMap[selectedService] || [];
+        if (
+          !venue.services.some((service) =>
+            keywords.some((keyword) =>
+              service.toLowerCase().includes(keyword.toLowerCase()),
+            ),
+          )
+        ) {
+          return false;
+        }
+      }
+
+      // Price filter
+      if (
+        selectedPrice !== "All Prices" &&
+        venue.priceRange !== selectedPrice
+      ) {
+        return false;
+      }
+
+      // Rating filter
+      if (selectedRating !== "All Ratings") {
+        const minRating = parseFloat(
+          selectedRating.replace("+", "").replace(" Stars", ""),
+        );
+        if (venue.rating < minRating) {
+          return false;
+        }
+      }
+
+      return true;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "rating":
+          return b.rating - a.rating;
+        case "priceLow":
+          return a.priceRange.length - b.priceRange.length;
+        case "priceHigh":
+          return b.priceRange.length - a.priceRange.length;
+        case "distance":
+        case "recommended":
+        default:
+          return b.rating - a.rating;
+      }
+    });
+
   return (
     <div className="min-h-screen bg-gradient-hero">
       {/* Navigation */}
@@ -325,7 +404,7 @@ export default function VendorListing() {
           <div className="flex justify-between items-center">
             <p className="text-spa-charcoal/60 font-light">
               <span className="font-medium text-spa-charcoal">
-                {venues.length}
+                {filteredVenues.length}
               </span>{" "}
               venues found
             </p>
@@ -394,7 +473,7 @@ export default function VendorListing() {
 
         {/* Venue Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {venues.map((venue) => (
+          {filteredVenues.map((venue) => (
             <ServiceCard key={venue.id} {...venue} />
           ))}
         </div>

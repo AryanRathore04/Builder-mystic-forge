@@ -33,7 +33,7 @@ export function ServiceCard({
   return (
     <div
       className={cn(
-        "bg-white rounded-lg overflow-hidden sophisticated-shadow hover:card-shadow-hover",
+        "bg-spa-cream/70 rounded-lg overflow-hidden sophisticated-shadow hover:card-shadow-hover",
         "transition-all duration-500 cursor-pointer group hover:scale-[1.02] border border-spa-stone/10",
         className,
       )}

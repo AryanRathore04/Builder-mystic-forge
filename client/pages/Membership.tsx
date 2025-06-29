@@ -187,30 +187,41 @@ export default function Membership() {
           </p>
 
           {/* Billing Toggle */}
-          <div className="flex items-center justify-center gap-4 mb-12">
-            <button
-              onClick={() => setBillingPeriod("monthly")}
-              className={`px-6 py-2 rounded-full font-light transition-all ${
-                billingPeriod === "monthly"
-                  ? "bg-primary text-white"
-                  : "text-spa-charcoal/60 hover:text-spa-charcoal"
-              }`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setBillingPeriod("yearly")}
-              className={`px-6 py-2 rounded-full font-light transition-all ${
-                billingPeriod === "yearly"
-                  ? "bg-primary text-white"
-                  : "text-spa-charcoal/60 hover:text-spa-charcoal"
-              }`}
-            >
-              Yearly
-              <Badge className="ml-2 bg-spa-lime text-spa-charcoal text-xs">
-                Save 20%
-              </Badge>
-            </button>
+          <div className="flex items-center justify-center mb-12">
+            <div className="relative bg-spa-cream rounded-full p-1 sophisticated-shadow">
+              <div
+                className={`absolute top-1 bottom-1 w-1/2 bg-primary rounded-full transition-transform duration-300 ease-in-out ${
+                  billingPeriod === "yearly"
+                    ? "translate-x-full"
+                    : "translate-x-0"
+                }`}
+              />
+              <div className="relative flex">
+                <button
+                  onClick={() => setBillingPeriod("monthly")}
+                  className={`px-6 py-2 rounded-full font-light transition-all duration-300 z-10 ${
+                    billingPeriod === "monthly"
+                      ? "text-white"
+                      : "text-spa-charcoal/60 hover:text-spa-charcoal"
+                  }`}
+                >
+                  Monthly
+                </button>
+                <button
+                  onClick={() => setBillingPeriod("yearly")}
+                  className={`px-6 py-2 rounded-full font-light transition-all duration-300 z-10 relative ${
+                    billingPeriod === "yearly"
+                      ? "text-white"
+                      : "text-spa-charcoal/60 hover:text-spa-charcoal"
+                  }`}
+                >
+                  Yearly
+                  <Badge className="ml-2 bg-spa-lime text-spa-charcoal text-xs absolute -top-1 -right-1">
+                    Save 20%
+                  </Badge>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -223,10 +234,11 @@ export default function Membership() {
               <div
                 key={plan.id}
                 className={`rounded-2xl p-8 sophisticated-shadow border border-spa-stone/10 relative overflow-hidden transition-all hover:scale-[1.02] ${plan.color}`}
+                style={{ marginTop: plan.popular ? "24px" : "0" }}
               >
                 {plan.popular && (
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <Badge className="bg-spa-lime text-spa-charcoal px-4 py-1 font-medium">
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                    <Badge className="bg-spa-lime text-spa-charcoal px-4 py-2 font-medium text-sm rounded-full">
                       Most Popular
                     </Badge>
                   </div>
@@ -283,7 +295,14 @@ export default function Membership() {
 
                 <Button
                   className={`w-full rounded-full font-medium ${plan.buttonStyle}`}
-                  onClick={() => setSelectedPlan(plan.id)}
+                  onClick={() => {
+                    setSelectedPlan(plan.id);
+                    alert(
+                      `You selected the ${plan.name} plan! Proceeding to checkout...`,
+                    );
+                    // In a real app, this would navigate to checkout
+                    window.location.href = `/signup?plan=${plan.id}`;
+                  }}
                 >
                   Choose {plan.name}
                   <ArrowRight className="h-4 w-4 ml-2" />
@@ -295,7 +314,7 @@ export default function Membership() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-spa-cream/30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-light text-spa-charcoal mb-4">

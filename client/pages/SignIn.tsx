@@ -24,8 +24,23 @@ export default function SignIn() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle sign in logic here
+
+    // Basic validation
+    if (!formData.email || !formData.password) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    // Simulate sign in process
     console.log("Sign in:", formData, userType);
+    alert(`Welcome back! Signing in as ${userType}...`);
+
+    // Navigate based on user type
+    if (userType === "vendor") {
+      window.location.href = "/vendor-dashboard";
+    } else {
+      window.location.href = "/";
+    }
   };
 
   return (

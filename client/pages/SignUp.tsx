@@ -53,12 +53,52 @@ export default function SignUp() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (userType === "vendor" && currentStep === 1) {
+      // Validate step 1 for vendors
+      if (
+        !formData.firstName ||
+        !formData.lastName ||
+        !formData.email ||
+        !formData.phone ||
+        !formData.password ||
+        !formData.confirmPassword
+      ) {
+        alert("Please fill in all required fields");
+        return;
+      }
+      if (formData.password !== formData.confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      }
       setCurrentStep(2);
       return;
     }
-    // Handle sign up logic here
+
+    // Final validation
+    if (!formData.agreeTerms) {
+      alert("Please agree to the Terms of Service");
+      return;
+    }
+
+    if (
+      userType === "vendor" &&
+      (!formData.businessName || !formData.businessType || !formData.city)
+    ) {
+      alert("Please fill in all business information");
+      return;
+    }
+
+    // Simulate sign up process
     console.log("Sign up:", formData, userType);
+    alert(`Account created successfully! Welcome to BeautyBook!`);
+
+    // Navigate based on user type
+    if (userType === "vendor") {
+      window.location.href = "/vendor-dashboard";
+    } else {
+      window.location.href = "/";
+    }
   };
 
   const businessTypes = [
