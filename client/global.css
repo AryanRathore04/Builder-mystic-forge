@@ -135,10 +135,6 @@
     );
   }
 
-  .dark .bg-gradient-hero {
-    background: linear-gradient(135deg, hsl(340 25% 8%) 0%, hsl(0 0% 10%) 100%);
-  }
-
   .bg-gradient-accent {
     background: linear-gradient(
       135deg,
@@ -151,24 +147,12 @@
     box-shadow: 0 4px 24px hsla(0, 0%, 0%, 0.06);
   }
 
-  .dark .card-shadow {
-    box-shadow: 0 4px 24px hsla(0, 0%, 0%, 0.3);
-  }
-
   .card-shadow-hover {
     box-shadow: 0 8px 32px hsla(0, 0%, 0%, 0.1);
   }
 
-  .dark .card-shadow-hover {
-    box-shadow: 0 8px 32px hsla(0, 0%, 0%, 0.4);
-  }
-
   .sophisticated-shadow {
     box-shadow: 0 2px 16px hsla(0, 0%, 0%, 0.04);
-  }
-
-  .dark .sophisticated-shadow {
-    box-shadow: 0 2px 16px hsla(0, 0%, 0%, 0.2);
   }
 
   /* Animations */

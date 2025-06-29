@@ -33,8 +33,8 @@ export function ServiceCard({
   return (
     <div
       className={cn(
-        "bg-white dark:bg-spa-charcoal/80 rounded-lg overflow-hidden sophisticated-shadow hover:card-shadow-hover",
-        "transition-all duration-500 cursor-pointer group hover:scale-[1.02] border border-spa-stone/10 dark:border-white/10",
+        "bg-white rounded-lg overflow-hidden sophisticated-shadow hover:card-shadow-hover",
+        "transition-all duration-500 cursor-pointer group hover:scale-[1.02] border border-spa-stone/10",
         className,
       )}
       onClick={onClick || (() => (window.location.href = `/salon/${id}`))}
@@ -66,21 +66,21 @@ export function ServiceCard({
 
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
-          <h3 className="font-medium text-lg text-spa-charcoal dark:text-white line-clamp-1">
+          <h3 className="font-medium text-lg text-spa-charcoal line-clamp-1">
             {name}
           </h3>
-          <div className="flex items-center gap-1 bg-spa-lime/20 dark:bg-spa-lime/30 px-2 py-1 rounded-full">
+          <div className="flex items-center gap-1 bg-spa-lime/20 px-2 py-1 rounded-full">
             <Star className="h-3 w-3 fill-spa-lime text-spa-lime" />
-            <span className="text-xs font-medium text-spa-charcoal dark:text-white">
+            <span className="text-xs font-medium text-spa-charcoal">
               {rating}
             </span>
-            <span className="text-xs text-spa-charcoal/60 dark:text-white/70">
+            <span className="text-xs text-spa-charcoal/60">
               ({reviewCount})
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-spa-charcoal/60 dark:text-white/70 mb-4">
+        <div className="flex items-center gap-2 text-spa-charcoal/60 mb-4">
           <MapPin className="h-3 w-3" />
           <span className="text-sm line-clamp-1 font-light">{location}</span>
         </div>
