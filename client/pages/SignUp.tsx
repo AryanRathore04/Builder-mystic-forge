@@ -34,7 +34,14 @@ export default function SignUp() {
   // Check URL parameter to set initial user type
   const urlParams = new URLSearchParams(window.location.search);
   const typeParam = urlParams.get("type");
+  console.log("URL parameter 'type':", typeParam);
+
   const [userType, setUserType] = useState<"customer" | "vendor">(
+    typeParam === "vendor" ? "vendor" : "customer",
+  );
+
+  console.log(
+    "Initial user type set to:",
     typeParam === "vendor" ? "vendor" : "customer",
   );
 
