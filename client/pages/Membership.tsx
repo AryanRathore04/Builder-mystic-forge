@@ -27,7 +27,7 @@ const plans = [
       "Access to basic workshops",
       "Member-only offers",
     ],
-    color: "bg-white",
+    color: "bg-spa-cream/70",
     textColor: "text-spa-charcoal",
     buttonStyle: "border-spa-stone/30 text-spa-charcoal hover:bg-spa-cream",
   },
@@ -163,10 +163,11 @@ export default function Membership() {
               <Button
                 size="sm"
                 className="bg-primary text-white hover:bg-spa-sage text-sm px-6 rounded-full"
-                onClick={() => window.location.href = '/signup?type=vendor'}
+                onClick={() => (window.location.href = "/signup?type=vendor")}
               >
                 Become a Partner
               </Button>
+            </div>
           </div>
         </div>
       </nav>
@@ -191,7 +192,9 @@ export default function Membership() {
             <div className="relative bg-spa-cream rounded-full p-1 sophisticated-shadow">
               <div
                 className={`absolute top-1 bottom-1 w-1/2 bg-primary rounded-full transition-transform duration-300 ease-in-out ${
-                  billingPeriod === "yearly" ? "translate-x-full" : "translate-x-0"
+                  billingPeriod === "yearly"
+                    ? "translate-x-full"
+                    : "translate-x-0"
                 }`}
               />
               <div className="relative flex">
@@ -295,7 +298,9 @@ export default function Membership() {
                   className={`w-full rounded-full font-medium ${plan.buttonStyle}`}
                   onClick={() => {
                     setSelectedPlan(plan.id);
-                    alert(`You selected the ${plan.name} plan! Proceeding to checkout...`);
+                    alert(
+                      `You selected the ${plan.name} plan! Proceeding to checkout...`,
+                    );
                     // In a real app, this would navigate to checkout
                     window.location.href = `/signup?plan=${plan.id}`;
                   }}
@@ -358,7 +363,7 @@ export default function Membership() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="bg-white rounded-lg p-6 sophisticated-shadow"
+                className="bg-spa-cream/70 rounded-lg p-6 sophisticated-shadow"
               >
                 <div className="flex items-center gap-1 mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -427,5 +432,4 @@ export default function Membership() {
       </footer>
     </div>
   );
-}
 }
