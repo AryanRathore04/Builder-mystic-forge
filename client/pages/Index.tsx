@@ -271,6 +271,7 @@ export default function Index() {
             <Button
               variant="ghost"
               className="text-primary hover:text-spa-sage"
+              onClick={() => (window.location.href = "/salons")}
             >
               View All
               <ChevronRight className="ml-1 h-4 w-4" />
