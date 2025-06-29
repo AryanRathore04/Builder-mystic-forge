@@ -93,6 +93,9 @@ export default function BookingFlow() {
   const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
+    } else {
+      // If on step 1, go back to previous page
+      window.history.back();
     }
   };
 
