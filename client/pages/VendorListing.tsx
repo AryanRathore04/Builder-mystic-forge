@@ -27,7 +27,8 @@ const venues = [
   {
     id: "1",
     name: "Serenity Wellness Spa",
-    image: "/placeholder.svg",
+    image:
+      "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=300&fit=crop&crop=center",
     rating: 4.9,
     reviewCount: 186,
     location: "Connaught Place, Delhi",
@@ -43,7 +44,8 @@ const venues = [
   {
     id: "2",
     name: "Zen Beauty Lounge",
-    image: "/placeholder.svg",
+    image:
+      "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=400&h=300&fit=crop&crop=center",
     rating: 4.8,
     reviewCount: 234,
     location: "Bandra West, Mumbai",
@@ -54,7 +56,8 @@ const venues = [
   {
     id: "3",
     name: "Natural Glow Studio",
-    image: "/placeholder.svg",
+    image:
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&crop=center",
     rating: 4.7,
     reviewCount: 156,
     location: "Koramangala, Bangalore",
@@ -65,7 +68,8 @@ const venues = [
   {
     id: "4",
     name: "Tranquil Mind & Body",
-    image: "/placeholder.svg",
+    image:
+      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=400&h=300&fit=crop&crop=center",
     rating: 4.8,
     reviewCount: 198,
     location: "Cyber City, Gurgaon",
@@ -76,7 +80,8 @@ const venues = [
   {
     id: "5",
     name: "Pure Essence Spa",
-    image: "/placeholder.svg",
+    image:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&crop=center",
     rating: 4.9,
     reviewCount: 267,
     location: "Jubilee Hills, Hyderabad",
@@ -87,7 +92,8 @@ const venues = [
   {
     id: "6",
     name: "Harmony Beauty Center",
-    image: "/placeholder.svg",
+    image:
+      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&h=300&fit=crop&crop=center",
     rating: 4.6,
     reviewCount: 142,
     location: "Park Street, Kolkata",
@@ -161,17 +167,23 @@ export default function VendorListing() {
                 Find Venues
               </a>
               <a
-                href="/services"
+                href="/membership"
                 className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
               >
                 Services
               </a>
-              <Button variant="ghost" size="sm" className="text-sm">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-sm"
+                onClick={() => (window.location.href = "/signin")}
+              >
                 Sign In
               </Button>
               <Button
                 size="sm"
                 className="bg-primary text-white hover:bg-spa-sage text-sm px-6 rounded-full"
+                onClick={() => (window.location.href = "/signup")}
               >
                 Become a Partner
               </Button>
@@ -393,6 +405,10 @@ export default function VendorListing() {
             size="lg"
             variant="outline"
             className="px-8 rounded-full border-primary text-primary hover:bg-primary hover:text-white font-light"
+            onClick={() => {
+              // In a real app, this would load more data
+              alert("Loading more venues...");
+            }}
           >
             Load More Venues
           </Button>
