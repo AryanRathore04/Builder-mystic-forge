@@ -183,12 +183,14 @@ export default function Index() {
       {/* Hero Section */}
       <section className="pt-20 pb-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-light text-spa-charcoal mb-8 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-light text-spa-charcoal dark:text-white mb-8 leading-tight">
             Rejuvenate Your Mind,
             <br />
-            <span className="text-spa-sage">Body, and Spirit</span>
+            <span className="text-spa-sage dark:text-spa-lime">
+              Body, and Spirit
+            </span>
           </h1>
-          <p className="text-lg text-spa-charcoal/60 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="text-lg text-spa-charcoal/60 dark:text-white/70 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
             Discover exceptional wellness experiences at premium salons and
             spas. Book treatments from certified professionals who care about
             your well-being.
@@ -210,13 +212,13 @@ export default function Index() {
       </section>
 
       {/* Categories */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white dark:bg-spa-charcoal/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-light text-spa-charcoal mb-4">
+            <h2 className="text-3xl font-light text-spa-charcoal dark:text-white mb-4">
               Discover Our Services
             </h2>
-            <p className="text-spa-charcoal/60 font-light">
+            <p className="text-spa-charcoal/60 dark:text-white/70 font-light">
               Choose from our curated selection of wellness treatments
             </p>
           </div>
@@ -240,7 +242,7 @@ export default function Index() {
       </section>
 
       {/* Stats */}
-      <section className="py-16 bg-spa-cream">
+      <section className="py-16 bg-spa-cream dark:bg-gray-800">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
