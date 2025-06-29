@@ -4,6 +4,7 @@ import { SearchBar } from "@/components/ui/search-bar";
 import { CategoryButton } from "@/components/ui/category-button";
 import { ServiceCard } from "@/components/ui/service-card";
 import { Badge } from "@/components/ui/badge";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import {
   Scissors,
   Flower2,
@@ -49,7 +50,7 @@ const featuredServices = [
     reviewCount: 234,
     location: "Bandra West, Mumbai",
     services: ["Facial Treatment", "Hair Spa", "Manicure & Pedicure"],
-    priceRange: "₹��₹₹",
+    priceRange: "₹₹₹₹",
     isOpen: true,
   },
   {
@@ -120,44 +121,45 @@ export default function Index() {
   const [activeCategory, setActiveCategory] = useState("spa");
 
   return (
-    <div className="min-h-screen bg-gradient-hero">
+    <div className="min-h-screen bg-gradient-hero dark:bg-gradient-to-br dark:from-spa-charcoal dark:to-gray-900">
       {/* Navigation */}
-      <nav className="bg-white/95 backdrop-blur-sm border-b border-spa-stone/20">
+      <nav className="bg-white/95 dark:bg-spa-charcoal/95 backdrop-blur-sm border-b border-spa-stone/20 dark:border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">
               <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
                 <Leaf className="h-4 w-4 text-white" />
               </div>
-              <span className="text-xl font-light text-spa-charcoal tracking-wide">
+              <span className="text-xl font-light text-spa-charcoal dark:text-white tracking-wide">
                 BeautyBook
               </span>
             </div>
             <div className="hidden md:flex items-center gap-8">
               <a
                 href="/salons"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm text-spa-charcoal/70 dark:text-white/70 hover:text-primary transition-colors"
               >
                 Services
               </a>
               <a
                 href="/salons"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm text-spa-charcoal/70 dark:text-white/70 hover:text-primary transition-colors"
               >
                 Find Venues
               </a>
               <a
                 href="/membership"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm text-spa-charcoal/70 dark:text-white/70 hover:text-primary transition-colors"
               >
                 Membership
               </a>
               <a
                 href="/salons"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm text-spa-charcoal/70 dark:text-white/70 hover:text-primary transition-colors"
               >
                 About
               </a>
+              <ThemeToggle />
               <Button
                 variant="ghost"
                 size="sm"
