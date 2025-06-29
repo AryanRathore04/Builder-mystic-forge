@@ -422,6 +422,7 @@ export default function VendorListing() {
             variant="ghost"
             size="sm"
             className="flex-col h-auto py-2 text-spa-charcoal/60"
+            onClick={() => (window.location.href = "/")}
           >
             <Home className="h-5 w-5 mb-1" />
             <span className="text-xs font-light">Home</span>
@@ -430,6 +431,7 @@ export default function VendorListing() {
             variant="ghost"
             size="sm"
             className="flex-col h-auto py-2 text-primary"
+            onClick={() => (window.location.href = "/salons")}
           >
             <Compass className="h-5 w-5 mb-1" />
             <span className="text-xs font-light">Explore</span>
@@ -438,6 +440,7 @@ export default function VendorListing() {
             variant="ghost"
             size="sm"
             className="flex-col h-auto py-2 text-spa-charcoal/60"
+            onClick={() => (window.location.href = "/booking")}
           >
             <Calendar className="h-5 w-5 mb-1" />
             <span className="text-xs font-light">Bookings</span>
@@ -446,6 +449,7 @@ export default function VendorListing() {
             variant="ghost"
             size="sm"
             className="flex-col h-auto py-2 text-spa-charcoal/60"
+            onClick={() => (window.location.href = "/signin")}
           >
             <User className="h-5 w-5 mb-1" />
             <span className="text-xs font-light">Profile</span>
