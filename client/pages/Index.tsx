@@ -169,7 +169,7 @@ export default function Index() {
               <Button
                 size="sm"
                 className="bg-primary text-white hover:bg-spa-sage text-sm px-6 rounded-full"
-                onClick={() => (window.location.href = "/signup")}
+                onClick={() => (window.location.href = "/signup?type=vendor")}
               >
                 Become a Partner
               </Button>
@@ -402,8 +402,8 @@ export default function Index() {
             </Button>
             <Button
               size="lg"
-              className="bg-white text-primary hover:bg-white/90 px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105"
-              onClick={() => (window.location.href = "/signup")}
+              className="bg-white text-primary hover:bg-white/90 px-8 py-3 rounded-full font-medium"
+              onClick={() => (window.location.href = "/signup?type=vendor")}
             >
               Become a Partner
             </Button>

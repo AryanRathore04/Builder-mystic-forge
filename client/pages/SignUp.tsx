@@ -30,7 +30,14 @@ import {
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [userType, setUserType] = useState<"customer" | "vendor">("customer");
+
+  // Check URL parameter to set initial user type
+  const urlParams = new URLSearchParams(window.location.search);
+  const typeParam = urlParams.get("type");
+  const [userType, setUserType] = useState<"customer" | "vendor">(
+    typeParam === "vendor" ? "vendor" : "customer",
+  );
+
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     // Personal Info
