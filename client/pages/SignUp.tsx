@@ -91,13 +91,25 @@ export default function SignUp() {
 
     // Simulate sign up process
     console.log("Sign up:", formData, userType);
-    alert(`Account created successfully! Welcome to BeautyBook!`);
 
-    // Navigate based on user type
+    // Navigate based on user type with better debugging
     if (userType === "vendor") {
-      window.location.href = "/vendor-dashboard";
+      alert(
+        `Welcome to BeautyBook, ${formData.firstName}! Redirecting to your vendor dashboard...`,
+      );
+      console.log("Redirecting vendor to dashboard");
+      // Use setTimeout to ensure alert is shown before navigation
+      setTimeout(() => {
+        window.location.href = "/vendor-dashboard";
+      }, 500);
     } else {
-      window.location.href = "/";
+      alert(
+        `Welcome to BeautyBook, ${formData.firstName}! Account created successfully!`,
+      );
+      console.log("Redirecting customer to homepage");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 500);
     }
   };
 
