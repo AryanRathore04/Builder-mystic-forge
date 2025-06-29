@@ -37,7 +37,7 @@ export function ServiceCard({
         "transition-all duration-500 cursor-pointer group hover:scale-[1.02] border border-spa-stone/10",
         className,
       )}
-      onClick={onClick}
+      onClick={onClick || (() => (window.location.href = `/salon/${id}`))}
     >
       <div className="relative overflow-hidden">
         <img
@@ -108,6 +108,10 @@ export function ServiceCard({
         <Button
           className="w-full bg-primary text-white hover:bg-spa-sage rounded-full font-medium text-sm py-2"
           size="sm"
+          onClick={(e) => {
+            e.stopPropagation();
+            window.location.href = "/booking";
+          }}
         >
           Book Appointment
         </Button>
