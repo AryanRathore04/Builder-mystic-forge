@@ -97,26 +97,30 @@ export default function SignUp() {
     }
 
     // Simulate sign up process
-    console.log("Sign up:", formData, userType);
+    console.log("Sign up data:", formData);
+    console.log("User type:", userType);
+    console.log("Current step:", currentStep);
 
     // Navigate based on user type with better debugging
     if (userType === "vendor") {
       alert(
-        `Welcome to BeautyBook, ${formData.firstName}! Redirecting to your vendor dashboard...`,
+        `Welcome to BeautyBook, ${formData.firstName}! Setting up your vendor dashboard...`,
       );
-      console.log("Redirecting vendor to dashboard");
+      console.log("✅ Redirecting vendor to dashboard");
       // Use setTimeout to ensure alert is shown before navigation
       setTimeout(() => {
+        console.log("🚀 Navigating to /vendor-dashboard");
         window.location.href = "/vendor-dashboard";
-      }, 500);
+      }, 1000);
     } else {
       alert(
         `Welcome to BeautyBook, ${formData.firstName}! Account created successfully!`,
       );
-      console.log("Redirecting customer to homepage");
+      console.log("✅ Redirecting customer to homepage");
       setTimeout(() => {
+        console.log("🚀 Navigating to /");
         window.location.href = "/";
-      }, 500);
+      }, 1000);
     }
   };
 
