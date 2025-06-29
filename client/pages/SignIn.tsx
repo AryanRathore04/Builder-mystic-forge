@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import {
   Leaf,
   Mail,
@@ -30,13 +29,8 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero dark:bg-gradient-to-br dark:from-spa-charcoal dark:to-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-hero flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        {/* Theme Toggle */}
-        <div className="flex justify-end">
-          <ThemeToggle />
-        </div>
-
         {/* Header */}
         <div className="text-center">
           <div className="flex justify-center mb-6">
@@ -44,10 +38,10 @@ export default function SignIn() {
               <Leaf className="h-6 w-6 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-light text-spa-charcoal dark:text-white mb-2">
+          <h1 className="text-3xl font-light text-spa-charcoal mb-2">
             Welcome Back
           </h1>
-          <p className="text-spa-charcoal/60 dark:text-white/70 font-light">
+          <p className="text-spa-charcoal/60 font-light">
             Sign in to your wellness account
           </p>
         </div>

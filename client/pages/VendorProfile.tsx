@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import {
   Star,
   MapPin,
@@ -130,7 +129,6 @@ export default function VendorProfile() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <ThemeToggle />
               <Button variant="ghost" size="sm" className="p-2">
                 <Share2 className="h-4 w-4" />
               </Button>
