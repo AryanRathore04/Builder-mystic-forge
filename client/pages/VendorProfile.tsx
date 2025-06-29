@@ -25,7 +25,8 @@ const services = [
     price: "₹2,500",
     description:
       "Intensive therapeutic massage targeting muscle tension and knots",
-    image: "/placeholder.svg",
+    image:
+      "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=300&fit=crop&crop=center",
   },
   {
     id: "2",
@@ -33,7 +34,8 @@ const services = [
     duration: "75 mins",
     price: "₹3,200",
     description: "Relaxing treatment using heated stones to release tension",
-    image: "/placeholder.svg",
+    image:
+      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=400&h=300&fit=crop&crop=center",
   },
   {
     id: "3",
@@ -41,7 +43,8 @@ const services = [
     duration: "45 mins",
     price: "₹2,000",
     description: "Holistic therapy using essential oils for mind-body wellness",
-    image: "/placeholder.svg",
+    image:
+      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&crop=center",
   },
   {
     id: "4",
@@ -49,7 +52,8 @@ const services = [
     duration: "90 mins",
     price: "₹5,500",
     description: "Shared relaxation experience in our couples suite",
-    image: "/placeholder.svg",
+    image:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&crop=center",
   },
 ];
 
@@ -107,7 +111,12 @@ export default function VendorProfile() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" className="p-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-2"
+                onClick={() => window.history.back()}
+              >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
               <div className="flex items-center gap-3">
@@ -144,7 +153,7 @@ export default function VendorProfile() {
       <section className="relative">
         <div className="h-64 md:h-80 bg-spa-cream overflow-hidden">
           <img
-            src="/placeholder.svg"
+            src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&h=400&fit=crop&crop=center"
             alt="Serenity Wellness Spa"
             className="w-full h-full object-cover"
           />
@@ -221,7 +230,10 @@ export default function VendorProfile() {
                             </div>
                           </div>
                           <Button
-                            onClick={() => setSelectedService(service.id)}
+                            onClick={() => {
+                              setSelectedService(service.id);
+                              window.location.href = "/booking";
+                            }}
                             className="bg-primary text-white hover:bg-spa-sage rounded-full px-6 font-light"
                           >
                             Book Now
@@ -303,13 +315,23 @@ export default function VendorProfile() {
                     Our Spaces
                   </h2>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {[...Array(9)].map((_, i) => (
+                    {[
+                      "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=300&h=300&fit=crop&crop=center",
+                      "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=300&h=300&fit=crop&crop=center",
+                      "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=300&fit=crop&crop=center",
+                      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=300&h=300&fit=crop&crop=center",
+                      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=center",
+                      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=300&h=300&fit=crop&crop=center",
+                      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=300&h=300&fit=crop&crop=center",
+                      "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=300&h=300&fit=crop&crop=center",
+                      "https://images.unsplash.com/photo-1487088678257-3a541e6e3922?w=300&h=300&fit=crop&crop=center",
+                    ].map((src, i) => (
                       <div
                         key={i}
                         className="aspect-square bg-spa-cream rounded-lg overflow-hidden"
                       >
                         <img
-                          src="/placeholder.svg"
+                          src={src}
                           alt={`Gallery ${i + 1}`}
                           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         />
@@ -378,6 +400,11 @@ export default function VendorProfile() {
               <Button
                 className="w-full mt-4 bg-primary text-white hover:bg-spa-sage rounded-full font-medium"
                 disabled={!selectedTimeSlot}
+                onClick={() => {
+                  if (selectedTimeSlot) {
+                    window.location.href = "/booking";
+                  }
+                }}
               >
                 <Calendar className="h-4 w-4 mr-2" />
                 Book Appointment
