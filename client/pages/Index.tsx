@@ -49,7 +49,7 @@ const featuredServices = [
     reviewCount: 234,
     location: "Bandra West, Mumbai",
     services: ["Facial Treatment", "Hair Spa", "Manicure & Pedicure"],
-    priceRange: "₹₹₹₹",
+    priceRange: "₹��₹₹",
     isOpen: true,
   },
   {
@@ -226,7 +226,11 @@ export default function Index() {
                 icon={category.icon}
                 label={category.label}
                 isActive={activeCategory === category.id}
-                onClick={() => setActiveCategory(category.id)}
+                onClick={() => {
+                  setActiveCategory(category.id);
+                  // Navigate to salons page with category filter
+                  window.location.href = `/salons?category=${category.id}`;
+                }}
               />
             ))}
           </div>
