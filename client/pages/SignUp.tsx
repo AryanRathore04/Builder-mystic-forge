@@ -622,13 +622,25 @@ export default function SignUp() {
           )}
         </div>
 
+        {/* Back Button */}
+        <div className="flex justify-center">
+          <Button
+            variant="ghost"
+            onClick={() => (window.location.href = "/")}
+            className="flex items-center gap-2 font-body text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Home
+          </Button>
+        </div>
+
         {/* Sign In Link */}
         <div className="text-center">
-          <p className="text-spa-charcoal/60 font-light">
+          <p className="text-muted-foreground font-body">
             Already have an account?{" "}
             <a
               href="/signin"
-              className="text-primary hover:text-spa-sage font-medium transition-colors"
+              className="text-primary hover:text-cta font-heading transition-colors"
             >
               Sign in here
             </a>
@@ -636,8 +648,8 @@ export default function SignUp() {
         </div>
 
         {/* Benefits */}
-        <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 sophisticated-shadow border border-spa-stone/10">
-          <h3 className="font-medium text-spa-charcoal mb-4 text-center">
+        <div className="bg-card/70 backdrop-blur-sm rounded-lg p-6 sophisticated-shadow border border-border">
+          <h3 className="font-heading text-foreground mb-4 text-center">
             {userType === "customer"
               ? "Why Join BeautyBook?"
               : "Partner Benefits"}
@@ -647,19 +659,19 @@ export default function SignUp() {
               <>
                 <div className="flex items-center gap-3">
                   <Shield className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-light text-spa-charcoal/80">
+                  <span className="text-sm font-body text-muted-foreground">
                     Verified & trusted wellness providers
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Star className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-light text-spa-charcoal/80">
+                  <span className="text-sm font-body text-muted-foreground">
                     Exclusive member discounts and offers
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-light text-spa-charcoal/80">
+                  <span className="text-sm font-body text-muted-foreground">
                     Easy booking and rescheduling
                   </span>
                 </div>
@@ -668,19 +680,19 @@ export default function SignUp() {
               <>
                 <div className="flex items-center gap-3">
                   <Users className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-light text-spa-charcoal/80">
+                  <span className="text-sm font-body text-muted-foreground">
                     Reach 25,000+ potential customers
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Star className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-light text-spa-charcoal/80">
+                  <span className="text-sm font-body text-muted-foreground">
                     Professional business dashboard
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CheckCircle className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-light text-spa-charcoal/80">
+                  <span className="text-sm font-body text-muted-foreground">
                     Marketing support and insights
                   </span>
                 </div>
