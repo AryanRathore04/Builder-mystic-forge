@@ -125,53 +125,93 @@ const testimonials = [
 ];
 
 export default function Membership() {
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedPlan, setSelectedPlan] = useState("premium");
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">(
     "monthly",
   );
+  const { toasts, removeToast, showSuccess } = useToasts();
+
+  useEffect(() => {
+    // Check for success parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("success") === "true") {
+      showSuccess("Payment successful! Welcome to BeautyBook membership!");
+    }
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, [showSuccess]);
+
+  const handleSelectPlan = (planId: string) => {
+    showSuccess(
+      `${plans.find((p) => p.id === planId)?.name} plan selected! Redirecting to payment...`,
+    );
+    setTimeout(() => {
+      window.location.href = `/payment?plan=${planId}&billing=${billingPeriod}`;
+    }, 1500);
+  };
+
+  if (isLoading) {
+    return <PageLoading />;
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-hero">
+    <div className="min-h-screen bg-background animate-fade-in">
+      <ToastNotification toasts={toasts} removeToast={removeToast} />
+
       {/* Navigation */}
-      <nav className="bg-white/95 backdrop-blur-sm border-b border-spa-stone/20">
+      <nav className="bg-card/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
-                <Leaf className="h-4 w-4 text-white" />
+            <div
+              className="flex items-center gap-3 cursor-pointer group"
+              onClick={() => (window.location.href = "/")}
+            >
+              <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
+                <Leaf className="h-4 w-4 text-primary-foreground" />
               </div>
-              <span className="text-xl font-light text-spa-charcoal tracking-wide">
+              <span className="text-xl font-heading text-foreground tracking-wide">
                 BeautyBook
               </span>
             </div>
             <div className="hidden md:flex items-center gap-8">
               <a
                 href="/"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm font-body text-muted-foreground hover:text-primary transition-colors"
               >
                 Home
               </a>
               <a
                 href="/salons"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm font-body text-muted-foreground hover:text-primary transition-colors"
               >
                 Find Venues
               </a>
               <a
                 href="/membership"
-                className="text-sm text-primary font-medium"
+                className="text-sm font-body text-primary font-heading"
               >
                 Membership
               </a>
-              <Button variant="ghost" size="sm" className="text-sm">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-sm font-body"
+                onClick={() => (window.location.href = "/signin")}
+              >
                 Sign In
               </Button>
               <Button
-                size="sm"
-                className="bg-primary text-white hover:bg-spa-sage text-sm px-6 rounded-full"
-                onClick={() => (window.location.href = "/signup?type=vendor")}
+                variant="ghost"
+                onClick={() => (window.location.href = "/")}
+                className="flex items-center gap-2 font-body text-muted-foreground hover:text-foreground"
               >
-                Become a Partner
+                <ArrowLeft className="h-4 w-4" />
+                Back to Home
               </Button>
             </div>
           </div>
