@@ -117,22 +117,22 @@ export default function SignIn() {
         </div>
 
         {/* Sign In Form */}
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl sophisticated-shadow border border-spa-stone/10 p-8">
+        <div className="bg-card/90 backdrop-blur-sm rounded-2xl sophisticated-shadow border border-border p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
             <div>
-              <Label className="text-sm font-medium text-spa-charcoal mb-3 block">
+              <Label className="text-sm font-body text-foreground mb-3 block">
                 Email Address
               </Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-spa-charcoal/40" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="email"
                   value={formData.email}
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="pl-10 border-spa-stone/20 rounded-lg font-light"
+                  className="pl-10 h-12 font-body"
                   placeholder="your@email.com"
                   required
                 />
@@ -141,25 +141,25 @@ export default function SignIn() {
 
             {/* Password Field */}
             <div>
-              <Label className="text-sm font-medium text-spa-charcoal mb-3 block">
+              <Label className="text-sm font-body text-foreground mb-3 block">
                 Password
               </Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-spa-charcoal/40" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  className="pl-10 pr-10 border-spa-stone/20 rounded-lg font-light"
+                  className="pl-10 pr-10 h-12 font-body"
                   placeholder="Enter your password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-spa-charcoal/40 hover:text-spa-charcoal"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {showPassword ? (
                     <EyeOff className="h-4 w-4" />
@@ -179,15 +179,15 @@ export default function SignIn() {
                   onChange={(e) =>
                     setFormData({ ...formData, rememberMe: e.target.checked })
                   }
-                  className="rounded border-spa-stone/30 text-primary focus:ring-primary focus:ring-offset-0"
+                  className="rounded border-border text-primary focus:ring-primary focus:ring-offset-0"
                 />
-                <span className="text-sm font-light text-spa-charcoal/80">
+                <span className="text-sm font-body text-muted-foreground">
                   Remember me
                 </span>
               </label>
               <a
                 href="/forgot-password"
-                className="text-sm font-light text-primary hover:text-spa-sage transition-colors"
+                className="text-sm font-body text-primary hover:text-cta transition-colors"
               >
                 Forgot password?
               </a>
@@ -196,7 +196,7 @@ export default function SignIn() {
             {/* Sign In Button */}
             <Button
               type="submit"
-              className="w-full bg-primary text-white hover:bg-spa-sage rounded-full py-3 font-medium"
+              className="w-full bg-cta hover:bg-cta/90 text-cta-foreground rounded-lg py-3 h-12 font-heading"
             >
               Sign In
               <ArrowRight className="h-4 w-4 ml-2" />
