@@ -38,7 +38,7 @@ const featuredServices = [
     reviewCount: 186,
     location: "Connaught Place, Delhi",
     services: ["Deep Tissue Massage", "Hot Stone Therapy", "Aromatherapy"],
-    priceRange: "₹₹₹",
+    priceRange: "���₹₹",
     isOpen: true,
   },
   {
@@ -413,14 +413,14 @@ export default function Index() {
             <Button
               size="lg"
               variant="outline"
-              className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary px-8 py-3 rounded-full font-heading transition-all duration-300 hover:scale-105"
+              className="border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-full font-heading transition-all duration-300 hover:scale-105"
               onClick={() => (window.location.href = "/salons")}
             >
               Book Your Treatment
             </Button>
             <Button
               size="lg"
-              className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 px-8 py-3 rounded-full font-heading"
+              className="bg-white text-primary hover:bg-white/90 px-8 py-3 rounded-full font-heading"
               onClick={() => (window.location.href = "/signup?type=vendor")}
             >
               Become a Partner
@@ -430,7 +430,7 @@ export default function Index() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-classic-brown text-primary-foreground py-16">
+      <footer className="bg-primary text-primary-foreground py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div className="md:col-span-2">
