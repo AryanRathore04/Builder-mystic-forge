@@ -412,15 +412,14 @@ export default function Index() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up-delay-2">
             <Button
               size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-full font-heading transition-all duration-300 hover:scale-105"
+              className="bg-white text-primary hover:bg-white/90 px-8 py-3 rounded-full font-heading transition-all duration-300 hover:scale-105"
               onClick={() => (window.location.href = "/salons")}
             >
               Book Your Treatment
             </Button>
             <Button
               size="lg"
-              className="bg-white text-primary hover:bg-white/90 px-8 py-3 rounded-full font-heading"
+              className="bg-white text-primary hover:bg-white/90 px-8 py-3 rounded-full font-heading transition-all duration-300 hover:scale-105"
               onClick={() => (window.location.href = "/signup?type=vendor")}
             >
               Become a Partner
