@@ -299,7 +299,7 @@ export default function Index() {
             </div>
             <Button
               variant="ghost"
-              className="text-primary hover:text-spa-sage"
+              className="text-primary hover:text-secondary font-body"
               onClick={() => (window.location.href = "/salons")}
             >
               View All
@@ -322,13 +322,13 @@ export default function Index() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-spa-cream">
+      <section className="py-20 bg-muted">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-light text-spa-charcoal mb-4">
+            <h2 className="text-3xl font-heading text-foreground mb-4">
               Client Experiences
             </h2>
-            <p className="text-spa-charcoal/60 font-light">
+            <p className="text-muted-foreground font-body">
               Stories from our wellness community
             </p>
           </div>
@@ -337,26 +337,26 @@ export default function Index() {
             {testimonials.map((testimonial, index) => (
               <div
                 key={testimonial.id}
-                className="bg-spa-cream/70 rounded-lg p-8 sophisticated-shadow transform transition-all duration-300 hover:scale-105 animate-slide-up"
+                className="bg-card rounded-lg p-8 sophisticated-shadow transform transition-all duration-300 hover:scale-105 animate-slide-up"
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <div className="flex items-center gap-1 mb-6">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="h-4 w-4 fill-spa-lime text-spa-lime"
+                      className="h-4 w-4 fill-secondary text-secondary"
                     />
                   ))}
                 </div>
-                <Quote className="h-6 w-6 text-spa-stone mb-4" />
-                <p className="text-spa-charcoal/80 font-light leading-relaxed mb-6">
+                <Quote className="h-6 w-6 text-muted-foreground mb-4" />
+                <p className="text-muted-foreground font-body leading-relaxed mb-6">
                   "{testimonial.text}"
                 </p>
-                <div className="border-t border-spa-stone pt-6">
-                  <div className="font-medium text-spa-charcoal text-sm">
+                <div className="border-t border-border pt-6">
+                  <div className="font-heading text-foreground text-sm">
                     {testimonial.name}
                   </div>
-                  <div className="text-xs text-spa-charcoal/60 font-light mt-1">
+                  <div className="text-xs text-muted-foreground font-body mt-1">
                     {testimonial.treatment} • {testimonial.location}
                   </div>
                 </div>
@@ -385,17 +385,17 @@ export default function Index() {
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl md:text-5xl font-light mb-6 animate-slide-up">
+          <h2 className="text-4xl md:text-5xl font-heading mb-6 animate-slide-up text-primary-foreground">
             Begin Your Wellness Journey
           </h2>
-          <p className="text-xl font-light mb-8 text-white/90 animate-slide-up-delay">
+          <p className="text-xl font-body mb-8 text-primary-foreground/90 animate-slide-up-delay">
             Join thousands who trust BeautyBook for their wellness needs
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up-delay-2">
             <Button
               size="lg"
               variant="outline"
-              className="border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105"
+              className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary px-8 py-3 rounded-full font-heading transition-all duration-300 hover:scale-105"
               onClick={() => (window.location.href = "/salons")}
             >
               Book Your Treatment
