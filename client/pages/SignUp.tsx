@@ -164,11 +164,14 @@ export default function SignUp() {
             <div className="h-10 w-10 bg-primary rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
               <Leaf className="h-5 w-5 text-primary-foreground" />
             </div>
+            <span className="text-2xl font-heading text-foreground tracking-wide">
+              BeautyBook
+            </span>
           </div>
-          <h1 className="text-3xl font-light text-spa-charcoal mb-2">
+          <h1 className="text-3xl font-heading text-foreground mb-2">
             Join BeautyBook
           </h1>
-          <p className="text-spa-charcoal/60 font-light">
+          <p className="text-muted-foreground font-body">
             {userType === "customer"
               ? "Start your wellness journey today"
               : "Grow your business with us"}
@@ -176,17 +179,24 @@ export default function SignUp() {
         </div>
 
         {/* User Type Selection */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-full p-1 sophisticated-shadow border border-spa-stone/10">
-          <div className="grid grid-cols-2 gap-1">
+        <div className="bg-card/80 backdrop-blur-sm rounded-full p-1 sophisticated-shadow border border-border relative">
+          <div
+            className="absolute top-1 bottom-1 bg-primary rounded-full transition-all duration-300 ease-in-out"
+            style={{
+              left: userType === "customer" ? "4px" : "50%",
+              right: userType === "customer" ? "50%" : "4px",
+            }}
+          />
+          <div className="grid grid-cols-2 gap-1 relative">
             <button
               onClick={() => {
                 setUserType("customer");
                 setCurrentStep(1);
               }}
-              className={`py-2 px-4 rounded-full text-sm font-light transition-all ${
+              className={`py-3 px-4 rounded-full text-sm font-body transition-all duration-300 relative z-10 ${
                 userType === "customer"
-                  ? "bg-primary text-white"
-                  : "text-spa-charcoal/60 hover:text-spa-charcoal"
+                  ? "text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Customer
@@ -196,10 +206,10 @@ export default function SignUp() {
                 setUserType("vendor");
                 setCurrentStep(1);
               }}
-              className={`py-2 px-4 rounded-full text-sm font-light transition-all ${
+              className={`py-3 px-4 rounded-full text-sm font-body transition-all duration-300 relative z-10 ${
                 userType === "vendor"
-                  ? "bg-primary text-white"
-                  : "text-spa-charcoal/60 hover:text-spa-charcoal"
+                  ? "text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Business Partner
@@ -211,24 +221,24 @@ export default function SignUp() {
         {userType === "vendor" && (
           <div className="flex items-center justify-center space-x-4">
             <div
-              className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
+              className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-heading transition-all duration-300 ${
                 currentStep >= 1
-                  ? "bg-primary text-white"
-                  : "bg-spa-stone text-spa-charcoal/60"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted text-muted-foreground"
               }`}
             >
               1
             </div>
             <div
-              className={`h-px w-12 ${
-                currentStep > 1 ? "bg-primary" : "bg-spa-stone"
+              className={`h-px w-12 transition-all duration-300 ${
+                currentStep > 1 ? "bg-primary" : "bg-border"
               }`}
             />
             <div
-              className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
+              className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-heading transition-all duration-300 ${
                 currentStep >= 2
-                  ? "bg-primary text-white"
-                  : "bg-spa-stone text-spa-charcoal/60"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted text-muted-foreground"
               }`}
             >
               2
@@ -237,14 +247,14 @@ export default function SignUp() {
         )}
 
         {/* Sign Up Form */}
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl sophisticated-shadow border border-spa-stone/10 p-8">
+        <div className="bg-card/90 backdrop-blur-sm rounded-2xl sophisticated-shadow border border-border p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Step 1: Personal Information */}
             {currentStep === 1 && (
               <>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label className="text-sm font-medium text-spa-charcoal mb-3 block">
+                    <Label className="text-sm font-body text-foreground mb-3 block">
                       First Name
                     </Label>
                     <div className="relative">
