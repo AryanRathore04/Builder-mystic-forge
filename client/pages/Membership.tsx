@@ -224,18 +224,18 @@ export default function Membership() {
           <div className="flex justify-center mb-6">
             <Crown className="h-12 w-12 text-primary" />
           </div>
-          <h1 className="text-4xl md:text-6xl font-light text-spa-charcoal mb-6 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-heading text-foreground mb-6 leading-tight">
             Wellness
             <span className="text-primary"> Membership</span>
           </h1>
-          <p className="text-lg text-spa-charcoal/60 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto font-body leading-relaxed">
             Join our exclusive wellness community and unlock unlimited access to
             premium treatments, priority booking, and personalized care.
           </p>
 
           {/* Billing Toggle */}
           <div className="flex items-center justify-center mb-12">
-            <div className="relative bg-spa-cream rounded-full p-1 sophisticated-shadow">
+            <div className="relative bg-card rounded-full p-1 sophisticated-shadow border border-border">
               <div
                 className={`absolute top-1 bottom-1 w-1/2 bg-primary rounded-full transition-transform duration-300 ease-in-out ${
                   billingPeriod === "yearly"
@@ -246,24 +246,24 @@ export default function Membership() {
               <div className="relative flex">
                 <button
                   onClick={() => setBillingPeriod("monthly")}
-                  className={`px-6 py-2 rounded-full font-light transition-all duration-300 z-10 ${
+                  className={`px-6 py-2 rounded-full font-body transition-all duration-300 z-10 ${
                     billingPeriod === "monthly"
-                      ? "text-white"
-                      : "text-spa-charcoal/60 hover:text-spa-charcoal"
+                      ? "text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   Monthly
                 </button>
                 <button
                   onClick={() => setBillingPeriod("yearly")}
-                  className={`px-6 py-2 rounded-full font-light transition-all duration-300 z-10 relative ${
+                  className={`px-6 py-2 rounded-full font-body transition-all duration-300 z-10 relative ${
                     billingPeriod === "yearly"
-                      ? "text-white"
-                      : "text-spa-charcoal/60 hover:text-spa-charcoal"
+                      ? "text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   Yearly
-                  <Badge className="ml-2 bg-spa-lime text-spa-charcoal text-xs absolute -top-1 -right-1">
+                  <Badge className="ml-2 bg-secondary text-foreground text-xs absolute -top-1 -right-1">
                     Save 20%
                   </Badge>
                 </button>
