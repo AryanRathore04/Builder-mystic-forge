@@ -47,13 +47,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        spa: {
-          forest: "hsl(84 45% 21%)",
-          sage: "hsl(84 30% 40%)",
-          lime: "hsl(76 55% 75%)",
-          cream: "hsl(60 8% 96%)",
-          stone: "hsl(60 6% 92%)",
-          charcoal: "hsl(0 0% 15%)",
+        classic: {
+          bronze: "hsl(45 100% 22%)",
+          gold: "hsl(45 80% 67%)",
+          cream: "hsl(30 50% 80%)",
+          pearl: "hsl(0 0% 98%)",
+          warm: "hsl(60 20% 96%)",
+          brown: "hsl(30 50% 15%)",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -65,6 +65,11 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      fontFamily: {
+        heading: ["Playfair Display", "Crimson Text", "Georgia", "serif"],
+        body: ["Source Sans Pro", "Lora", "system-ui", "sans-serif"],
+        serif: ["Crimson Text", "Playfair Display", "Times New Roman", "serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
