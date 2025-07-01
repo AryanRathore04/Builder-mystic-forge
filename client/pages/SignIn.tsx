@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { PageLoading } from "@/components/ui/loading";
 import {
   Leaf,
   Mail,
@@ -10,10 +11,12 @@ import {
   Eye,
   EyeOff,
   ArrowRight,
+  ArrowLeft,
   CheckCircle,
 } from "lucide-react";
 
 export default function SignIn() {
+  const [isLoading, setIsLoading] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState<"customer" | "vendor">("customer");
   const [formData, setFormData] = useState({
@@ -21,6 +24,19 @@ export default function SignIn() {
     password: "",
     rememberMe: false,
   });
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <PageLoading />;
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,42 +60,55 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 animate-fade-in">
       <div className="max-w-md w-full space-y-8">
         {/* Header */}
         <div className="text-center">
-          <div className="flex justify-center mb-6">
-            <div className="h-12 w-12 bg-primary rounded-full flex items-center justify-center">
-              <Leaf className="h-6 w-6 text-white" />
+          <div
+            className="flex items-center justify-center gap-3 mb-8 cursor-pointer group"
+            onClick={() => (window.location.href = "/")}
+          >
+            <div className="h-10 w-10 bg-primary rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Leaf className="h-5 w-5 text-primary-foreground" />
             </div>
+            <span className="text-2xl font-heading text-foreground tracking-wide">
+              BeautyBook
+            </span>
           </div>
-          <h1 className="text-3xl font-light text-spa-charcoal mb-2">
+          <h1 className="text-3xl font-heading text-foreground mb-2">
             Welcome Back
           </h1>
-          <p className="text-spa-charcoal/60 font-light">
+          <p className="text-muted-foreground font-body">
             Sign in to your wellness account
           </p>
         </div>
 
         {/* User Type Selection */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-full p-1 sophisticated-shadow border border-spa-stone/10">
-          <div className="grid grid-cols-2 gap-1">
+        <div className="bg-card/80 backdrop-blur-sm rounded-full p-1 sophisticated-shadow border border-border relative">
+          <div
+            className="absolute top-1 bottom-1 bg-primary rounded-full transition-all duration-300 ease-in-out"
+            style={{
+              left: userType === "customer" ? "4px" : "50%",
+              right: userType === "customer" ? "50%" : "4px",
+            }}
+          />
+          <div className="grid grid-cols-2 gap-1 relative">
             <button
               onClick={() => setUserType("customer")}
-              className={`py-2 px-4 rounded-full text-sm font-light transition-all ${
+              className={`py-3 px-4 rounded-full text-sm font-body transition-all duration-300 relative z-10 ${
                 userType === "customer"
-                  ? "bg-primary text-white"
-                  : "text-spa-charcoal/60 hover:text-spa-charcoal"
+                  ? "text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Customer
             </button>
             <button
               onClick={() => setUserType("vendor")}
-              className={`py-2 px-4 rounded-full text-sm font-light transition-all ${
+              className={`py-3 px-4 rounded-full text-sm font-body transition-all duration-300 relative z-10 ${
                 userType === "vendor"
-                  ? "bg-primary text-white"
-                  : "text-spa-charcoal/60 hover:text-spa-charcoal"
+                  ? "text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               Business Partner
