@@ -33,8 +33,8 @@ export function ServiceCard({
   return (
     <div
       className={cn(
-        "bg-spa-cream/70 rounded-lg overflow-hidden sophisticated-shadow hover:card-shadow-hover",
-        "transition-all duration-500 cursor-pointer group hover:scale-[1.02] border border-spa-stone/10",
+        "bg-card rounded-lg overflow-hidden sophisticated-shadow hover:card-shadow-hover",
+        "transition-all duration-500 cursor-pointer group hover:scale-[1.02] border border-border",
         className,
       )}
       onClick={onClick || (() => (window.location.href = `/salon/${id}`))}
@@ -49,8 +49,8 @@ export function ServiceCard({
           <Badge
             variant={isOpen ? "default" : "secondary"}
             className={cn(
-              "bg-white/90 backdrop-blur-sm text-xs font-light px-2 py-1",
-              isOpen ? "text-primary" : "text-spa-charcoal/60",
+              "bg-card/90 backdrop-blur-sm text-xs font-body px-2 py-1",
+              isOpen ? "text-primary" : "text-muted-foreground",
             )}
           >
             <Clock className="h-3 w-3 mr-1" />
@@ -58,7 +58,7 @@ export function ServiceCard({
           </Badge>
         </div>
         <div className="absolute top-3 right-3">
-          <Badge className="bg-white/90 backdrop-blur-sm text-spa-charcoal text-xs font-light px-2 py-1">
+          <Badge className="bg-card/90 backdrop-blur-sm text-foreground text-xs font-body px-2 py-1">
             {priceRange}
           </Badge>
         </div>
@@ -66,23 +66,21 @@ export function ServiceCard({
 
       <div className="p-6">
         <div className="flex items-start justify-between mb-3">
-          <h3 className="font-medium text-lg text-spa-charcoal line-clamp-1">
+          <h3 className="font-heading text-lg text-foreground line-clamp-1">
             {name}
           </h3>
-          <div className="flex items-center gap-1 bg-spa-lime/20 px-2 py-1 rounded-full">
-            <Star className="h-3 w-3 fill-spa-lime text-spa-lime" />
-            <span className="text-xs font-medium text-spa-charcoal">
-              {rating}
-            </span>
-            <span className="text-xs text-spa-charcoal/60">
+          <div className="flex items-center gap-1 bg-secondary/30 px-2 py-1 rounded-full">
+            <Star className="h-3 w-3 fill-secondary text-secondary" />
+            <span className="text-xs font-body text-foreground">{rating}</span>
+            <span className="text-xs text-muted-foreground">
               ({reviewCount})
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-spa-charcoal/60 mb-4">
+        <div className="flex items-center gap-2 text-muted-foreground mb-4">
           <MapPin className="h-3 w-3" />
-          <span className="text-sm line-clamp-1 font-light">{location}</span>
+          <span className="text-sm line-clamp-1 font-body">{location}</span>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-5">
@@ -90,7 +88,7 @@ export function ServiceCard({
             <Badge
               key={index}
               variant="secondary"
-              className="text-xs font-light bg-spa-cream text-spa-charcoal/70 border-0"
+              className="text-xs font-body bg-muted text-muted-foreground border-0"
             >
               {service}
             </Badge>
@@ -98,7 +96,7 @@ export function ServiceCard({
           {services.length > 2 && (
             <Badge
               variant="outline"
-              className="text-xs font-light border-spa-stone/30 text-spa-charcoal/60"
+              className="text-xs font-body border-border text-muted-foreground"
             >
               +{services.length - 2} more
             </Badge>
@@ -106,7 +104,7 @@ export function ServiceCard({
         </div>
 
         <Button
-          className="w-full bg-primary text-white hover:bg-spa-sage rounded-full font-medium text-sm py-2"
+          className="w-full bg-primary text-primary-foreground hover:bg-secondary rounded-full font-heading text-sm py-2"
           size="sm"
           onClick={(e) => {
             e.stopPropagation();

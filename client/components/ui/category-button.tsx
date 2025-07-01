@@ -21,9 +21,9 @@ export function CategoryButton({
       onClick={onClick}
       className={cn(
         "flex flex-col items-center gap-4 p-6 rounded-lg transition-all duration-300 group",
-        "bg-white sophisticated-shadow hover:card-shadow-hover border border-spa-stone/10",
+        "bg-card sophisticated-shadow hover:card-shadow-hover border border-border",
         "hover:scale-[1.02] active:scale-[0.98]",
-        isActive && "bg-primary text-white border-primary",
+        isActive && "bg-primary text-primary-foreground border-primary",
         className,
       )}
     >
@@ -31,18 +31,18 @@ export function CategoryButton({
         className={cn(
           "p-3 rounded-full transition-all duration-300",
           isActive
-            ? "bg-white/20 text-white"
-            : "bg-spa-cream text-spa-charcoal group-hover:bg-primary group-hover:text-white",
+            ? "bg-primary-foreground/20 text-primary-foreground"
+            : "bg-classic-warm text-foreground group-hover:bg-primary group-hover:text-primary-foreground",
         )}
       >
         {icon}
       </div>
       <span
         className={cn(
-          "font-light text-sm",
+          "font-body text-sm",
           isActive
-            ? "text-white"
-            : "text-spa-charcoal group-hover:text-primary",
+            ? "text-primary-foreground"
+            : "text-foreground group-hover:text-primary",
         )}
       >
         {label}
