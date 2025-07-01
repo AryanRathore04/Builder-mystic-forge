@@ -12,6 +12,8 @@ import VendorListing from "./pages/VendorListing";
 import VendorProfile from "./pages/VendorProfile";
 import BookingFlow from "./pages/BookingFlow";
 import Membership from "./pages/Membership";
+import About from "./pages/About";
+import Payment from "./pages/Payment";
 import AdminDashboard from "./pages/AdminDashboard";
 import VendorDashboard from "./pages/VendorDashboard";
 import SignIn from "./pages/SignIn";
@@ -32,6 +34,8 @@ const App = () => (
             <Route path="/salon/:id" element={<VendorProfile />} />
             <Route path="/booking" element={<BookingFlow />} />
             <Route path="/membership" element={<Membership />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/payment" element={<Payment />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/vendor-dashboard" element={<VendorDashboard />} />
             <Route path="/signin" element={<SignIn />} />
