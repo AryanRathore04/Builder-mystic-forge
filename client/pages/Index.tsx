@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { SearchBar } from "@/components/ui/search-bar";
 import { CategoryButton } from "@/components/ui/category-button";
 import { ServiceCard } from "@/components/ui/service-card";
 import { Badge } from "@/components/ui/badge";
+import { PageLoading } from "@/components/ui/loading";
 import {
   Scissors,
   Flower2,
@@ -118,6 +119,20 @@ const stats = [
 
 export default function Index() {
   const [activeCategory, setActiveCategory] = useState("spa");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <PageLoading />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-hero">
@@ -125,8 +140,11 @@ export default function Index() {
       <nav className="bg-card/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
+            <div
+              className="flex items-center gap-3 cursor-pointer group"
+              onClick={() => (window.location.href = "/")}
+            >
+              <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
                 <Leaf className="h-4 w-4 text-primary-foreground" />
               </div>
               <span className="text-xl font-heading text-foreground tracking-wide">
