@@ -205,13 +205,12 @@ export default function SignIn() {
 
           {/* Divider */}
           <div className="my-6">
-            <Separator className="bg-spa-stone/20" />
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-spa-stone/20"></div>
+                <div className="w-full border-t border-border"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-spa-charcoal/60 font-light">
+                <span className="px-4 bg-card text-muted-foreground font-body">
                   Or continue with
                 </span>
               </div>
@@ -220,10 +219,7 @@ export default function SignIn() {
 
           {/* Social Login */}
           <div className="grid grid-cols-2 gap-3">
-            <Button
-              variant="outline"
-              className="border-spa-stone/30 text-spa-charcoal font-light hover:bg-spa-cream"
-            >
+            <Button variant="outline" className="font-body hover:bg-accent">
               <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24">
                 <path
                   fill="currentColor"
@@ -244,10 +240,7 @@ export default function SignIn() {
               </svg>
               Google
             </Button>
-            <Button
-              variant="outline"
-              className="border-spa-stone/30 text-spa-charcoal font-light hover:bg-spa-cream"
-            >
+            <Button variant="outline" className="font-body hover:bg-accent">
               <svg
                 className="h-4 w-4 mr-2"
                 fill="currentColor"
@@ -260,13 +253,25 @@ export default function SignIn() {
           </div>
         </div>
 
+        {/* Back Button */}
+        <div className="flex justify-center">
+          <Button
+            variant="ghost"
+            onClick={() => (window.location.href = "/")}
+            className="flex items-center gap-2 font-body text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Home
+          </Button>
+        </div>
+
         {/* Sign Up Link */}
         <div className="text-center">
-          <p className="text-spa-charcoal/60 font-light">
+          <p className="text-muted-foreground font-body">
             Don't have an account?{" "}
             <a
               href="/signup"
-              className="text-primary hover:text-spa-sage font-medium transition-colors"
+              className="text-primary hover:text-cta font-heading transition-colors"
             >
               Create one here
             </a>
@@ -275,26 +280,26 @@ export default function SignIn() {
 
         {/* Features for Business Partners */}
         {userType === "vendor" && (
-          <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 sophisticated-shadow border border-spa-stone/10">
-            <h3 className="font-medium text-spa-charcoal mb-4 text-center">
+          <div className="bg-card/70 backdrop-blur-sm rounded-lg p-6 sophisticated-shadow border border-border">
+            <h3 className="font-heading text-foreground mb-4 text-center">
               Why Partner with BeautyBook?
             </h3>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <CheckCircle className="h-4 w-4 text-primary" />
-                <span className="text-sm font-light text-spa-charcoal/80">
+                <span className="text-sm font-body text-muted-foreground">
                   Increase your bookings by 3x
                 </span>
               </div>
               <div className="flex items-center gap-3">
                 <CheckCircle className="h-4 w-4 text-primary" />
-                <span className="text-sm font-light text-spa-charcoal/80">
+                <span className="text-sm font-body text-muted-foreground">
                   Professional business dashboard
                 </span>
               </div>
               <div className="flex items-center gap-3">
                 <CheckCircle className="h-4 w-4 text-primary" />
-                <span className="text-sm font-light text-spa-charcoal/80">
+                <span className="text-sm font-body text-muted-foreground">
                   Marketing and customer insights
                 </span>
               </div>
