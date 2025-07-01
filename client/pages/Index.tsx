@@ -303,6 +303,21 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Decorative Separator */}
+      <div className="py-8 bg-gradient-to-r from-background via-muted/30 to-background">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-px bg-gradient-to-r from-transparent to-primary"></div>
+              <div className="p-3 bg-primary/10 rounded-full">
+                <Leaf className="h-6 w-6 text-primary" />
+              </div>
+              <div className="w-16 h-px bg-gradient-to-l from-transparent to-primary"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Featured Venues */}
       <section className="py-20 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -338,6 +353,75 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {/* Decorative Wave Separator */}
+      <div className="relative py-12 bg-background overflow-hidden">
+        <div className="absolute inset-0">
+          <svg
+            className="w-full h-full"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <linearGradient
+                id="wave-gradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="0%"
+              >
+                <stop
+                  offset="0%"
+                  stopColor="hsl(var(--primary))"
+                  stopOpacity="0.1"
+                />
+                <stop
+                  offset="50%"
+                  stopColor="hsl(var(--primary))"
+                  stopOpacity="0.3"
+                />
+                <stop
+                  offset="100%"
+                  stopColor="hsl(var(--primary))"
+                  stopOpacity="0.1"
+                />
+              </linearGradient>
+            </defs>
+            <path
+              d="M0,60 Q300,10 600,60 T1200,60 L1200,120 L0,120 Z"
+              fill="url(#wave-gradient)"
+            />
+          </svg>
+        </div>
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center space-x-8">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Users className="h-6 w-6 text-primary" />
+              </div>
+              <p className="text-sm font-body text-muted-foreground">
+                Trusted Community
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Star className="h-6 w-6 text-primary" />
+              </div>
+              <p className="text-sm font-body text-muted-foreground">
+                Premium Quality
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Award className="h-6 w-6 text-primary" />
+              </div>
+              <p className="text-sm font-body text-muted-foreground">
+                Excellence Guaranteed
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Testimonials */}
       <section className="py-20 bg-muted">
