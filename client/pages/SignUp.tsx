@@ -62,6 +62,19 @@ export default function SignUp() {
     agreeMarketing: false,
   });
 
+  useEffect(() => {
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <PageLoading />;
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -140,13 +153,16 @@ export default function SignUp() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 animate-fade-in">
       <div className="max-w-md w-full space-y-8">
         {/* Header */}
         <div className="text-center">
-          <div className="flex justify-center mb-6">
-            <div className="h-12 w-12 bg-primary rounded-full flex items-center justify-center">
-              <Leaf className="h-6 w-6 text-white" />
+          <div
+            className="flex items-center justify-center gap-3 mb-8 cursor-pointer group"
+            onClick={() => (window.location.href = "/")}
+          >
+            <div className="h-10 w-10 bg-primary rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Leaf className="h-5 w-5 text-primary-foreground" />
             </div>
           </div>
           <h1 className="text-3xl font-light text-spa-charcoal mb-2">
