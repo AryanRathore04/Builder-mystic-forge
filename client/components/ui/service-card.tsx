@@ -104,7 +104,7 @@ export function ServiceCard({
         </div>
 
         <Button
-          className="w-full bg-primary text-primary-foreground hover:bg-secondary rounded-full font-heading text-sm py-2"
+          className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-full font-heading text-sm py-2 transition-colors"
           size="sm"
           onClick={(e) => {
             e.stopPropagation();
