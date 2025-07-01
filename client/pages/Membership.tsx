@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { PageLoading } from "@/components/ui/loading";
+import {
+  ToastNotification,
+  useToasts,
+} from "@/components/ui/toast-notification";
 import {
   Check,
   Star,
@@ -10,6 +15,7 @@ import {
   Calendar,
   Gift,
   Crown,
+  ArrowLeft,
 } from "lucide-react";
 
 const plans = [
@@ -27,9 +33,9 @@ const plans = [
       "Access to basic workshops",
       "Member-only offers",
     ],
-    color: "bg-spa-cream/70",
-    textColor: "text-spa-charcoal",
-    buttonStyle: "border-spa-stone/30 text-spa-charcoal hover:bg-spa-cream",
+    color: "bg-card/70",
+    textColor: "text-foreground",
+    buttonStyle: "border-border text-foreground hover:bg-accent",
   },
   {
     id: "premium",
@@ -66,9 +72,9 @@ const plans = [
       "Priority access to new treatments",
       "24/7 customer support",
     ],
-    color: "bg-spa-sage",
-    textColor: "text-white",
-    buttonStyle: "bg-white text-spa-sage hover:bg-white/90",
+    color: "bg-cta",
+    textColor: "text-cta-foreground",
+    buttonStyle: "bg-white text-cta hover:bg-white/90",
   },
 ];
 
