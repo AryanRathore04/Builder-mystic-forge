@@ -277,6 +277,25 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Elegant Transition */}
+      <div className="py-8 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-muted/50 to-muted"></div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-3 bg-card/80 backdrop-blur-sm rounded-full px-8 py-4 sophisticated-shadow border border-border">
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+              <span className="text-sm font-body text-muted-foreground">
+                Trusted by thousands across India
+              </span>
+              <div
+                className="w-2 h-2 bg-primary rounded-full animate-pulse"
+                style={{ animationDelay: "0.5s" }}
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Stats */}
       <section className="py-16 bg-muted">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
