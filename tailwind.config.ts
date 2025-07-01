@@ -47,13 +47,16 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        classic: {
-          bronze: "hsl(45 100% 22%)",
-          gold: "hsl(45 80% 67%)",
-          cream: "hsl(30 50% 80%)",
-          pearl: "hsl(0 0% 98%)",
-          warm: "hsl(60 20% 96%)",
-          brown: "hsl(30 50% 15%)",
+        cta: {
+          DEFAULT: "hsl(var(--cta))",
+          foreground: "hsl(var(--cta-foreground))",
+        },
+        elegant: {
+          primary: "#7B3F00",
+          accent: "#F7C59F",
+          secondary: "#FAFAFA",
+          background: "#F4F1EE",
+          cta: "#C36F09",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
