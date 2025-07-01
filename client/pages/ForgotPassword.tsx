@@ -3,35 +3,45 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loading } from "@/components/ui/loading";
+import {
+  ToastNotification,
+  useToasts,
+} from "@/components/ui/toast-notification";
+import { useAuth } from "@/hooks/useAuth";
 import { Leaf, Mail, ArrowLeft, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState("");
+
+  const { resetPassword } = useAuth();
+  const { toasts, removeToast, showSuccess, showError } = useToasts();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
     if (!email) {
-      setError("Please enter your email address");
+      showError("Please enter your email address");
       return;
     }
 
     if (!email.includes("@")) {
-      setError("Please enter a valid email address");
+      showError("Please enter a valid email address");
       return;
     }
 
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      await resetPassword(email);
       setIsSubmitted(true);
-    }, 2000);
+      showSuccess("Password reset email sent successfully!");
+    } catch (error: any) {
+      showError(error.message || "Failed to send reset email");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleBackToSignIn = () => {
@@ -44,6 +54,7 @@ export default function ForgotPassword() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 animate-fade-in">
+      <ToastNotification toasts={toasts} removeToast={removeToast} />
       <div className="max-w-md w-full space-y-8">
         {/* Header */}
         <div className="text-center">
