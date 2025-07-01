@@ -5,6 +5,11 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { PageLoading } from "@/components/ui/loading";
 import {
+  ToastNotification,
+  useToasts,
+} from "@/components/ui/toast-notification";
+import { useAuth } from "@/hooks/useAuth";
+import {
   Leaf,
   Mail,
   Lock,
@@ -13,10 +18,12 @@ import {
   ArrowRight,
   ArrowLeft,
   CheckCircle,
+  Loader,
 } from "lucide-react";
 
 export default function SignIn() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isPageLoading, setIsPageLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState<"customer" | "vendor">("customer");
   const [formData, setFormData] = useState({
@@ -25,42 +32,98 @@ export default function SignIn() {
     rememberMe: false,
   });
 
+  const { signIn, signInWithGoogle, signInWithFacebook, user, userProfile } =
+    useAuth();
+  const { toasts, removeToast, showSuccess, showError } = useToasts();
+
   useEffect(() => {
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (isLoading) {
-    return <PageLoading />;
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Basic validation
-    if (!formData.email || !formData.password) {
-      alert("Please fill in all required fields");
+    // Check if user is already signed in
+    if (user && userProfile) {
+      if (userProfile.userType === "vendor") {
+        window.location.href = "/vendor-dashboard";
+      } else {
+        window.location.href = "/";
+      }
       return;
     }
 
-    // Simulate sign in process
-    console.log("Sign in:", formData, userType);
-    alert(`Welcome back! Signing in as ${userType}...`);
+    // Simulate loading time
+    const timer = setTimeout(() => {
+      setIsPageLoading(false);
+    }, 800);
 
-    // Navigate based on user type
-    if (userType === "vendor") {
-      window.location.href = "/vendor-dashboard";
-    } else {
-      window.location.href = "/";
+    return () => clearTimeout(timer);
+  }, [user, userProfile]);
+
+  if (isPageLoading) {
+    return <PageLoading />;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!formData.email || !formData.password) {
+      showError("Please fill in all required fields");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const profile = await signIn(formData.email, formData.password);
+      showSuccess(`Welcome back, ${profile.firstName}!`);
+
+      // Navigate based on user type
+      setTimeout(() => {
+        if (profile.userType === "vendor") {
+          window.location.href = "/vendor-dashboard";
+        } else {
+          window.location.href = "/";
+        }
+      }, 1000);
+    } catch (error: any) {
+      showError(error.message || "Failed to sign in");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const profile = await signInWithGoogle();
+      showSuccess(`Welcome back, ${profile.firstName}!`);
+
+      setTimeout(() => {
+        if (profile.userType === "vendor") {
+          window.location.href = "/vendor-dashboard";
+        } else {
+          window.location.href = "/";
+        }
+      }, 1000);
+    } catch (error: any) {
+      showError(error.message || "Failed to sign in with Google");
+    }
+  };
+
+  const handleFacebookSignIn = async () => {
+    try {
+      const profile = await signInWithFacebook();
+      showSuccess(`Welcome back, ${profile.firstName}!`);
+
+      setTimeout(() => {
+        if (profile.userType === "vendor") {
+          window.location.href = "/vendor-dashboard";
+        } else {
+          window.location.href = "/";
+        }
+      }, 1000);
+    } catch (error: any) {
+      showError(error.message || "Failed to sign in with Facebook");
     }
   };
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 animate-fade-in">
+      <ToastNotification toasts={toasts} removeToast={removeToast} />
       <div className="max-w-md w-full space-y-8">
         {/* Header */}
         <div className="text-center">
@@ -196,10 +259,20 @@ export default function SignIn() {
             {/* Sign In Button */}
             <Button
               type="submit"
+              disabled={isSubmitting}
               className="w-full bg-cta hover:bg-cta/90 text-cta-foreground rounded-lg py-3 h-12 font-heading"
             >
-              Sign In
-              <ArrowRight className="h-4 w-4 ml-2" />
+              {isSubmitting ? (
+                <div className="flex items-center gap-2">
+                  <Loader className="h-4 w-4 animate-spin" />
+                  Signing In...
+                </div>
+              ) : (
+                <>
+                  Sign In
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </>
+              )}
             </Button>
           </form>
 
