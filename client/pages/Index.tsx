@@ -122,53 +122,53 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-gradient-hero">
       {/* Navigation */}
-      <nav className="bg-white/95 backdrop-blur-sm border-b border-spa-stone/20">
+      <nav className="bg-card/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">
               <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
-                <Leaf className="h-4 w-4 text-white" />
+                <Leaf className="h-4 w-4 text-primary-foreground" />
               </div>
-              <span className="text-xl font-light text-spa-charcoal tracking-wide">
+              <span className="text-xl font-heading text-foreground tracking-wide">
                 BeautyBook
               </span>
             </div>
             <div className="hidden md:flex items-center gap-8">
               <a
                 href="/salons"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm font-body text-muted-foreground hover:text-primary transition-colors"
               >
                 Services
               </a>
               <a
                 href="/salons"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm font-body text-muted-foreground hover:text-primary transition-colors"
               >
                 Find Venues
               </a>
               <a
                 href="/membership"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm font-body text-muted-foreground hover:text-primary transition-colors"
               >
                 Membership
               </a>
               <a
                 href="/salons"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm font-body text-muted-foreground hover:text-primary transition-colors"
               >
                 About
               </a>
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-sm"
+                className="text-sm font-body"
                 onClick={() => (window.location.href = "/signin")}
               >
                 Sign In
               </Button>
               <Button
                 size="sm"
-                className="bg-primary text-white hover:bg-spa-sage text-sm px-6 rounded-full"
+                className="bg-primary text-primary-foreground hover:bg-secondary text-sm px-6 rounded-full font-heading"
                 onClick={() => (window.location.href = "/signup?type=vendor")}
               >
                 Become a Partner
@@ -182,7 +182,7 @@ export default function Index() {
       <section className="relative pt-20 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-spa-cream/80 via-spa-cream/40 to-spa-cream/80 z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-classic-warm/80 via-classic-warm/40 to-classic-warm/80 z-10"></div>
           <img
             src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1920&h=1080&fit=crop&crop=center"
             alt="Spa wellness background"
@@ -192,10 +192,10 @@ export default function Index() {
 
         {/* Floating Animation Elements */}
         <div className="absolute inset-0 z-5">
-          <div className="absolute top-20 left-10 w-20 h-20 bg-spa-lime/20 rounded-full animate-float-slow"></div>
+          <div className="absolute top-20 left-10 w-20 h-20 bg-secondary/20 rounded-full animate-float-slow"></div>
           <div className="absolute top-40 right-20 w-16 h-16 bg-primary/20 rounded-full animate-float-medium"></div>
-          <div className="absolute bottom-40 left-20 w-12 h-12 bg-spa-sage/20 rounded-full animate-float-fast"></div>
-          <div className="absolute bottom-20 right-10 w-24 h-24 bg-spa-lime/20 rounded-full animate-float-slow"></div>
+          <div className="absolute bottom-40 left-20 w-12 h-12 bg-accent/20 rounded-full animate-float-fast"></div>
+          <div className="absolute bottom-20 right-10 w-24 h-24 bg-secondary/20 rounded-full animate-float-slow"></div>
         </div>
 
         <div className="relative z-20 max-w-4xl mx-auto text-center">
