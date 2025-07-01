@@ -202,9 +202,9 @@ export default function Index() {
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-classic-warm/80 via-classic-warm/40 to-classic-warm/80 z-10"></div>
           <img
-            src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1920&h=1080&fit=crop&crop=center"
-            alt="Spa wellness background"
-            className="w-full h-full object-cover opacity-60"
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop&crop=center"
+            alt="Simple wellness background"
+            className="w-full h-full object-cover opacity-40"
           />
         </div>
 
