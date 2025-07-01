@@ -280,38 +280,40 @@ export default function Membership() {
             {plans.map((plan) => (
               <div
                 key={plan.id}
-                className={`rounded-2xl p-8 sophisticated-shadow border border-spa-stone/10 relative overflow-hidden transition-all hover:scale-[1.02] ${plan.color}`}
+                className={`rounded-2xl p-8 sophisticated-shadow border border-border relative overflow-hidden transition-all hover:scale-[1.02] ${plan.color}`}
                 style={{ marginTop: plan.popular ? "24px" : "0" }}
               >
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <Badge className="bg-spa-lime text-spa-charcoal px-4 py-2 font-medium text-sm rounded-full">
+                    <Badge className="bg-secondary text-foreground px-4 py-2 font-heading text-sm rounded-full">
                       Most Popular
                     </Badge>
                   </div>
                 )}
 
                 <div className="text-center mb-8">
-                  <h3 className={`text-2xl font-light mb-2 ${plan.textColor}`}>
+                  <h3
+                    className={`text-2xl font-heading mb-2 ${plan.textColor}`}
+                  >
                     {plan.name}
                   </h3>
                   <p
-                    className={`text-sm font-light mb-6 ${
+                    className={`text-sm font-body mb-6 ${
                       plan.id === "premium" || plan.id === "vip"
                         ? "text-white/80"
-                        : "text-spa-charcoal/60"
+                        : "text-muted-foreground"
                     }`}
                   >
                     {plan.description}
                   </p>
                   <div className={`${plan.textColor}`}>
-                    <span className="text-4xl font-light">
+                    <span className="text-4xl font-heading">
                       ₹
                       {billingPeriod === "yearly"
                         ? Math.round(plan.price * 12 * 0.8).toLocaleString()
                         : plan.price.toLocaleString()}
                     </span>
-                    <span className="text-sm font-light">
+                    <span className="text-sm font-body">
                       /{billingPeriod === "yearly" ? "year" : "month"}
                     </span>
                   </div>
@@ -328,10 +330,10 @@ export default function Membership() {
                         }`}
                       />
                       <span
-                        className={`text-sm font-light ${
+                        className={`text-sm font-body ${
                           plan.id === "premium" || plan.id === "vip"
                             ? "text-white/90"
-                            : "text-spa-charcoal/80"
+                            : "text-muted-foreground"
                         }`}
                       >
                         {feature}
@@ -341,15 +343,8 @@ export default function Membership() {
                 </ul>
 
                 <Button
-                  className={`w-full rounded-full font-medium ${plan.buttonStyle}`}
-                  onClick={() => {
-                    setSelectedPlan(plan.id);
-                    alert(
-                      `You selected the ${plan.name} plan! Proceeding to checkout...`,
-                    );
-                    // In a real app, this would navigate to checkout
-                    window.location.href = `/signup?plan=${plan.id}`;
-                  }}
+                  className={`w-full rounded-lg font-heading h-12 ${plan.buttonStyle}`}
+                  onClick={() => handleSelectPlan(plan.id)}
                 >
                   Choose {plan.name}
                   <ArrowRight className="h-4 w-4 ml-2" />
