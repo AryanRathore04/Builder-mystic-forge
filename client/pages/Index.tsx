@@ -199,14 +199,14 @@ export default function Index() {
         </div>
 
         <div className="relative z-20 max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-light text-spa-charcoal mb-8 leading-tight animate-slide-up">
+          <h1 className="text-5xl md:text-7xl font-heading text-foreground mb-8 leading-tight animate-slide-up">
             Rejuvenate Your Mind,
             <br />
-            <span className="text-spa-sage animate-gradient-text">
+            <span className="text-secondary animate-gradient-text">
               Body, and Spirit
             </span>
           </h1>
-          <p className="text-lg text-spa-charcoal/80 mb-12 max-w-2xl mx-auto font-light leading-relaxed animate-slide-up-delay">
+          <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto font-body leading-relaxed animate-slide-up-delay">
             Discover exceptional wellness experiences at premium salons and
             spas. Book treatments from certified professionals who care about
             your well-being.
@@ -219,7 +219,7 @@ export default function Index() {
           <div className="flex justify-center mb-8 animate-slide-up-delay-3">
             <Button
               size="lg"
-              className="bg-primary text-white hover:bg-spa-sage px-8 py-3 rounded-full text-sm font-medium transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              className="bg-primary text-primary-foreground hover:bg-secondary px-8 py-3 rounded-full text-sm font-heading transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
               onClick={() => (window.location.href = "/salons")}
             >
               Explore Treatments
@@ -230,13 +230,13 @@ export default function Index() {
       </section>
 
       {/* Categories */}
-      <section className="py-16 bg-spa-cream/50">
+      <section className="py-16 bg-muted/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-light text-spa-charcoal mb-4">
+            <h2 className="text-3xl font-heading text-foreground mb-4">
               Discover Our Services
             </h2>
-            <p className="text-spa-charcoal/60 font-light">
+            <p className="text-muted-foreground font-body">
               Choose from our curated selection of wellness treatments
             </p>
           </div>
@@ -260,7 +260,7 @@ export default function Index() {
       </section>
 
       {/* Stats */}
-      <section className="py-16 bg-spa-cream">
+      <section className="py-16 bg-muted">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -269,14 +269,14 @@ export default function Index() {
                 className="text-center transform transition-all duration-300 hover:scale-105"
               >
                 <div className="flex justify-center mb-4">
-                  <div className="p-3 bg-spa-cream/90 rounded-full sophisticated-shadow">
+                  <div className="p-3 bg-card rounded-full sophisticated-shadow">
                     <div className="text-primary">{stat.icon}</div>
                   </div>
                 </div>
-                <div className="text-2xl font-light text-spa-charcoal mb-2">
+                <div className="text-2xl font-heading text-foreground mb-2">
                   {stat.value}
                 </div>
-                <div className="text-sm text-spa-charcoal/60 font-light">
+                <div className="text-sm text-muted-foreground font-body">
                   {stat.label}
                 </div>
               </div>
@@ -286,14 +286,14 @@ export default function Index() {
       </section>
 
       {/* Featured Venues */}
-      <section className="py-20 bg-spa-cream/30">
+      <section className="py-20 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-12">
             <div>
-              <h2 className="text-3xl font-light text-spa-charcoal mb-2">
+              <h2 className="text-3xl font-heading text-foreground mb-2">
                 Premium Wellness Venues
               </h2>
-              <p className="text-spa-charcoal/60 font-light">
+              <p className="text-muted-foreground font-body">
                 Handpicked locations for the ultimate relaxation experience
               </p>
             </div>
