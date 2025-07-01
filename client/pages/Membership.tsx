@@ -35,7 +35,7 @@ const plans = [
     ],
     color: "bg-card/70",
     textColor: "text-foreground",
-    buttonStyle: "border-border text-foreground hover:bg-accent",
+    buttonStyle: "bg-primary text-primary-foreground hover:bg-primary/90",
   },
   {
     id: "premium",
