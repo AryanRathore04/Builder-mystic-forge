@@ -171,7 +171,7 @@ export default function Index() {
                 Membership
               </a>
               <a
-                href="/salons"
+                href="/about"
                 className="text-sm font-body text-muted-foreground hover:text-primary transition-colors"
               >
                 About
