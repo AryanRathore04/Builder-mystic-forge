@@ -10,7 +10,7 @@ interface SearchBarProps {
 export function SearchBar({ className = "", onSearch }: SearchBarProps) {
   return (
     <div className={`relative ${className}`}>
-      <div className="flex flex-col sm:flex-row gap-0 bg-classic-cream/95 backdrop-blur-sm rounded-full p-1 sophisticated-shadow border border-border">
+      <div className="flex flex-col sm:flex-row gap-0 bg-white/10 backdrop-blur-md rounded-full p-1 sophisticated-shadow border border-white/20 shadow-xl">
         <div className="flex-1 flex items-center gap-3 px-6 py-4">
           <MapPin className="h-4 w-4 text-muted-foreground" />
           <Input
