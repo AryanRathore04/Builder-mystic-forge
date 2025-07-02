@@ -10,8 +10,8 @@ import {
   orderBy,
   Timestamp,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { LoyaltyTransaction, User, Booking } from "@/types/platform";
+import { db } from "../lib/firebase";
+import { LoyaltyTransaction, User, Booking } from "../types/platform";
 
 export class LoyaltyService {
   private static readonly POINTS_PER_RUPEE = 1; // 1 point per ₹1 spent
