@@ -228,9 +228,30 @@
     0%,
     100% {
       opacity: 1;
+      background-position: 0% 50%;
     }
     50% {
-      opacity: 0.8;
+      opacity: 0.9;
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes glow {
+    0%,
+    100% {
+      box-shadow: 0 0 20px rgba(139, 188, 50, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(139, 188, 50, 0.6);
     }
   }
 
@@ -263,7 +284,23 @@
   }
 
   .animate-gradient-text {
-    animation: gradient-text 3s ease-in-out infinite;
+    background-size: 200% 200%;
+    animation: gradient-text 4s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
   }
 
   /* Loading animations */
