@@ -141,6 +141,16 @@ export default function VendorListing() {
   const [selectedRating, setSelectedRating] = useState("All Ratings");
   const [sortBy, setSortBy] = useState("recommended");
   const [showFilters, setShowFilters] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Filter and sort venues
   const filteredVenues = venues
@@ -224,14 +234,17 @@ export default function VendorListing() {
   return (
     <div className="min-h-screen bg-gradient-hero">
       {/* Navigation */}
-      <nav className={`sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'glass-navbar shadow-lg'
-          : 'bg-transparent'
-      }`}>
+      <nav
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          isScrolled ? "glass-navbar shadow-lg" : "bg-transparent"
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3 cursor-pointer group" onClick={() => (window.location.href = "/")}>
+            <div
+              className="flex items-center gap-3 cursor-pointer group"
+              onClick={() => (window.location.href = "/")}
+            >
               <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
                 <Leaf className="h-4 w-4 text-white" />
               </div>
@@ -246,7 +259,10 @@ export default function VendorListing() {
               >
                 Home
               </a>
-              <a href="/salons" className="text-sm font-body text-primary font-medium">
+              <a
+                href="/salons"
+                className="text-sm font-body text-primary font-medium"
+              >
                 Find Venues
               </a>
               <a
@@ -286,7 +302,9 @@ export default function VendorListing() {
         <div className="mb-12 text-center">
           <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
             <Compass className="h-4 w-4 text-primary" />
-            <span className="text-sm font-body text-primary">Discover Premium Wellness</span>
+            <span className="text-sm font-body text-primary">
+              Discover Premium Wellness
+            </span>
           </div>
           <h1 className="text-5xl md:text-6xl font-heading text-foreground mb-4">
             Find Your Perfect
@@ -294,11 +312,8 @@ export default function VendorListing() {
             <span className="text-primary italic">Wellness Destination</span>
           </h1>
           <p className="text-lg text-muted-foreground font-body max-w-2xl mx-auto leading-relaxed">
-            Explore curated premium salons and spas near you. Book instantly and experience luxury wellness treatments.
-          </p>
-        </div>
-          <p className="text-spa-charcoal/60 font-light">
-            Discover exceptional spa and beauty experiences near you
+            Explore curated premium salons and spas near you. Book instantly and
+            experience luxury wellness treatments.
           </p>
         </div>
 
