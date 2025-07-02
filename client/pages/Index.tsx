@@ -200,11 +200,11 @@ export default function Index() {
       <section className="relative pt-20 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-black/60 z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-olive-900/60 via-olive-800/30 to-olive-900/60 z-10"></div>
           <img
             src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop&crop=center"
             alt="Simple wellness background"
-            className="w-full h-full object-cover opacity-70 brightness-75 contrast-125"
+            className="w-full h-full object-cover opacity-70 brightness-75 contrast-125 sepia-[0.3] hue-rotate-[15deg]"
           />
         </div>
 
