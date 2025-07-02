@@ -12,25 +12,25 @@
   */
   :root {
     --background: 90 20% 97%; /* #F8FAF6 */
-    --foreground: 85 30% 25%; /* #4A5D23 */
+    --foreground: 85 40% 20%; /* #3A4B14 - Darker for better contrast */
 
     --card: 90 15% 98%; /* #FAFBF9 */
-    --card-foreground: 85 30% 25%;
+    --card-foreground: 85 40% 20%;
 
     --popover: 90 15% 98%;
-    --popover-foreground: 85 30% 25%;
+    --popover-foreground: 85 40% 20%;
 
     --primary: 85 30% 35%; /* #6B7C32 */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 75 40% 75%; /* #C7D2A3 */
-    --secondary-foreground: 85 30% 25%;
+    --secondary-foreground: 85 40% 20%;
 
     --muted: 90 15% 94%;
-    --muted-foreground: 85 15% 45%;
+    --muted-foreground: 85 25% 35%; /* Darker for better readability */
 
     --accent: 75 35% 82%; /* #D4DFB8 */
-    --accent-foreground: 85 30% 25%;
+    --accent-foreground: 85 40% 20%;
 
     --cta: 65 45% 50%; /* #8FBC32 */
     --cta-foreground: 0 0% 100%;
