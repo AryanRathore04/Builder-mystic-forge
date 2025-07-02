@@ -11,8 +11,8 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { db, storage } from "@/lib/firebase";
-import { VendorOnboarding, Vendor, VendorService } from "@/types/platform";
+import { db, storage } from "../lib/firebase";
+import { VendorOnboarding, Vendor, VendorService } from "../types/platform";
 
 export class VendorOnboardingService {
   /**
