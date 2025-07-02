@@ -13,7 +13,7 @@ import {
   Timestamp,
   runTransaction,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "../lib/firebase";
 import {
   AdminUser,
   VendorOnboarding,
@@ -24,7 +24,7 @@ import {
   Vendor,
   User,
   Booking,
-} from "@/types/platform";
+} from "../types/platform";
 
 export class AdminService {
   /**
