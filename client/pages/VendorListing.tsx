@@ -224,44 +224,54 @@ export default function VendorListing() {
   return (
     <div className="min-h-screen bg-gradient-hero">
       {/* Navigation */}
-      <nav className="bg-white/95 backdrop-blur-sm border-b border-spa-stone/20 sticky top-0 z-50">
+      <nav className={`sticky top-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'glass-navbar shadow-lg'
+          : 'bg-transparent'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
-              <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
+            <div className="flex items-center gap-3 cursor-pointer group" onClick={() => (window.location.href = "/")}>
+              <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
                 <Leaf className="h-4 w-4 text-white" />
               </div>
-              <span className="text-xl font-light text-spa-charcoal tracking-wide">
+              <span className="text-xl font-heading text-foreground tracking-wide">
                 BeautyBook
               </span>
             </div>
             <div className="hidden md:flex items-center gap-8">
               <a
                 href="/"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm font-body text-muted-foreground hover:text-primary transition-colors"
               >
                 Home
               </a>
-              <a href="/salons" className="text-sm text-primary font-medium">
+              <a href="/salons" className="text-sm font-body text-primary font-medium">
                 Find Venues
               </a>
               <a
                 href="/membership"
-                className="text-sm text-spa-charcoal/70 hover:text-primary transition-colors"
+                className="text-sm font-body text-muted-foreground hover:text-primary transition-colors"
               >
-                Services
+                Membership
+              </a>
+              <a
+                href="/about"
+                className="text-sm font-body text-muted-foreground hover:text-primary transition-colors"
+              >
+                About
               </a>
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-sm"
+                className="text-sm font-body"
                 onClick={() => (window.location.href = "/signin")}
               >
                 Sign In
               </Button>
               <Button
                 size="sm"
-                className="bg-primary text-white hover:bg-spa-sage text-sm px-6 rounded-full"
+                className="bg-primary text-primary-foreground hover:bg-secondary text-sm px-6 rounded-full font-heading"
                 onClick={() => (window.location.href = "/signup?type=vendor")}
               >
                 Become a Partner
@@ -271,12 +281,22 @@ export default function VendorListing() {
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-light text-spa-charcoal mb-3">
-            Wellness Venues
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Enhanced Header */}
+        <div className="mb-12 text-center">
+          <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+            <Compass className="h-4 w-4 text-primary" />
+            <span className="text-sm font-body text-primary">Discover Premium Wellness</span>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-heading text-foreground mb-4">
+            Find Your Perfect
+            <br />
+            <span className="text-primary italic">Wellness Destination</span>
           </h1>
+          <p className="text-lg text-muted-foreground font-body max-w-2xl mx-auto leading-relaxed">
+            Explore curated premium salons and spas near you. Book instantly and experience luxury wellness treatments.
+          </p>
+        </div>
           <p className="text-spa-charcoal/60 font-light">
             Discover exceptional spa and beauty experiences near you
           </p>
