@@ -11,10 +11,10 @@
    * HSL values for Tailwind CSS theme compatibility
   */
   :root {
-    --background: 90 20% 97%; /* #F8FAF6 */
+    --background: 70 15% 94%; /* #EEEFE0 */
     --foreground: 85 40% 20%; /* #3A4B14 - Darker for better contrast */
 
-    --card: 90 15% 98%; /* #FAFBF9 */
+    --card: 70 20% 96%; /* #F2F3E8 */
     --card-foreground: 85 40% 20%;
 
     --popover: 90 15% 98%;
@@ -141,8 +141,8 @@
   .bg-gradient-hero {
     background: linear-gradient(
       135deg,
-      hsl(90 25% 96%) 0%,
-      hsl(85 20% 94%) 100%
+      hsl(70 15% 94%) 0%,
+      hsl(70 20% 96%) 100%
     );
   }
 
@@ -166,7 +166,7 @@
     background: linear-gradient(
       135deg,
       hsl(75 35% 85%) 0%,
-      hsl(90 20% 95%) 100%
+      hsl(70 20% 96%) 100%
     );
   }
 

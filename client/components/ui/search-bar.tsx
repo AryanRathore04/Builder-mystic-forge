@@ -42,19 +42,19 @@ export function SearchBar({ className = "", onSearch }: SearchBarProps) {
 
   return (
     <div className={`relative ${className}`}>
-      <div className="flex flex-col sm:flex-row gap-0 bg-white/10 backdrop-blur-md rounded-full p-1 sophisticated-shadow border border-white/20 shadow-xl">
+      <div className="flex flex-col sm:flex-row gap-0 bg-white/95 backdrop-blur-md rounded-full p-1 sophisticated-shadow border border-sage-200 shadow-xl">
         <div className="flex-1 flex items-center gap-3 px-6 py-4">
-          <MapPin className="h-4 w-4 text-white/70" />
+          <MapPin className="h-4 w-4 text-muted-foreground" />
           <Input
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             placeholder="Your location"
-            className="border-0 bg-transparent placeholder:text-white/60 text-white focus-visible:ring-0 p-0 font-body"
+            className="border-0 bg-transparent placeholder:text-muted-foreground text-foreground focus-visible:ring-0 p-0 font-body"
           />
           <button
             onClick={handleGetCurrentLocation}
             disabled={isGettingLocation}
-            className="text-white/70 hover:text-white transition-colors"
+            className="text-muted-foreground hover:text-foreground transition-colors"
             title="Use current location"
           >
             {isGettingLocation ? (
@@ -64,14 +64,14 @@ export function SearchBar({ className = "", onSearch }: SearchBarProps) {
             )}
           </button>
         </div>
-        <div className="hidden sm:block w-px bg-white/20 my-2"></div>
+        <div className="hidden sm:block w-px bg-border my-2"></div>
         <div className="flex-1 flex items-center gap-3 px-6 py-4">
-          <Search className="h-4 w-4 text-white/70" />
+          <Search className="h-4 w-4 text-muted-foreground" />
           <Input
             value={service}
             onChange={(e) => setService(e.target.value)}
             placeholder="Service or treatment"
-            className="border-0 bg-transparent placeholder:text-white/60 text-white focus-visible:ring-0 p-0 font-body"
+            className="border-0 bg-transparent placeholder:text-muted-foreground text-foreground focus-visible:ring-0 p-0 font-body"
           />
         </div>
         <div className="flex items-center justify-center p-1">

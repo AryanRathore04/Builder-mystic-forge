@@ -292,9 +292,9 @@ export default function Index() {
               <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-sage-100 to-olive-100 p-8">
                 {/* Main Spa Image */}
                 <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2F6373fffa9c4144baa03315aef7b6a7f2%2F871650b704f34fce8835e128892cf8f7?format=webp&width=800"
-                  alt="Luxury spa and wellness center"
-                  className="w-full h-[500px] object-cover rounded-2xl shadow-2xl"
+                  src="https://cdn.builder.io/api/v1/image/assets%2F6373fffa9c4144baa03315aef7b6a7f2%2F13d130be36644801a74d4a1ac374ae48?format=webp&width=800"
+                  alt="Serene spa massage and wellness treatment"
+                  className="w-full h-[500px] object-cover rounded-2xl shadow-2xl animate-fade-in hover:scale-105 transition-transform duration-700"
                 />
 
                 {/* Floating Discount Card */}
