@@ -13,8 +13,13 @@ import {
   Timestamp,
   runTransaction,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { Booking, VendorService, AddOnService, Vendor } from "@/types/platform";
+import { db } from "../lib/firebase";
+import {
+  Booking,
+  VendorService,
+  AddOnService,
+  Vendor,
+} from "../types/platform";
 import { CommissionService } from "./commission";
 import { LoyaltyService } from "./loyalty";
 
