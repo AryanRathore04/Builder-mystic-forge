@@ -10,8 +10,8 @@ import {
   orderBy,
   Timestamp,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { Referral, User } from "@/types/platform";
+import { db } from "../lib/firebase";
+import { Referral, User } from "../types/platform";
 
 export class ReferralService {
   private static readonly REFERRAL_REWARD_AMOUNT = 100; // ₹100 reward
