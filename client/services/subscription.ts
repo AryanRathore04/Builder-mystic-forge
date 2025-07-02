@@ -10,8 +10,8 @@ import {
   orderBy,
   Timestamp,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { Subscription, PremiumListing, Vendor } from "@/types/platform";
+import { db } from "../lib/firebase";
+import { Subscription, PremiumListing, Vendor } from "../types/platform";
 
 export class SubscriptionService {
   private static readonly ANNUAL_SUBSCRIPTION_FEE = 5000; // ₹5,000
