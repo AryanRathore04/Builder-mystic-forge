@@ -540,57 +540,57 @@ export default function Index() {
                 <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
                   <Leaf className="h-4 w-4 text-primary-foreground" />
                 </div>
-                <span className="text-xl font-heading tracking-wide">
+                <span className="text-xl font-heading tracking-wide text-white">
                   BeautyBook
                 </span>
               </div>
-              <p className="text-primary-foreground/70 font-body leading-relaxed max-w-md">
+              <p className="text-white/70 font-body leading-relaxed max-w-md">
                 Your trusted companion for discovering exceptional wellness
                 experiences. We connect you with premium salons and spas that
                 prioritize your well-being.
               </p>
             </div>
             <div>
-              <h3 className="font-heading mb-6 text-sm tracking-wide">
+              <h3 className="font-heading mb-6 text-sm tracking-wide text-white">
                 Services
               </h3>
-              <ul className="space-y-3 text-primary-foreground/70 font-body text-sm">
-                <li className="hover:text-primary-foreground transition-colors cursor-pointer">
+              <ul className="space-y-3 text-white/70 font-body text-sm">
+                <li className="hover:text-white transition-colors cursor-pointer">
                   Spa & Wellness
                 </li>
-                <li className="hover:text-primary-foreground transition-colors cursor-pointer">
+                <li className="hover:text-white transition-colors cursor-pointer">
                   Hair Care
                 </li>
-                <li className="hover:text-primary-foreground transition-colors cursor-pointer">
+                <li className="hover:text-white transition-colors cursor-pointer">
                   Massage Therapy
                 </li>
-                <li className="hover:text-primary-foreground transition-colors cursor-pointer">
+                <li className="hover:text-white transition-colors cursor-pointer">
                   Beauty Treatments
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="font-heading mb-6 text-sm tracking-wide">
+              <h3 className="font-heading mb-6 text-sm tracking-wide text-white">
                 Company
               </h3>
-              <ul className="space-y-3 text-primary-foreground/70 font-body text-sm">
-                <li className="hover:text-primary-foreground transition-colors cursor-pointer">
+              <ul className="space-y-3 text-white/70 font-body text-sm">
+                <li className="hover:text-white transition-colors cursor-pointer">
                   About Us
                 </li>
-                <li className="hover:text-primary-foreground transition-colors cursor-pointer">
+                <li className="hover:text-white transition-colors cursor-pointer">
                   Partner Program
                 </li>
-                <li className="hover:text-primary-foreground transition-colors cursor-pointer">
+                <li className="hover:text-white transition-colors cursor-pointer">
                   Careers
                 </li>
-                <li className="hover:text-primary-foreground transition-colors cursor-pointer">
+                <li className="hover:text-white transition-colors cursor-pointer">
                   Contact
                 </li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-primary-foreground/10 pt-8 text-center">
-            <p className="text-primary-foreground/60 font-body text-sm">
+          <div className="border-t border-white/10 pt-8 text-center">
+            <p className="text-white/60 font-body text-sm">
               © 2024 BeautyBook. All rights reserved. Made with care for your
               wellness journey.
             </p>
