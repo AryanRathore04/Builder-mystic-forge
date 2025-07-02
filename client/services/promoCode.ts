@@ -11,8 +11,8 @@ import {
   increment,
   Timestamp,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { PromoCode, User } from "@/types/platform";
+import { db } from "../lib/firebase";
+import { PromoCode, User } from "../types/platform";
 
 export class PromoCodeService {
   /**
