@@ -197,180 +197,175 @@ export default function Index() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Dynamic Background */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-olive-900/80 via-olive-800/60 to-sage-900/80 z-10"></div>
-          <img
-            src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1920&h=1080&fit=crop&crop=center"
-            alt="Luxury spa wellness experience"
-            className="w-full h-full object-cover opacity-60 scale-105"
-          />
-          {/* Animated Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-olive-600/20 to-transparent animate-pulse z-15"></div>
-        </div>
-
-        {/* Enhanced Floating Elements */}
-        <div className="absolute inset-0 z-5">
-          <div className="absolute top-1/4 left-[10%] w-32 h-32 bg-gradient-to-br from-sage-300/30 to-olive-400/20 rounded-full blur-xl animate-float-slow"></div>
-          <div className="absolute top-1/3 right-[15%] w-24 h-24 bg-gradient-to-br from-olive-300/25 to-sage-400/15 rounded-full blur-lg animate-float-medium"></div>
-          <div className="absolute bottom-1/3 left-[20%] w-20 h-20 bg-gradient-to-br from-olive-500/20 to-sage-300/25 rounded-full blur-md animate-float-fast"></div>
-          <div className="absolute bottom-1/4 right-[10%] w-28 h-28 bg-gradient-to-br from-sage-400/20 to-olive-500/15 rounded-full blur-lg animate-float-slow"></div>
-
-          {/* Decorative Lines */}
-          <div className="absolute top-1/2 left-0 w-40 h-px bg-gradient-to-r from-transparent to-white/20 animate-pulse"></div>
-          <div className="absolute top-1/2 right-0 w-40 h-px bg-gradient-to-l from-transparent to-white/20 animate-pulse"></div>
-        </div>
-
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* Hero Section - Clean Modern Design */}
+      <section className="relative min-h-screen bg-background overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center min-h-[90vh]">
             {/* Left Content */}
-            <div className="text-center lg:text-left space-y-8">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20 animate-slide-up">
-                <div className="w-2 h-2 bg-cta rounded-full animate-pulse"></div>
-                <span className="text-white/90 font-body text-sm">
-                  Trusted by 25,000+ customers
-                </span>
-              </div>
-
+            <div className="space-y-8 lg:pr-8">
               {/* Main Heading */}
-              <div className="space-y-6 animate-slide-up">
-                <h1 className="text-6xl md:text-8xl font-heading text-white leading-none">
-                  Your
-                  <span className="block text-transparent bg-gradient-to-r from-sage-200 to-olive-200 bg-clip-text animate-gradient-text">
-                    Wellness
+              <div className="space-y-4">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading text-foreground leading-tight">
+                  Discover the
+                  <br />
+                  <span className="italic text-primary font-serif">
+                    Perfect Place
+                  </span>{" "}
+                  to Relax
+                  <br />
+                  and <span className="text-primary">Rejuvenate</span>
+                  <span className="inline-block ml-3">
+                    <Flower2 className="h-10 w-10 text-primary" />
                   </span>
-                  <span className="block">Journey</span>
-                  <span className="block text-cta">Begins Here</span>
                 </h1>
               </div>
 
               {/* Description */}
-              <p className="text-xl text-white/80 font-body leading-relaxed max-w-lg animate-slide-up-delay">
-                Discover premium wellness experiences at handpicked salons and
-                spas. Book treatments from certified professionals who
-                prioritize your well-being.
+              <p className="text-lg text-muted-foreground font-body leading-relaxed max-w-lg">
+                Explore a curated selection of premium salons and spas that fit
+                your wellness lifestyle and preferences.
               </p>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 animate-slide-up-delay-2">
+              {/* CTA Button */}
+              <div className="flex items-center gap-4">
                 <Button
                   size="lg"
-                  className="bg-cta hover:bg-cta/90 text-white px-8 py-4 rounded-full font-heading text-lg shadow-2xl hover:shadow-cta/25 transition-all duration-300 hover:scale-105"
+                  className="bg-foreground hover:bg-foreground/90 text-background px-8 py-4 rounded-full font-body text-base shadow-lg hover:shadow-xl transition-all duration-300"
                   onClick={() => (window.location.href = "/salons")}
                 >
-                  <span>Explore Treatments</span>
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  View Treatments
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm px-8 py-4 rounded-full font-heading text-lg transition-all duration-300 hover:scale-105"
-                  onClick={() => (window.location.href = "/about")}
+                <div
+                  className="w-12 h-12 bg-foreground rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
+                  onClick={() => (window.location.href = "/salons")}
                 >
-                  Learn More
-                </Button>
+                  <ArrowRight className="h-5 w-5 text-background" />
+                </div>
               </div>
 
-              {/* Quick Stats */}
-              <div className="flex items-center justify-center lg:justify-start gap-8 pt-8 animate-slide-up-delay-3">
-                <div className="text-center">
-                  <div className="text-2xl font-heading text-white">500+</div>
-                  <div className="text-sm text-white/70 font-body">
-                    Premium Venues
+              {/* Reviews Section */}
+              <div className="flex items-center gap-6 pt-8 flex-wrap">
+                <div className="flex -space-x-3">
+                  <img
+                    src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face"
+                    alt="Customer"
+                    className="w-12 h-12 rounded-full border-2 border-background object-cover"
+                  />
+                  <img
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
+                    alt="Customer"
+                    className="w-12 h-12 rounded-full border-2 border-background object-cover"
+                  />
+                  <img
+                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face"
+                    alt="Customer"
+                    className="w-12 h-12 rounded-full border-2 border-background object-cover"
+                  />
+                </div>
+                <div className="text-sm">
+                  <div className="font-heading text-foreground">More than</div>
+                  <div className="font-body text-muted-foreground">
+                    1000+ happy clients
                   </div>
                 </div>
-                <div className="w-px h-12 bg-white/20"></div>
-                <div className="text-center">
-                  <div className="text-2xl font-heading text-white">4.9★</div>
-                  <div className="text-sm text-white/70 font-body">
-                    Customer Rating
+                <div className="flex items-center gap-1">
+                  <span className="text-sm font-body text-foreground">5/5</span>
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="h-4 w-4 fill-primary text-primary"
+                      />
+                    ))}
                   </div>
                 </div>
-                <div className="w-px h-12 bg-white/20"></div>
-                <div className="text-center">
-                  <div className="text-2xl font-heading text-white">15+</div>
-                  <div className="text-sm text-white/70 font-body">Cities</div>
+                <div className="text-sm">
+                  <div className="font-body text-muted-foreground">
+                    25 Reviews On Google
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Right Content - Interactive Cards */}
-            <div className="hidden lg:block">
-              <div className="relative">
-                {/* Main Feature Card */}
-                <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl animate-slide-up">
-                  <div className="space-y-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-cta/20 rounded-2xl flex items-center justify-center">
-                        <Star className="h-6 w-6 text-cta" />
+            {/* Right Content - Spa Image with Overlays */}
+            <div className="relative">
+              <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-sage-100 to-olive-100 p-8">
+                {/* Main Spa Image */}
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2F6373fffa9c4144baa03315aef7b6a7f2%2F871650b704f34fce8835e128892cf8f7?format=webp&width=800"
+                  alt="Luxury spa and wellness center"
+                  className="w-full h-[500px] object-cover rounded-2xl shadow-2xl"
+                />
+
+                {/* Floating Discount Card */}
+                <div className="absolute top-12 left-12 bg-white rounded-2xl p-4 shadow-xl border border-sage-200 animate-float-slow">
+                  <div className="text-center">
+                    <div className="text-xs font-body text-muted-foreground mb-1">
+                      Get discount up to
+                    </div>
+                    <div className="text-3xl font-heading text-primary mb-2">
+                      50%
+                    </div>
+                    <Button
+                      size="sm"
+                      className="bg-primary hover:bg-primary/90 text-white px-4 py-1 rounded-lg text-xs font-body"
+                      onClick={() => (window.location.href = "/membership")}
+                    >
+                      Get it Now
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Floating Service Card */}
+                <div className="absolute bottom-12 right-12 bg-white rounded-2xl p-4 shadow-xl border border-sage-200 min-w-[200px] animate-float-medium">
+                  <div className="flex items-center gap-3 mb-3">
+                    <img
+                      src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=60&h=60&fit=crop&crop=center"
+                      alt="Spa treatment"
+                      className="w-12 h-12 rounded-lg object-cover"
+                    />
+                    <div>
+                      <div className="font-body text-foreground text-sm">
+                        Deep Relaxation
                       </div>
-                      <div>
-                        <h3 className="text-xl font-heading text-white">
-                          Premium Experience
-                        </h3>
-                        <p className="text-white/70 font-body">
-                          Handpicked wellness providers
-                        </p>
+                      <div className="text-xs text-muted-foreground">
+                        Signature spa treatment
                       </div>
                     </div>
-
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <span className="text-white/80 font-body">
-                          Spa & Wellness
-                        </span>
-                        <span className="text-white font-heading">
-                          150+ venues
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-white/80 font-body">
-                          Hair & Beauty
-                        </span>
-                        <span className="text-white font-heading">
-                          200+ salons
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-white/80 font-body">
-                          Massage Therapy
-                        </span>
-                        <span className="text-white font-heading">
-                          120+ centers
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="pt-4 border-t border-white/10">
-                      <Button
-                        className="w-full bg-white/20 hover:bg-white/30 text-white border-0 rounded-xl font-body"
-                        onClick={() => (window.location.href = "/salons")}
-                      >
-                        View All Categories
-                      </Button>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-heading text-foreground">
+                      ₹2,500
                     </div>
                   </div>
                 </div>
 
-                {/* Floating Mini Cards */}
-                <div className="absolute -top-4 -right-4 bg-cta/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl animate-float-slow">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-white" />
-                    <span className="text-white font-body text-sm">
-                      Instant Booking
-                    </span>
+                {/* Floating Rating Card */}
+                <div className="absolute top-1/2 -left-6 bg-white rounded-2xl p-4 shadow-xl border border-sage-200 animate-float-fast">
+                  <div className="text-center">
+                    <div className="flex items-center gap-1 justify-center mb-2">
+                      <Star className="h-4 w-4 fill-primary text-primary" />
+                      <span className="font-heading text-foreground">4.9</span>
+                    </div>
+                    <div className="text-xs font-body text-muted-foreground max-w-[120px]">
+                      Excellence in wellness with years of experience and a
+                      passion for creating exceptional experiences.
+                    </div>
                   </div>
                 </div>
 
-                <div className="absolute -bottom-4 -left-4 bg-sage-600/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl animate-float-medium">
-                  <div className="flex items-center gap-2">
-                    <Users className="h-5 w-5 text-white" />
-                    <span className="text-white font-body text-sm">
-                      25K+ Happy Customers
-                    </span>
+                {/* Price Tag */}
+                <div className="absolute bottom-8 left-8 bg-foreground text-background rounded-xl px-4 py-2">
+                  <div className="text-lg font-heading">₹1,850</div>
+                </div>
+
+                {/* Additional Info */}
+                <div className="absolute top-1/2 -right-6 bg-white rounded-2xl p-3 shadow-xl border border-sage-200">
+                  <div className="text-xs font-body text-muted-foreground mb-1">
+                    Affordable luxury
+                  </div>
+                  <div className="font-heading text-foreground text-sm">
+                    Premium Services
                   </div>
                 </div>
               </div>
@@ -378,23 +373,16 @@ export default function Index() {
           </div>
 
           {/* Search Bar Section */}
-          <div className="mt-16 animate-slide-up-delay-3">
+          <div className="mt-16">
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-heading text-white mb-2">
+              <h2 className="text-2xl font-heading text-foreground mb-2">
                 Find Your Perfect Wellness Experience
               </h2>
-              <p className="text-white/70 font-body">
+              <p className="text-muted-foreground font-body">
                 Search by location and service type
               </p>
             </div>
             <SearchBar className="max-w-4xl mx-auto" />
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </section>
