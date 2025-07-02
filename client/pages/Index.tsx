@@ -20,6 +20,7 @@ import {
   ArrowRight,
   Leaf,
   CheckCircle,
+  User,
 } from "lucide-react";
 
 const categories = [
