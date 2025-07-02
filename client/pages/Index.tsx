@@ -478,25 +478,28 @@ export default function Index() {
       </div>
 
       {/* Featured Venues */}
-      <section className="py-20 bg-background">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-12">
-            <div>
-              <h2 className="text-3xl font-heading text-foreground mb-2">
-                Premium Wellness Venues
-              </h2>
-              <p className="text-muted-foreground font-body">
-                Handpicked locations for the ultimate relaxation experience
-              </p>
+      <section className="py-24 bg-gradient-to-br from-background to-muted/30 relative overflow-hidden">
+        {/* Background decorations */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+              <Star className="h-4 w-4 text-primary" />
+              <span className="text-sm font-body text-primary">
+                Premium Collection
+              </span>
             </div>
-            <Button
-              variant="ghost"
-              className="text-primary hover:text-secondary font-body"
-              onClick={() => (window.location.href = "/salons")}
-            >
-              View All
-              <ChevronRight className="ml-1 h-4 w-4" />
-            </Button>
+            <h2 className="text-4xl md:text-5xl font-heading text-foreground mb-4">
+              Featured Wellness
+              <br />
+              <span className="text-primary italic">Destinations</span>
+            </h2>
+            <p className="text-lg text-muted-foreground font-body max-w-2xl mx-auto leading-relaxed">
+              Discover our handpicked selection of premium venues offering
+              exceptional treatments and unparalleled service
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
