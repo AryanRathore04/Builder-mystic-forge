@@ -19,6 +19,7 @@ import {
   Clock,
   ArrowRight,
   Leaf,
+  CheckCircle,
 } from "lucide-react";
 
 const categories = [
