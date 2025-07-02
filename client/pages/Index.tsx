@@ -506,10 +506,10 @@ export default function Index() {
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl md:text-5xl font-heading mb-6 animate-slide-up text-primary-foreground">
+          <h2 className="text-4xl md:text-5xl font-heading mb-6 animate-slide-up text-white">
             Begin Your Wellness Journey
           </h2>
-          <p className="text-xl font-body mb-8 text-primary-foreground/90 animate-slide-up-delay">
+          <p className="text-xl font-body mb-8 text-white/90 animate-slide-up-delay">
             Join thousands who trust BeautyBook for their wellness needs
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up-delay-2">
