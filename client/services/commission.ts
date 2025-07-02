@@ -11,8 +11,8 @@ import {
   limit,
   Timestamp,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { Transaction, Booking, Vendor } from "@/types/platform";
+import { db } from "../lib/firebase";
+import { Transaction, Booking, Vendor } from "../types/platform";
 
 export class CommissionService {
   private static readonly COMMISSION_RATE = 0.22; // 22%
