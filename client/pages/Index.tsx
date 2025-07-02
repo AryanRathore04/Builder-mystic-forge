@@ -210,10 +210,10 @@ export default function Index() {
 
         {/* Floating Animation Elements */}
         <div className="absolute inset-0 z-5">
-          <div className="absolute top-20 left-10 w-20 h-20 bg-secondary/20 rounded-full animate-float-slow"></div>
-          <div className="absolute top-40 right-20 w-16 h-16 bg-primary/20 rounded-full animate-float-medium"></div>
-          <div className="absolute bottom-40 left-20 w-12 h-12 bg-accent/20 rounded-full animate-float-fast"></div>
-          <div className="absolute bottom-20 right-10 w-24 h-24 bg-secondary/20 rounded-full animate-float-slow"></div>
+          <div className="absolute top-20 left-10 w-20 h-20 bg-olive-400/20 rounded-full animate-float-slow"></div>
+          <div className="absolute top-40 right-20 w-16 h-16 bg-olive-600/20 rounded-full animate-float-medium"></div>
+          <div className="absolute bottom-40 left-20 w-12 h-12 bg-sage-300/20 rounded-full animate-float-fast"></div>
+          <div className="absolute bottom-20 right-10 w-24 h-24 bg-olive-500/20 rounded-full animate-float-slow"></div>
         </div>
 
         <div className="relative z-20 max-w-4xl mx-auto text-center">
