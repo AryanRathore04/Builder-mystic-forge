@@ -20,16 +20,28 @@ export class LocationService {
             const locationData = await this.reverseGeocode(latitude, longitude);
             resolve(locationData);
           } catch (error) {
-            resolve({ latitude, longitude });
+            // Fallback with coordinates only
+            resolve({
+              latitude,
+              longitude,
+              city: "Your Location",
+              address: `Lat: ${latitude.toFixed(4)}, Lng: ${longitude.toFixed(4)}`,
+            });
           }
         },
         (error) => {
-          reject(new Error(`Location error: ${error.message}`));
+          // Better error handling with fallback location
+          console.warn(`Location error: ${error.message}`);
+          reject(
+            new Error(
+              `Unable to get location: ${error.message}. Please enable location services.`,
+            ),
+          );
         },
         {
           enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 300000, // 5 minutes
+          timeout: 15000, // Increased timeout
+          maximumAge: 60000, // Reduced cache time for better accuracy
         },
       );
     });
@@ -42,7 +54,7 @@ export class LocationService {
     try {
       // Using OpenStreetMap Nominatim API (free alternative to Google Maps)
       const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`,
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=12&addressdetails=1&accept-language=en`,
       );
 
       if (!response.ok) {
@@ -51,14 +63,20 @@ export class LocationService {
 
       const data = await response.json();
 
+      // Better city detection
+      const city =
+        data.address?.city ||
+        data.address?.town ||
+        data.address?.village ||
+        data.address?.municipality ||
+        data.address?.suburb ||
+        data.address?.neighbourhood ||
+        "Current Location";
+
       return {
         latitude,
         longitude,
-        city:
-          data.address?.city ||
-          data.address?.town ||
-          data.address?.village ||
-          "Unknown",
+        city,
         address: data.display_name || "Unknown location",
       };
     } catch (error) {

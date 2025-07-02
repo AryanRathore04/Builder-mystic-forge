@@ -227,16 +227,16 @@ export default function Index() {
               </p>
 
               {/* CTA Button */}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 group hover:gap-0 transition-all duration-500 ease-out">
                 <Button
                   size="lg"
-                  className="bg-foreground hover:bg-foreground/90 text-background px-8 py-4 rounded-full font-body text-base shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="bg-foreground hover:bg-foreground/90 text-background px-8 py-4 rounded-full font-body text-base shadow-lg hover:shadow-xl transition-all duration-300 group-hover:rounded-r-none"
                   onClick={() => (window.location.href = "/salons")}
                 >
                   View Treatments
                 </Button>
                 <div
-                  className="w-12 h-12 bg-foreground rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
+                  className="w-12 h-12 bg-foreground rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300 group-hover:rounded-l-none group-hover:w-14"
                   onClick={() => (window.location.href = "/salons")}
                 >
                   <ArrowRight className="h-5 w-5 text-background" />
