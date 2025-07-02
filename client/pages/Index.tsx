@@ -217,14 +217,14 @@ export default function Index() {
         </div>
 
         <div className="relative z-20 max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-heading text-foreground mb-8 leading-tight animate-slide-up">
+          <h1 className="text-5xl md:text-7xl font-heading text-white mb-8 leading-tight animate-slide-up">
             Rejuvenate Your Mind,
             <br />
-            <span className="text-secondary animate-gradient-text">
+            <span className="text-olive-100 animate-gradient-text">
               Body, and Spirit
             </span>
           </h1>
-          <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto font-body leading-relaxed animate-slide-up-delay">
+          <p className="text-lg text-white/90 mb-12 max-w-2xl mx-auto font-body leading-relaxed animate-slide-up-delay">
             Discover exceptional wellness experiences at premium salons and
             spas. Book treatments from certified professionals who care about
             your well-being.
