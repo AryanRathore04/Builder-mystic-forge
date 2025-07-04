@@ -1,95 +1,140 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { User, onAuthStateChanged } from "firebase/auth";
-import { auth } from "../lib/firebase";
-import { authService, UserProfile } from "../services/auth";
+import { AuthService, AuthUser, SignupData, LoginData } from "../services/auth";
+import { User } from "../types/platform";
 
 interface AuthContextType {
-  user: User | null;
-  userProfile: UserProfile | null;
+  user: AuthUser | null;
+  userProfile: User | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<UserProfile>;
-  signUp: (userData: any) => Promise<UserProfile>;
-  signInWithGoogle: () => Promise<UserProfile>;
-  signInWithFacebook: () => Promise<UserProfile>;
+  signIn: (loginData: LoginData) => Promise<any>;
+  signUp: (userData: SignupData) => Promise<AuthUser>;
+  signInWithGoogle: () => Promise<void>;
+  signInWithFacebook: () => Promise<void>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
-  updateProfile: (updates: Partial<UserProfile>) => Promise<void>;
+  updateProfile: (updates: Partial<User>) => Promise<void>;
+  isAdmin: boolean;
+  isVendor: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [userProfile, setUserProfile] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isVendor, setIsVendor] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      setUser(firebaseUser);
-
-      if (firebaseUser) {
-        // Get user profile from Firestore
-        try {
-          const profile = await authService.getCurrentUserProfile();
-          setUserProfile(profile);
-        } catch (error) {
-          console.error("Error getting user profile:", error);
-          setUserProfile(null);
-        }
-      } else {
-        setUserProfile(null);
-      }
-
-      setLoading(false);
-    });
-
-    return unsubscribe;
+    checkUser();
   }, []);
 
-  const signIn = async (
-    email: string,
-    password: string,
-  ): Promise<UserProfile> => {
-    const profile = await authService.signIn(email, password);
-    setUserProfile(profile);
-    return profile;
+  const checkUser = async () => {
+    try {
+      const currentUser = await AuthService.getCurrentUser();
+      setUser(currentUser);
+
+      if (currentUser) {
+        // Get user profile from database
+        const profile = await AuthService.getUserData(currentUser.$id);
+        setUserProfile(profile);
+
+        // Check user roles
+        const adminStatus = await AuthService.isAdmin(currentUser.$id);
+        const vendorStatus = await AuthService.isVendor(currentUser.$id);
+        setIsAdmin(adminStatus);
+        setIsVendor(vendorStatus);
+      } else {
+        setUserProfile(null);
+        setIsAdmin(false);
+        setIsVendor(false);
+      }
+    } catch (error) {
+      console.error("Error checking user:", error);
+      setUser(null);
+      setUserProfile(null);
+      setIsAdmin(false);
+      setIsVendor(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const signUp = async (userData: any): Promise<UserProfile> => {
-    const profile = await authService.signUp(userData);
-    setUserProfile(profile);
-    return profile;
+  const signIn = async (loginData: LoginData): Promise<any> => {
+    try {
+      const session = await AuthService.signin(loginData);
+      await checkUser(); // Refresh user data
+      return session;
+    } catch (error) {
+      console.error("Sign in error:", error);
+      throw error;
+    }
   };
 
-  const signInWithGoogle = async (): Promise<UserProfile> => {
-    const profile = await authService.signInWithGoogle();
-    setUserProfile(profile);
-    return profile;
+  const signUp = async (userData: SignupData): Promise<AuthUser> => {
+    try {
+      const newUser = await AuthService.signup(userData);
+      await checkUser(); // Refresh user data
+      return newUser;
+    } catch (error) {
+      console.error("Sign up error:", error);
+      throw error;
+    }
   };
 
-  const signInWithFacebook = async (): Promise<UserProfile> => {
-    const profile = await authService.signInWithFacebook();
-    setUserProfile(profile);
-    return profile;
+  const signInWithGoogle = async (): Promise<void> => {
+    try {
+      await AuthService.signInWithGoogle();
+      await checkUser(); // Refresh user data
+    } catch (error) {
+      console.error("Google sign in error:", error);
+      throw error;
+    }
+  };
+
+  const signInWithFacebook = async (): Promise<void> => {
+    try {
+      await AuthService.signInWithFacebook();
+      await checkUser(); // Refresh user data
+    } catch (error) {
+      console.error("Facebook sign in error:", error);
+      throw error;
+    }
   };
 
   const signOut = async (): Promise<void> => {
-    await authService.signOutUser();
-    setUser(null);
-    setUserProfile(null);
+    try {
+      await AuthService.signout();
+      setUser(null);
+      setUserProfile(null);
+      setIsAdmin(false);
+      setIsVendor(false);
+    } catch (error) {
+      console.error("Sign out error:", error);
+      throw error;
+    }
   };
 
   const resetPassword = async (email: string): Promise<void> => {
-    await authService.resetPassword(email);
+    try {
+      await AuthService.forgotPassword(email);
+    } catch (error) {
+      console.error("Reset password error:", error);
+      throw error;
+    }
   };
 
-  const updateProfile = async (
-    updates: Partial<UserProfile>,
-  ): Promise<void> => {
-    if (!user) throw new Error("No user logged in");
+  const updateProfile = async (updates: Partial<User>): Promise<void> => {
+    try {
+      if (!user) throw new Error("No user logged in");
 
-    await authService.updateUserProfile(user.uid, updates);
-    setUserProfile((prev) => (prev ? { ...prev, ...updates } : null));
+      await AuthService.updateUserData(user.$id, updates);
+      setUserProfile((prev) => (prev ? { ...prev, ...updates } : null));
+    } catch (error) {
+      console.error("Update profile error:", error);
+      throw error;
+    }
   };
 
   const value: AuthContextType = {
@@ -103,6 +148,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     signOut,
     resetPassword,
     updateProfile,
+    isAdmin,
+    isVendor,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
