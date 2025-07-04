@@ -1,16 +1,4 @@
-import {
-  collection,
-  doc,
-  addDoc,
-  updateDoc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-  orderBy,
-  Timestamp,
-} from "firebase/firestore";
-import { db } from "../lib/firebase";
+import { AppwriteHelper, COLLECTIONS, Query } from "../lib/appwrite";
 import { LoyaltyTransaction, User, Booking } from "../types/platform";
 
 export class LoyaltyService {
@@ -42,19 +30,21 @@ export class LoyaltyService {
         points: pointsEarned,
         bookingId,
         description: `Points earned for booking #${bookingId}`,
-        createdAt: Timestamp.now() as any,
-        expiresAt: Timestamp.fromDate(expiryDate) as any,
+        createdAt: new Date(),
+        expiresAt: expiryDate,
       };
 
-      await addDoc(collection(db, "loyaltyTransactions"), transaction);
+      await AppwriteHelper.createDocument(
+        COLLECTIONS.LOYALTY_TRANSACTIONS,
+        transaction,
+      );
 
       // Update user's total loyalty points
       await this.updateUserLoyaltyPoints(customerId, pointsEarned);
 
       // Update booking with points earned
-      await updateDoc(doc(db, "bookings", bookingId), {
+      await AppwriteHelper.updateDocument(COLLECTIONS.BOOKINGS, bookingId, {
         loyaltyPointsEarned: pointsEarned,
-        updatedAt: Timestamp.now(),
       });
 
       console.log(
@@ -83,14 +73,15 @@ export class LoyaltyService {
         );
       }
 
-      const userRef = doc(db, "users", customerId);
-      const userDoc = await getDoc(userRef);
+      const userDoc = await AppwriteHelper.getDocument(
+        COLLECTIONS.USERS,
+        customerId,
+      );
 
-      if (!userDoc.exists()) {
+      if (!userDoc) {
         throw new Error("User not found");
       }
 
-      const user = userDoc.data() as User;
       const availablePoints = await this.getAvailablePoints(customerId);
 
       if (availablePoints < pointsToRedeem) {
@@ -106,18 +97,20 @@ export class LoyaltyService {
         points: -pointsToRedeem,
         bookingId,
         description: `Points redeemed for booking #${bookingId}`,
-        createdAt: Timestamp.now() as any,
+        createdAt: new Date(),
       };
 
-      await addDoc(collection(db, "loyaltyTransactions"), transaction);
+      await AppwriteHelper.createDocument(
+        COLLECTIONS.LOYALTY_TRANSACTIONS,
+        transaction,
+      );
 
       // Update user's total loyalty points
       await this.updateUserLoyaltyPoints(customerId, -pointsToRedeem);
 
       // Update booking with points used
-      await updateDoc(doc(db, "bookings", bookingId), {
+      await AppwriteHelper.updateDocument(COLLECTIONS.BOOKINGS, bookingId, {
         loyaltyPointsUsed: pointsToRedeem,
-        updatedAt: Timestamp.now(),
       });
 
       console.log(
@@ -136,20 +129,26 @@ export class LoyaltyService {
    */
   static async getAvailablePoints(customerId: string): Promise<number> {
     try {
-      const now = Timestamp.now();
-      const transactionsRef = collection(db, "loyaltyTransactions");
-      const q = query(
-        transactionsRef,
-        where("customerId", "==", customerId),
-        where("type", "in", ["earned", "redeemed"]),
-        orderBy("createdAt", "desc"),
+      const now = new Date();
+      const result = await AppwriteHelper.listDocuments(
+        COLLECTIONS.LOYALTY_TRANSACTIONS,
+        [
+          Query.equal("customerId", customerId),
+          Query.equal("type", ["earned", "redeemed"]),
+          Query.orderDesc("createdAt"),
+        ],
       );
 
-      const snapshot = await getDocs(q);
       let availablePoints = 0;
 
-      snapshot.docs.forEach((doc) => {
-        const transaction = doc.data() as LoyaltyTransaction;
+      result.documents.forEach((doc) => {
+        const transaction = {
+          ...doc,
+          createdAt: AppwriteHelper.parseDate(doc.createdAt),
+          expiresAt: doc.expiresAt
+            ? AppwriteHelper.parseDate(doc.expiresAt)
+            : undefined,
+        } as LoyaltyTransaction;
 
         // Check if points are not expired (for earned points)
         if (transaction.type === "earned") {
@@ -173,17 +172,18 @@ export class LoyaltyService {
    */
   static async getLoyaltyHistory(customerId: string) {
     try {
-      const transactionsRef = collection(db, "loyaltyTransactions");
-      const q = query(
-        transactionsRef,
-        where("customerId", "==", customerId),
-        orderBy("createdAt", "desc"),
+      const result = await AppwriteHelper.listDocuments(
+        COLLECTIONS.LOYALTY_TRANSACTIONS,
+        [Query.equal("customerId", customerId), Query.orderDesc("createdAt")],
       );
 
-      const snapshot = await getDocs(q);
-      const transactions = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
+      const transactions = result.documents.map((doc) => ({
+        id: doc.$id,
+        ...doc,
+        createdAt: AppwriteHelper.parseDate(doc.createdAt),
+        expiresAt: doc.expiresAt
+          ? AppwriteHelper.parseDate(doc.expiresAt)
+          : undefined,
       })) as LoyaltyTransaction[];
 
       const totalEarned = transactions
@@ -218,29 +218,37 @@ export class LoyaltyService {
    */
   static async expireOldPoints(): Promise<void> {
     try {
-      const now = Timestamp.now();
-      const transactionsRef = collection(db, "loyaltyTransactions");
-      const q = query(
-        transactionsRef,
-        where("type", "==", "earned"),
-        where("expiresAt", "<", now),
+      const now = new Date();
+      const result = await AppwriteHelper.listDocuments(
+        COLLECTIONS.LOYALTY_TRANSACTIONS,
+        [
+          Query.equal("type", "earned"),
+          Query.lessThan("expiresAt", AppwriteHelper.formatDate(now)),
+        ],
       );
 
-      const snapshot = await getDocs(q);
-
-      for (const docSnapshot of snapshot.docs) {
-        const transaction = docSnapshot.data() as LoyaltyTransaction;
+      for (const doc of result.documents) {
+        const transaction = {
+          ...doc,
+          createdAt: AppwriteHelper.parseDate(doc.createdAt),
+          expiresAt: doc.expiresAt
+            ? AppwriteHelper.parseDate(doc.expiresAt)
+            : undefined,
+        } as LoyaltyTransaction;
 
         // Create expiry transaction
         const expiryTransaction: Omit<LoyaltyTransaction, "id"> = {
           customerId: transaction.customerId,
           type: "expired",
           points: -transaction.points,
-          description: `Points expired from ${transaction.createdAt.toDate().toLocaleDateString()}`,
-          createdAt: Timestamp.now() as any,
+          description: `Points expired from ${transaction.createdAt.toLocaleDateString()}`,
+          createdAt: new Date(),
         };
 
-        await addDoc(collection(db, "loyaltyTransactions"), expiryTransaction);
+        await AppwriteHelper.createDocument(
+          COLLECTIONS.LOYALTY_TRANSACTIONS,
+          expiryTransaction,
+        );
 
         // Update user's total loyalty points
         await this.updateUserLoyaltyPoints(
@@ -265,20 +273,25 @@ export class LoyaltyService {
     customerId: string,
     pointsChange: number,
   ): Promise<void> {
-    const userRef = doc(db, "users", customerId);
-    const userDoc = await getDoc(userRef);
-
-    if (userDoc.exists()) {
-      const currentData = userDoc.data() as User;
-      const newPoints = Math.max(
-        0,
-        (currentData.loyaltyPoints || 0) + pointsChange,
+    try {
+      const userDoc = await AppwriteHelper.getDocument(
+        COLLECTIONS.USERS,
+        customerId,
       );
 
-      await updateDoc(userRef, {
-        loyaltyPoints: newPoints,
-        updatedAt: Timestamp.now(),
-      });
+      if (userDoc) {
+        const newPoints = Math.max(
+          0,
+          (userDoc.loyaltyPoints || 0) + pointsChange,
+        );
+
+        await AppwriteHelper.updateDocument(COLLECTIONS.USERS, customerId, {
+          loyaltyPoints: newPoints,
+        });
+      }
+    } catch (error) {
+      console.error("Error updating user loyalty points:", error);
+      throw error;
     }
   }
 
@@ -287,23 +300,35 @@ export class LoyaltyService {
    */
   static async getLoyaltyAnalytics(startDate?: Date, endDate?: Date) {
     try {
-      let q = query(
-        collection(db, "loyaltyTransactions"),
-        orderBy("createdAt", "desc"),
-      );
+      const queries = [Query.orderDesc("createdAt")];
 
       if (startDate) {
-        q = query(q, where("createdAt", ">=", Timestamp.fromDate(startDate)));
+        queries.push(
+          Query.greaterThanEqual(
+            "createdAt",
+            AppwriteHelper.formatDate(startDate),
+          ),
+        );
       }
 
       if (endDate) {
-        q = query(q, where("createdAt", "<=", Timestamp.fromDate(endDate)));
+        queries.push(
+          Query.lessThanEqual("createdAt", AppwriteHelper.formatDate(endDate)),
+        );
       }
 
-      const snapshot = await getDocs(q);
-      const transactions = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
+      const result = await AppwriteHelper.listDocuments(
+        COLLECTIONS.LOYALTY_TRANSACTIONS,
+        queries,
+      );
+
+      const transactions = result.documents.map((doc) => ({
+        id: doc.$id,
+        ...doc,
+        createdAt: AppwriteHelper.parseDate(doc.createdAt),
+        expiresAt: doc.expiresAt
+          ? AppwriteHelper.parseDate(doc.expiresAt)
+          : undefined,
       })) as LoyaltyTransaction[];
 
       const totalPointsEarned = transactions
