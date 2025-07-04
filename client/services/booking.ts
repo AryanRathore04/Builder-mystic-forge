@@ -1,19 +1,4 @@
-import {
-  collection,
-  doc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-  orderBy,
-  limit,
-  Timestamp,
-  runTransaction,
-} from "firebase/firestore";
-import { db } from "../lib/firebase";
+import { AppwriteHelper, COLLECTIONS, Query } from "../lib/appwrite";
 import {
   Booking,
   VendorService,
@@ -38,12 +23,22 @@ export class BookingService {
   }> {
     try {
       // Get vendor operating hours
-      const vendorDoc = await getDoc(doc(db, "vendors", vendorId));
-      if (!vendorDoc.exists()) {
+      const vendorDoc = await AppwriteHelper.getDocument(
+        COLLECTIONS.VENDORS,
+        vendorId,
+      );
+
+      if (!vendorDoc) {
         throw new Error("Vendor not found");
       }
 
-      const vendor = vendorDoc.data() as Vendor;
+      const vendor = {
+        id: vendorDoc.$id,
+        ...vendorDoc,
+        createdAt: AppwriteHelper.parseDate(vendorDoc.createdAt),
+        updatedAt: AppwriteHelper.parseDate(vendorDoc.updatedAt),
+      } as Vendor;
+
       const dayOfWeek = date
         .toLocaleDateString("en-US", { weekday: "long" })
         .toLowerCase();
@@ -64,18 +59,17 @@ export class BookingService {
       const endOfDay = new Date(date);
       endOfDay.setHours(23, 59, 59, 999);
 
-      const bookingsQuery = query(
-        collection(db, "bookings"),
-        where("vendorId", "==", vendorId),
-        where("date", ">=", Timestamp.fromDate(startOfDay)),
-        where("date", "<=", Timestamp.fromDate(endOfDay)),
-        where("status", "in", ["pending", "confirmed", "in_progress"]),
+      const bookingsResult = await AppwriteHelper.listDocuments(
+        COLLECTIONS.BOOKINGS,
+        [
+          Query.equal("vendorId", vendorId),
+          Query.greaterThanEqual("date", AppwriteHelper.formatDate(startOfDay)),
+          Query.lessThanEqual("date", AppwriteHelper.formatDate(endOfDay)),
+          Query.equal("status", ["pending", "confirmed", "in_progress"]),
+        ],
       );
 
-      const bookingsSnapshot = await getDocs(bookingsQuery);
-      const bookedSlots = bookingsSnapshot.docs.map(
-        (doc) => doc.data().timeSlot,
-      );
+      const bookedSlots = bookingsResult.documents.map((doc) => doc.timeSlot);
 
       // Generate all possible slots based on operating hours
       const allSlots = this.generateTimeSlots(
@@ -121,105 +115,99 @@ export class BookingService {
     notes?: string;
   }): Promise<string> {
     try {
-      return await runTransaction(db, async (transaction) => {
-        // Get service details
-        const vendorDoc = await transaction.get(
-          doc(db, "vendors", bookingData.vendorId),
+      // Get service details
+      const vendorDoc = await AppwriteHelper.getDocument(
+        COLLECTIONS.VENDORS,
+        bookingData.vendorId,
+      );
+
+      if (!vendorDoc) {
+        throw new Error("Vendor not found");
+      }
+
+      const vendor = vendorDoc as Vendor;
+      const service = vendor.services.find(
+        (s) => s.id === bookingData.serviceId,
+      );
+      if (!service) {
+        throw new Error("Service not found");
+      }
+
+      // Calculate pricing
+      let basePrice = service.price;
+      let addOnPrice = 0;
+      let totalDuration = service.duration;
+      const selectedAddOns: string[] = [];
+
+      if (bookingData.addOnServiceIds?.length) {
+        bookingData.addOnServiceIds.forEach((addOnId) => {
+          const addOn = service.addOns.find((ao) => ao.id === addOnId);
+          if (addOn) {
+            addOnPrice += addOn.price;
+            totalDuration += addOn.duration;
+            selectedAddOns.push(addOnId);
+          }
+        });
+      }
+
+      const subtotal = basePrice + addOnPrice;
+      let discountAmount = 0;
+      let finalPrice = subtotal;
+
+      // Apply loyalty points if provided
+      let loyaltyPointsUsed = 0;
+      if (bookingData.loyaltyPointsToUse) {
+        const availablePoints = await LoyaltyService.getAvailablePoints(
+          bookingData.customerId,
         );
-        if (!vendorDoc.exists()) {
-          throw new Error("Vendor not found");
-        }
-
-        const vendor = vendorDoc.data() as Vendor;
-        const service = vendor.services.find(
-          (s) => s.id === bookingData.serviceId,
+        loyaltyPointsUsed = Math.min(
+          bookingData.loyaltyPointsToUse,
+          availablePoints,
         );
-        if (!service) {
-          throw new Error("Service not found");
-        }
+        const loyaltyDiscount =
+          LoyaltyService.calculateRedemptionValue(loyaltyPointsUsed);
+        discountAmount += loyaltyDiscount;
+      }
 
-        // Calculate pricing
-        let basePrice = service.price;
-        let addOnPrice = 0;
-        let totalDuration = service.duration;
-        const selectedAddOns: string[] = [];
+      finalPrice = Math.max(0, subtotal - discountAmount);
 
-        if (bookingData.addOnServiceIds?.length) {
-          bookingData.addOnServiceIds.forEach((addOnId) => {
-            const addOn = service.addOns.find((ao) => ao.id === addOnId);
-            if (addOn) {
-              addOnPrice += addOn.price;
-              totalDuration += addOn.duration;
-              selectedAddOns.push(addOnId);
-            }
-          });
-        }
+      // Calculate commission
+      const commissionAmount = finalPrice * 0.22; // 22% commission
+      const vendorEarnings = finalPrice - commissionAmount;
 
-        const subtotal = basePrice + addOnPrice;
-        let discountAmount = 0;
-        let finalPrice = subtotal;
+      // Create booking
+      const booking: Omit<Booking, "id"> = {
+        customerId: bookingData.customerId,
+        vendorId: bookingData.vendorId,
+        serviceId: bookingData.serviceId,
+        addOnServices: selectedAddOns,
+        date: bookingData.date,
+        timeSlot: bookingData.timeSlot,
+        duration: totalDuration,
+        basePrice,
+        addOnPrice,
+        totalPrice: subtotal,
+        discountAmount,
+        finalPrice,
+        commissionAmount,
+        vendorEarnings,
+        status: "pending",
+        paymentStatus: "pending",
+        paymentMethod: "pending" as any,
+        loyaltyPointsEarned: 0,
+        loyaltyPointsUsed,
+        promoCode: bookingData.promoCode,
+        promoDiscount: 0,
+        notes: bookingData.notes,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
 
-        // Apply promo code if provided
-        if (bookingData.promoCode) {
-          // TODO: Implement promo code validation and discount calculation
-          // const promoDiscount = await this.validateAndApplyPromoCode(bookingData.promoCode, subtotal);
-          // discountAmount += promoDiscount;
-        }
-
-        // Apply loyalty points if provided
-        let loyaltyPointsUsed = 0;
-        if (bookingData.loyaltyPointsToUse) {
-          const availablePoints = await LoyaltyService.getAvailablePoints(
-            bookingData.customerId,
-          );
-          loyaltyPointsUsed = Math.min(
-            bookingData.loyaltyPointsToUse,
-            availablePoints,
-          );
-          const loyaltyDiscount =
-            LoyaltyService.calculateRedemptionValue(loyaltyPointsUsed);
-          discountAmount += loyaltyDiscount;
-        }
-
-        finalPrice = Math.max(0, subtotal - discountAmount);
-
-        // Calculate commission
-        const commissionAmount = finalPrice * 0.22; // 22% commission
-        const vendorEarnings = finalPrice - commissionAmount;
-
-        // Create booking
-        const booking: Omit<Booking, "id"> = {
-          customerId: bookingData.customerId,
-          vendorId: bookingData.vendorId,
-          serviceId: bookingData.serviceId,
-          addOnServices: selectedAddOns,
-          date: Timestamp.fromDate(bookingData.date) as any,
-          timeSlot: bookingData.timeSlot,
-          duration: totalDuration,
-          basePrice,
-          addOnPrice,
-          totalPrice: subtotal,
-          discountAmount,
-          finalPrice,
-          commissionAmount,
-          vendorEarnings,
-          status: "pending",
-          paymentStatus: "pending",
-          paymentMethod: "pending" as any,
-          loyaltyPointsEarned: 0,
-          loyaltyPointsUsed,
-          promoCode: bookingData.promoCode,
-          promoDiscount: 0, // TODO: Implement promo discount
-          notes: bookingData.notes,
-          createdAt: Timestamp.now() as any,
-          updatedAt: Timestamp.now() as any,
-        };
-
-        const bookingRef = doc(collection(db, "bookings"));
-        transaction.set(bookingRef, booking);
-
-        return bookingRef.id;
-      });
+      const doc = await AppwriteHelper.createDocument(
+        COLLECTIONS.BOOKINGS,
+        booking,
+      );
+      return doc.$id;
     } catch (error) {
       console.error("Error creating booking:", error);
       throw error;
@@ -235,21 +223,28 @@ export class BookingService {
     paymentId: string,
   ): Promise<void> {
     try {
-      const bookingRef = doc(db, "bookings", bookingId);
-      const bookingDoc = await getDoc(bookingRef);
+      const bookingDoc = await AppwriteHelper.getDocument(
+        COLLECTIONS.BOOKINGS,
+        bookingId,
+      );
 
-      if (!bookingDoc.exists()) {
+      if (!bookingDoc) {
         throw new Error("Booking not found");
       }
 
-      const booking = bookingDoc.data() as Booking;
+      const booking = {
+        id: bookingDoc.$id,
+        ...bookingDoc,
+        date: AppwriteHelper.parseDate(bookingDoc.date),
+        createdAt: AppwriteHelper.parseDate(bookingDoc.createdAt),
+        updatedAt: AppwriteHelper.parseDate(bookingDoc.updatedAt),
+      } as Booking;
 
       // Update booking payment status
-      await updateDoc(bookingRef, {
+      await AppwriteHelper.updateDocument(COLLECTIONS.BOOKINGS, bookingId, {
         paymentStatus: "paid",
         paymentMethod,
         status: "confirmed",
-        updatedAt: Timestamp.now(),
       });
 
       // Process commission
@@ -272,9 +267,8 @@ export class BookingService {
       );
 
       // Update booking with earned points
-      await updateDoc(bookingRef, {
+      await AppwriteHelper.updateDocument(COLLECTIONS.BOOKINGS, bookingId, {
         loyaltyPointsEarned: pointsEarned,
-        updatedAt: Timestamp.now(),
       });
 
       console.log(`Booking ${bookingId} payment processed successfully`);
@@ -293,16 +287,25 @@ export class BookingService {
     cancelledBy: "customer" | "vendor" | "admin",
   ): Promise<void> {
     try {
-      const bookingRef = doc(db, "bookings", bookingId);
-      const bookingDoc = await getDoc(bookingRef);
+      const bookingDoc = await AppwriteHelper.getDocument(
+        COLLECTIONS.BOOKINGS,
+        bookingId,
+      );
 
-      if (!bookingDoc.exists()) {
+      if (!bookingDoc) {
         throw new Error("Booking not found");
       }
 
-      const booking = bookingDoc.data() as Booking;
+      const booking = {
+        id: bookingDoc.$id,
+        ...bookingDoc,
+        date: AppwriteHelper.parseDate(bookingDoc.date),
+        createdAt: AppwriteHelper.parseDate(bookingDoc.createdAt),
+        updatedAt: AppwriteHelper.parseDate(bookingDoc.updatedAt),
+      } as Booking;
+
       const now = new Date();
-      const bookingDateTime = new Date(booking.date.toDate());
+      const bookingDateTime = new Date(booking.date);
       bookingDateTime.setHours(
         parseInt(booking.timeSlot.split(":")[0]),
         parseInt(booking.timeSlot.split(":")[1]),
@@ -320,15 +323,13 @@ export class BookingService {
         } else if (hoursUntilBooking < 24) {
           cancellationTokens = 1; // 1 token for same-day cancellation
         }
-        // No tokens for cancellation > 24 hours before
       }
 
       // Update booking status
-      await updateDoc(bookingRef, {
+      await AppwriteHelper.updateDocument(COLLECTIONS.BOOKINGS, bookingId, {
         status: "cancelled",
         cancellationReason: reason,
         cancellationTokens,
-        updatedAt: Timestamp.now(),
       });
 
       // Process refund if payment was made
@@ -350,80 +351,38 @@ export class BookingService {
   }
 
   /**
-   * Mark booking as completed
-   */
-  static async completeBooking(bookingId: string): Promise<void> {
-    try {
-      const bookingRef = doc(db, "bookings", bookingId);
-      await updateDoc(bookingRef, {
-        status: "completed",
-        updatedAt: Timestamp.now(),
-      });
-
-      console.log(`Booking ${bookingId} marked as completed`);
-    } catch (error) {
-      console.error("Error completing booking:", error);
-      throw error;
-    }
-  }
-
-  /**
-   * Mark booking as no-show
-   */
-  static async markNoShow(bookingId: string): Promise<void> {
-    try {
-      const bookingRef = doc(db, "bookings", bookingId);
-      const bookingDoc = await getDoc(bookingRef);
-
-      if (!bookingDoc.exists()) {
-        throw new Error("Booking not found");
-      }
-
-      const booking = bookingDoc.data() as Booking;
-
-      await updateDoc(bookingRef, {
-        status: "no_show",
-        cancellationTokens: 3, // 3 tokens for no-show
-        updatedAt: Timestamp.now(),
-      });
-
-      // Process commission even for no-show (vendor policy)
-      await CommissionService.processBookingCommission(bookingId, booking);
-
-      console.log(`Booking ${bookingId} marked as no-show`);
-    } catch (error) {
-      console.error("Error marking no-show:", error);
-      throw error;
-    }
-  }
-
-  /**
    * Get customer bookings with filters
    */
   static async getCustomerBookings(
     customerId: string,
     status?: string,
-    limit?: number,
+    limitCount?: number,
   ) {
     try {
-      let q = query(
-        collection(db, "bookings"),
-        where("customerId", "==", customerId),
-        orderBy("createdAt", "desc"),
-      );
+      const queries = [
+        Query.equal("customerId", customerId),
+        Query.orderDesc("createdAt"),
+      ];
 
       if (status) {
-        q = query(q, where("status", "==", status));
+        queries.push(Query.equal("status", status));
       }
 
-      if (limit) {
-        q = query(q, limit(limit));
+      if (limitCount) {
+        queries.push(Query.limit(limitCount));
       }
 
-      const snapshot = await getDocs(q);
-      return snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
+      const result = await AppwriteHelper.listDocuments(
+        COLLECTIONS.BOOKINGS,
+        queries,
+      );
+
+      return result.documents.map((doc) => ({
+        id: doc.$id,
+        ...doc,
+        date: AppwriteHelper.parseDate(doc.date),
+        createdAt: AppwriteHelper.parseDate(doc.createdAt),
+        updatedAt: AppwriteHelper.parseDate(doc.updatedAt),
       })) as Booking[];
     } catch (error) {
       console.error("Error getting customer bookings:", error);
@@ -440,14 +399,13 @@ export class BookingService {
     date?: Date,
   ) {
     try {
-      let q = query(
-        collection(db, "bookings"),
-        where("vendorId", "==", vendorId),
-        orderBy("date", "desc"),
-      );
+      const queries = [
+        Query.equal("vendorId", vendorId),
+        Query.orderDesc("date"),
+      ];
 
       if (status) {
-        q = query(q, where("status", "==", status));
+        queries.push(Query.equal("status", status));
       }
 
       if (date) {
@@ -456,17 +414,23 @@ export class BookingService {
         const endOfDay = new Date(date);
         endOfDay.setHours(23, 59, 59, 999);
 
-        q = query(
-          q,
-          where("date", ">=", Timestamp.fromDate(startOfDay)),
-          where("date", "<=", Timestamp.fromDate(endOfDay)),
+        queries.push(
+          Query.greaterThanEqual("date", AppwriteHelper.formatDate(startOfDay)),
+          Query.lessThanEqual("date", AppwriteHelper.formatDate(endOfDay)),
         );
       }
 
-      const snapshot = await getDocs(q);
-      return snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
+      const result = await AppwriteHelper.listDocuments(
+        COLLECTIONS.BOOKINGS,
+        queries,
+      );
+
+      return result.documents.map((doc) => ({
+        id: doc.$id,
+        ...doc,
+        date: AppwriteHelper.parseDate(doc.date),
+        createdAt: AppwriteHelper.parseDate(doc.createdAt),
+        updatedAt: AppwriteHelper.parseDate(doc.updatedAt),
       })) as Booking[];
     } catch (error) {
       console.error("Error getting vendor bookings:", error);
@@ -525,63 +489,54 @@ export class BookingService {
   }
 
   /**
-   * Get booking analytics for vendor
+   * Mark booking as completed
    */
-  static async getVendorBookingAnalytics(
-    vendorId: string,
-    startDate?: Date,
-    endDate?: Date,
-  ) {
+  static async completeBooking(bookingId: string): Promise<void> {
     try {
-      let q = query(
-        collection(db, "bookings"),
-        where("vendorId", "==", vendorId),
-        orderBy("createdAt", "desc"),
+      await AppwriteHelper.updateDocument(COLLECTIONS.BOOKINGS, bookingId, {
+        status: "completed",
+      });
+
+      console.log(`Booking ${bookingId} marked as completed`);
+    } catch (error) {
+      console.error("Error completing booking:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Mark booking as no-show
+   */
+  static async markNoShow(bookingId: string): Promise<void> {
+    try {
+      const bookingDoc = await AppwriteHelper.getDocument(
+        COLLECTIONS.BOOKINGS,
+        bookingId,
       );
 
-      if (startDate) {
-        q = query(q, where("createdAt", ">=", Timestamp.fromDate(startDate)));
+      if (!bookingDoc) {
+        throw new Error("Booking not found");
       }
 
-      if (endDate) {
-        q = query(q, where("createdAt", "<=", Timestamp.fromDate(endDate)));
-      }
+      const booking = {
+        id: bookingDoc.$id,
+        ...bookingDoc,
+        date: AppwriteHelper.parseDate(bookingDoc.date),
+        createdAt: AppwriteHelper.parseDate(bookingDoc.createdAt),
+        updatedAt: AppwriteHelper.parseDate(bookingDoc.updatedAt),
+      } as Booking;
 
-      const snapshot = await getDocs(q);
-      const bookings = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Booking[];
+      await AppwriteHelper.updateDocument(COLLECTIONS.BOOKINGS, bookingId, {
+        status: "no_show",
+        cancellationTokens: 3, // 3 tokens for no-show
+      });
 
-      const totalBookings = bookings.length;
-      const completedBookings = bookings.filter(
-        (b) => b.status === "completed",
-      ).length;
-      const cancelledBookings = bookings.filter(
-        (b) => b.status === "cancelled",
-      ).length;
-      const noShowBookings = bookings.filter(
-        (b) => b.status === "no_show",
-      ).length;
+      // Process commission even for no-show (vendor policy)
+      await CommissionService.processBookingCommission(bookingId, booking);
 
-      const totalRevenue = bookings
-        .filter((b) => b.paymentStatus === "paid")
-        .reduce((sum, b) => sum + b.vendorEarnings, 0);
-
-      const completionRate =
-        totalBookings > 0 ? (completedBookings / totalBookings) * 100 : 0;
-
-      return {
-        totalBookings,
-        completedBookings,
-        cancelledBookings,
-        noShowBookings,
-        totalRevenue,
-        completionRate,
-        bookings,
-      };
+      console.log(`Booking ${bookingId} marked as no-show`);
     } catch (error) {
-      console.error("Error getting vendor analytics:", error);
+      console.error("Error marking no-show:", error);
       throw error;
     }
   }
