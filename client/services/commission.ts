@@ -1,17 +1,4 @@
-import {
-  collection,
-  doc,
-  addDoc,
-  updateDoc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-  orderBy,
-  limit,
-  Timestamp,
-} from "firebase/firestore";
-import { db } from "../lib/firebase";
+import { AppwriteHelper, COLLECTIONS, Query } from "../lib/appwrite";
 import { Transaction, Booking, Vendor } from "../types/platform";
 
 export class CommissionService {
@@ -29,10 +16,9 @@ export class CommissionService {
       const vendorEarnings = bookingData.finalPrice! - commissionAmount;
 
       // Update booking with commission details
-      await updateDoc(doc(db, "bookings", bookingId), {
+      await AppwriteHelper.updateDocument(COLLECTIONS.BOOKINGS, bookingId, {
         commissionAmount,
         vendorEarnings,
-        updatedAt: Timestamp.now(),
       });
 
       // Create commission transaction
@@ -81,12 +67,15 @@ export class CommissionService {
       commissionAmount: data.commissionAmount,
       description: data.description,
       status: "completed",
-      createdAt: Timestamp.now() as any,
-      processedAt: Timestamp.now() as any,
+      createdAt: new Date(),
+      processedAt: new Date(),
     };
 
-    const docRef = await addDoc(collection(db, "transactions"), transaction);
-    return docRef.id;
+    const doc = await AppwriteHelper.createDocument(
+      COLLECTIONS.TRANSACTIONS,
+      transaction,
+    );
+    return doc.$id;
   }
 
   /**
@@ -97,16 +86,21 @@ export class CommissionService {
     earnings: number,
     commission: number,
   ): Promise<void> {
-    const vendorRef = doc(db, "vendors", vendorId);
-    const vendorDoc = await getDoc(vendorRef);
+    try {
+      const vendorDoc = await AppwriteHelper.getDocument(
+        COLLECTIONS.VENDORS,
+        vendorId,
+      );
 
-    if (vendorDoc.exists()) {
-      const currentData = vendorDoc.data() as Vendor;
-      await updateDoc(vendorRef, {
-        totalEarnings: (currentData.totalEarnings || 0) + earnings,
-        pendingPayouts: (currentData.pendingPayouts || 0) + earnings,
-        updatedAt: Timestamp.now(),
-      });
+      if (vendorDoc) {
+        await AppwriteHelper.updateDocument(COLLECTIONS.VENDORS, vendorId, {
+          totalEarnings: (vendorDoc.totalEarnings || 0) + earnings,
+          pendingPayouts: (vendorDoc.pendingPayouts || 0) + earnings,
+        });
+      }
+    } catch (error) {
+      console.error("Error updating vendor earnings:", error);
+      throw error;
     }
   }
 
@@ -127,27 +121,27 @@ export class CommissionService {
         description: `Payout to vendor ${vendorId}`,
         status: "pending",
         paymentMethod,
-        createdAt: Timestamp.now() as any,
+        createdAt: new Date(),
       };
 
-      const docRef = await addDoc(collection(db, "transactions"), transaction);
+      const doc = await AppwriteHelper.createDocument(
+        COLLECTIONS.TRANSACTIONS,
+        transaction,
+      );
 
       // Update vendor pending payouts
-      const vendorRef = doc(db, "vendors", vendorId);
-      const vendorDoc = await getDoc(vendorRef);
+      const vendorDoc = await AppwriteHelper.getDocument(
+        COLLECTIONS.VENDORS,
+        vendorId,
+      );
 
-      if (vendorDoc.exists()) {
-        const currentData = vendorDoc.data() as Vendor;
-        await updateDoc(vendorRef, {
-          pendingPayouts: Math.max(
-            0,
-            (currentData.pendingPayouts || 0) - amount,
-          ),
-          updatedAt: Timestamp.now(),
+      if (vendorDoc) {
+        await AppwriteHelper.updateDocument(COLLECTIONS.VENDORS, vendorId, {
+          pendingPayouts: Math.max(0, (vendorDoc.pendingPayouts || 0) - amount),
         });
       }
 
-      return docRef.id;
+      return doc.$id;
     } catch (error) {
       console.error("Error processing payout:", error);
       throw error;
@@ -159,18 +153,22 @@ export class CommissionService {
    */
   static async getVendorEarnings(vendorId: string) {
     try {
-      const transactionsRef = collection(db, "transactions");
-      const q = query(
-        transactionsRef,
-        where("vendorId", "==", vendorId),
-        where("type", "in", ["commission", "payout"]),
-        orderBy("createdAt", "desc"),
+      const result = await AppwriteHelper.listDocuments(
+        COLLECTIONS.TRANSACTIONS,
+        [
+          Query.equal("vendorId", vendorId),
+          Query.equal("type", ["commission", "payout"]),
+          Query.orderDesc("createdAt"),
+        ],
       );
 
-      const snapshot = await getDocs(q);
-      const transactions = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
+      const transactions = result.documents.map((doc) => ({
+        id: doc.$id,
+        ...doc,
+        createdAt: AppwriteHelper.parseDate(doc.createdAt),
+        processedAt: doc.processedAt
+          ? AppwriteHelper.parseDate(doc.processedAt)
+          : undefined,
       })) as Transaction[];
 
       const totalEarnings = transactions
@@ -200,24 +198,38 @@ export class CommissionService {
    */
   static async getPlatformRevenue(startDate?: Date, endDate?: Date) {
     try {
-      let q = query(
-        collection(db, "transactions"),
-        where("type", "==", "commission"),
-        orderBy("createdAt", "desc"),
-      );
+      const queries = [
+        Query.equal("type", "commission"),
+        Query.orderDesc("createdAt"),
+      ];
 
       if (startDate) {
-        q = query(q, where("createdAt", ">=", Timestamp.fromDate(startDate)));
+        queries.push(
+          Query.greaterThanEqual(
+            "createdAt",
+            AppwriteHelper.formatDate(startDate),
+          ),
+        );
       }
 
       if (endDate) {
-        q = query(q, where("createdAt", "<=", Timestamp.fromDate(endDate)));
+        queries.push(
+          Query.lessThanEqual("createdAt", AppwriteHelper.formatDate(endDate)),
+        );
       }
 
-      const snapshot = await getDocs(q);
-      const transactions = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
+      const result = await AppwriteHelper.listDocuments(
+        COLLECTIONS.TRANSACTIONS,
+        queries,
+      );
+
+      const transactions = result.documents.map((doc) => ({
+        id: doc.$id,
+        ...doc,
+        createdAt: AppwriteHelper.parseDate(doc.createdAt),
+        processedAt: doc.processedAt
+          ? AppwriteHelper.parseDate(doc.processedAt)
+          : undefined,
       })) as Transaction[];
 
       const totalCommissions = transactions.reduce(
@@ -250,14 +262,23 @@ export class CommissionService {
     reason: string,
   ): Promise<string> {
     try {
-      const bookingRef = doc(db, "bookings", bookingId);
-      const bookingDoc = await getDoc(bookingRef);
+      const bookingDoc = await AppwriteHelper.getDocument(
+        COLLECTIONS.BOOKINGS,
+        bookingId,
+      );
 
-      if (!bookingDoc.exists()) {
+      if (!bookingDoc) {
         throw new Error("Booking not found");
       }
 
-      const booking = bookingDoc.data() as Booking;
+      const booking = {
+        id: bookingDoc.$id,
+        ...bookingDoc,
+        date: AppwriteHelper.parseDate(bookingDoc.date),
+        createdAt: AppwriteHelper.parseDate(bookingDoc.createdAt),
+        updatedAt: AppwriteHelper.parseDate(bookingDoc.updatedAt),
+      } as Booking;
+
       const commissionRefund = refundAmount * this.COMMISSION_RATE;
       const vendorRefund = refundAmount - commissionRefund;
 
@@ -271,11 +292,14 @@ export class CommissionService {
         commissionAmount: -commissionRefund,
         description: `Refund for booking #${bookingId}: ${reason}`,
         status: "completed",
-        createdAt: Timestamp.now() as any,
-        processedAt: Timestamp.now() as any,
+        createdAt: new Date(),
+        processedAt: new Date(),
       };
 
-      const docRef = await addDoc(collection(db, "transactions"), transaction);
+      const doc = await AppwriteHelper.createDocument(
+        COLLECTIONS.TRANSACTIONS,
+        transaction,
+      );
 
       // Update vendor earnings
       if (vendorRefund > 0) {
@@ -287,14 +311,13 @@ export class CommissionService {
       }
 
       // Update booking status
-      await updateDoc(bookingRef, {
+      await AppwriteHelper.updateDocument(COLLECTIONS.BOOKINGS, bookingId, {
         status: "cancelled",
         paymentStatus: "refunded",
         cancellationReason: reason,
-        updatedAt: Timestamp.now(),
       });
 
-      return docRef.id;
+      return doc.$id;
     } catch (error) {
       console.error("Error processing refund:", error);
       throw error;
