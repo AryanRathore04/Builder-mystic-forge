@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Loading } from "@/components/ui/loading";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import { Loading } from "../components/ui/loading";
 import {
   ToastNotification,
   useToasts,
-} from "@/components/ui/toast-notification";
+} from "../components/ui/toast-notification";
 import { useAuth } from "@/hooks/useAuth";
 import { Leaf, Mail, ArrowLeft, CheckCircle, AlertCircle } from "lucide-react";
 
