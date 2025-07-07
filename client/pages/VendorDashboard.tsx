@@ -118,11 +118,7 @@ export default function VendorDashboard() {
       setIsLoading(true);
 
       // Check if we're in demo mode (Appwrite not configured)
-      if (
-        !import.meta.env.VITE_APPWRITE_PROJECT_ID ||
-        import.meta.env.VITE_APPWRITE_PROJECT_ID === "your-project-id" ||
-        import.meta.env.VITE_APPWRITE_PROJECT_ID === "demo-project-id"
-      ) {
+      if (isDemoMode()) {
         // Load demo data instead of making API calls
         setVendorProfile({
           id: "demo-vendor",
