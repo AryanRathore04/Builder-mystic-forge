@@ -20,45 +20,38 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [userProfile, setUserProfile] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isVendor, setIsVendor] = useState(false);
+  // Create a fake user to bypass authentication
+  const fakeUser: AuthUser = {
+    $id: "demo-user-123",
+    email: "demo@vendor.com",
+    name: "Demo User",
+    emailVerification: true,
+  };
+
+  const fakeUserProfile: User = {
+    uid: "demo-user-123",
+    email: "demo@vendor.com",
+    name: "Demo User",
+    userType: "vendor", // Set as vendor to access vendor dashboard
+    phone: "+91 9876543210",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  const [user, setUser] = useState<AuthUser | null>(fakeUser);
+  const [userProfile, setUserProfile] = useState<User | null>(fakeUserProfile);
+  const [loading, setLoading] = useState(false); // Set to false immediately
+  const [isAdmin, setIsAdmin] = useState(true); // Allow admin access
+  const [isVendor, setIsVendor] = useState(true); // Allow vendor access
 
   useEffect(() => {
-    checkUser();
+    // Skip authentication checks completely
+    console.log("Authentication bypassed - using demo user");
   }, []);
 
   const checkUser = async () => {
-    try {
-      const currentUser = await AuthService.getCurrentUser();
-      setUser(currentUser);
-
-      if (currentUser) {
-        // Get user profile from database
-        const profile = await AuthService.getUserData(currentUser.$id);
-        setUserProfile(profile);
-
-        // Check user roles
-        const adminStatus = await AuthService.isAdmin(currentUser.$id);
-        const vendorStatus = await AuthService.isVendor(currentUser.$id);
-        setIsAdmin(adminStatus);
-        setIsVendor(vendorStatus);
-      } else {
-        setUserProfile(null);
-        setIsAdmin(false);
-        setIsVendor(false);
-      }
-    } catch (error) {
-      console.error("Error checking user:", error);
-      setUser(null);
-      setUserProfile(null);
-      setIsAdmin(false);
-      setIsVendor(false);
-    } finally {
-      setLoading(false);
-    }
+    // Skip all authentication logic
+    setLoading(false);
   };
 
   const signIn = async (loginData: LoginData): Promise<any> => {
