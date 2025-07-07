@@ -457,6 +457,27 @@ export default function VendorDashboard() {
     <div className="min-h-screen bg-background animate-fade-in">
       <ToastNotification toasts={toasts} removeToast={removeToast} />
 
+      {/* Demo Mode Banner */}
+      {isDemoMode && (
+        <div className="bg-amber-50 border-b border-amber-200 px-4 py-2">
+          <div className="max-w-7xl mx-auto">
+            <p className="text-sm text-amber-800 text-center">
+              🚀 <strong>Demo Mode:</strong> You're viewing the vendor dashboard
+              with sample data.
+              <a
+                href="/APPWRITE_SETUP.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline ml-1"
+              >
+                Set up Appwrite
+              </a>{" "}
+              to connect real backend services.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="bg-card border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
