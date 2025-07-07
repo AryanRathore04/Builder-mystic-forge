@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { PageLoading } from "@/components/ui/loading";
+import { Button } from "../components/ui/button";
+import { Badge } from "../components/ui/badge";
+import { PageLoading } from "../components/ui/loading";
 import {
   ToastNotification,
   useToasts,
-} from "@/components/ui/toast-notification";
+} from "../components/ui/toast-notification";
 import {
   Check,
   Star,
