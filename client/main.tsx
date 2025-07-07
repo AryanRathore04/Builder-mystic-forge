@@ -21,7 +21,6 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ForgotPassword from "./pages/ForgotPassword";
 import NotFound from "./pages/NotFound";
-import { PageStatusChecker } from "./components/ui/page-status-checker";
 
 const queryClient = new QueryClient();
 
@@ -49,7 +48,6 @@ const App = () => (
             </Routes>
             <Toaster />
             <Sonner />
-            <PageStatusChecker />
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>
