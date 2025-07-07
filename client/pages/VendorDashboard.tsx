@@ -1,36 +1,36 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { PageLoading } from "@/components/ui/loading";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import { Textarea } from "../components/ui/textarea";
+import { Badge } from "../components/ui/badge";
+import { Separator } from "../components/ui/separator";
+import { PageLoading } from "../components/ui/loading";
 import {
   ToastNotification,
   useToasts,
-} from "@/components/ui/toast-notification";
-import { useAuth } from "@/hooks/useAuth";
+} from "../components/ui/toast-notification";
+import { useAuth } from "../hooks/useAuth";
 import {
   vendorService,
   type VendorProfile,
   type VendorService as Service,
   type Booking,
-} from "@/services/vendor";
+} from "../services/vendor";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "../components/ui/select";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "../components/ui/dialog";
 import {
   Leaf,
   DollarSign,
