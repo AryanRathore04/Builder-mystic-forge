@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { PageLoading } from "@/components/ui/loading";
+import { Button } from "../components/ui/button";
+import { PageLoading } from "../components/ui/loading";
 import {
   Leaf,
   ArrowLeft,
