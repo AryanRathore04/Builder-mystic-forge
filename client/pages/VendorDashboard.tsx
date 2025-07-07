@@ -459,7 +459,7 @@ export default function VendorDashboard() {
       <ToastNotification toasts={toasts} removeToast={removeToast} />
 
       {/* Demo Mode Banner */}
-      {isDemoMode && (
+      {demoMode && (
         <div className="bg-amber-50 border-b border-amber-200 px-4 py-2">
           <div className="max-w-7xl mx-auto">
             <p className="text-sm text-amber-800 text-center">
