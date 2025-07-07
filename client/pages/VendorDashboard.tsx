@@ -18,6 +18,14 @@ import {
   type Booking,
 } from "../services/vendor";
 import {
+  isDemoMode,
+  handleDemoModeError,
+  getDemoVendorProfile,
+  getDemoServices,
+  getDemoBookings,
+  getDemoAnalytics,
+} from "../utils/demoMode";
+import {
   Select,
   SelectContent,
   SelectItem,
