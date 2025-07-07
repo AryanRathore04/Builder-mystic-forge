@@ -109,7 +109,94 @@ export default function VendorDashboard() {
     try {
       setIsLoading(true);
 
-      // Load vendor profile
+      // Check if we're in demo mode (Appwrite not configured)
+      if (
+        !import.meta.env.VITE_APPWRITE_PROJECT_ID ||
+        import.meta.env.VITE_APPWRITE_PROJECT_ID === "your-project-id" ||
+        import.meta.env.VITE_APPWRITE_PROJECT_ID === "demo-project-id"
+      ) {
+        // Load demo data instead of making API calls
+        setVendorProfile({
+          id: "demo-vendor",
+          uid: "demo-user",
+          businessName: "Demo Wellness Spa",
+          businessType: "Spa & Wellness",
+          businessAddress: "123 Demo Street, Demo City",
+          city: "Mumbai",
+          phone: "+91 9876543210",
+          email: "demo@vendor.com",
+          description: "A premium wellness spa offering relaxing treatments",
+          images: [
+            "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400",
+          ],
+          amenities: ["WiFi", "Parking", "AC", "Sanitized"],
+          rating: 4.8,
+          totalReviews: 150,
+          isVerified: true,
+          joinedDate: new Date(),
+          subscription: "premium",
+        });
+
+        // Load demo services
+        setServices([
+          {
+            id: "demo-service-1",
+            vendorId: "demo-vendor",
+            name: "Relaxing Full Body Massage",
+            description: "60-minute full body massage with essential oils",
+            category: "massage",
+            duration: 60,
+            price: 2500,
+            active: true,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+          {
+            id: "demo-service-2",
+            vendorId: "demo-vendor",
+            name: "Deep Cleansing Facial",
+            description: "90-minute facial treatment for glowing skin",
+            category: "facial",
+            duration: 90,
+            price: 3500,
+            active: true,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+        ]);
+
+        // Load demo bookings
+        setBookings([
+          {
+            id: "demo-booking-1",
+            vendorId: "demo-vendor",
+            serviceName: "Relaxing Full Body Massage",
+            customerName: "Demo Customer",
+            customerPhone: "+91 9876543210",
+            customerEmail: "customer@demo.com",
+            bookingDate: new Date(),
+            bookingTime: "10:00 AM",
+            status: "confirmed",
+            price: 2500,
+            duration: 60,
+          },
+        ]);
+
+        // Set demo analytics
+        setAnalytics({
+          totalBookings: 45,
+          pendingBookings: 3,
+          completedBookings: 40,
+          totalRevenue: 125000,
+          averageRating: 4.8,
+          totalReviews: 150,
+        });
+
+        setIsLoading(false);
+        return;
+      }
+
+      // Load vendor profile from Appwrite (when configured)
       const profile = await vendorService.getVendorProfile(user.uid);
       setVendorProfile(profile);
 
