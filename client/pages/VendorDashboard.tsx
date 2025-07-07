@@ -429,7 +429,13 @@ export default function VendorDashboard() {
     return <PageLoading />;
   }
 
-  if (!user || userProfile?.userType !== "vendor") {
+  // Show demo mode notice
+  const isDemoMode =
+    !import.meta.env.VITE_APPWRITE_PROJECT_ID ||
+    import.meta.env.VITE_APPWRITE_PROJECT_ID === "your-project-id" ||
+    import.meta.env.VITE_APPWRITE_PROJECT_ID === "demo-project-id";
+
+  if (!user && !isDemoMode) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
