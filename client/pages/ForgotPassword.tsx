@@ -7,7 +7,7 @@ import {
   ToastNotification,
   useToasts,
 } from "../components/ui/toast-notification";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 import { Leaf, Mail, ArrowLeft, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function ForgotPassword() {
