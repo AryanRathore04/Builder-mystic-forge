@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { PageLoading } from "@/components/ui/loading";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import { Separator } from "../components/ui/separator";
+import { PageLoading } from "../components/ui/loading";
 import {
   ToastNotification,
   useToasts,
-} from "@/components/ui/toast-notification";
-import { useAuth } from "@/hooks/useAuth";
+} from "../components/ui/toast-notification";
+import { useAuth } from "../hooks/useAuth";
 import {
   Leaf,
   Mail,
