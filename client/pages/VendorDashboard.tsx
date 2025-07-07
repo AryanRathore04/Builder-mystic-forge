@@ -434,12 +434,9 @@ export default function VendorDashboard() {
   }
 
   // Show demo mode notice
-  const isDemoMode =
-    !import.meta.env.VITE_APPWRITE_PROJECT_ID ||
-    import.meta.env.VITE_APPWRITE_PROJECT_ID === "your-project-id" ||
-    import.meta.env.VITE_APPWRITE_PROJECT_ID === "demo-project-id";
+  const demoMode = isDemoMode();
 
-  if (!user && !isDemoMode) {
+  if (!user && !demoMode) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
