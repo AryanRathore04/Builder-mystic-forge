@@ -1,7 +1,7 @@
 import { Star, MapPin, Clock } from "lucide-react";
 import { Badge } from "./badge";
 import { Button } from "./button";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 
 interface ServiceCardProps {
   id: string;
