@@ -425,9 +425,7 @@ export default function VendorDashboard() {
     }
   };
 
-  if (isLoading) {
-    return <PageLoading />;
-  }
+  // Loading removed - immediate access to all pages
 
   // Show demo mode notice
   const demoMode = isDemoMode();
