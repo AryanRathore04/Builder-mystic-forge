@@ -103,13 +103,9 @@ export default function VendorDashboard() {
   });
 
   useEffect(() => {
-    if (user && userProfile?.userType === "vendor") {
-      loadVendorData();
-    } else if (!isLoading) {
-      // Redirect non-vendor users
-      window.location.href = "/signin";
-    }
-  }, [user, userProfile]);
+    // Always load vendor data in demo mode
+    loadVendorData();
+  }, []);
 
   const loadVendorData = async () => {
     if (!user) return;
